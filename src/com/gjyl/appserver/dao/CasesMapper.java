@@ -1,11 +1,10 @@
 package com.gjyl.appserver.dao;
 
-import java.util.List;
-
 import com.gjyl.appserver.pojo.Cases;
 
+import java.util.List;
+
 public interface CasesMapper {
-    int deleteByPrimaryKey(String caseid);
 
     int insert(Cases record);
 
@@ -13,14 +12,16 @@ public interface CasesMapper {
 
     Cases selectByPrimaryKey(String caseid);
 
-    int updateByPrimaryKeySelective(Cases record);
-
     int updateByPrimaryKey(Cases record);
 
     //列表
 	List<Cases> getMyCases(String userid);
 	//添加
 	int addCases(Cases cases);
+    //编辑
+    int updateByPrimaryKeySelective(Cases record);
+    //删除
+    int deleteByPrimaryKey(String caseid);
 	//详情
 	Cases getCaseInfo(String id);
 }

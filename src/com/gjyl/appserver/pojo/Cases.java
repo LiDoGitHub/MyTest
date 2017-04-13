@@ -1,5 +1,6 @@
 package com.gjyl.appserver.pojo;
 
+import java.util.Date;
 import java.util.UUID;
 
 public class Cases {
@@ -20,8 +21,10 @@ public class Cases {
     private String docname;
 
     private String memo;
-    
+
     private String userid;
+
+    private Date casetime;
 
     public String getCaseid() {
         return caseid;
@@ -103,9 +106,15 @@ public class Cases {
         this.memo = memo == null ? null : memo.trim();
     }
 
+    public Date getCasetime() {
+        return casetime;
+    }
+
+    public void setCasetime(Date casetime) {
+        this.casetime = casetime;
+    }
+
 	public Cases() {
 		this.caseid=UUID.randomUUID().toString().replace("-", "");
 	}
-	
-	
 }
