@@ -3,3 +3,4 @@ MyTest.iml
 
 out/*
 web/WEB-INF/classes/*
+.idea/*
