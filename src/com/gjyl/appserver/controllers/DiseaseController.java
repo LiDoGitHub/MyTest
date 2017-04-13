@@ -21,7 +21,7 @@ public class DiseaseController {
 
 	@Resource
 	private DiseaseService diseaseService;
-	
+
 	/**
 	 * 后台用,获取所有疾病
 	 * @param request
@@ -38,7 +38,7 @@ public class DiseaseController {
 	 * 常见疾病
 	 * @param request
 	 * @param response
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping(value="/getCommonDis",method=RequestMethod.GET)
 	public void getCommonDis(HttpServletRequest request,HttpServletResponse response) throws Exception {
@@ -46,13 +46,13 @@ public class DiseaseController {
 		List<DiseaseLibraryWithBLOBs> list= diseaseService.getCommonDis();
 		response.getWriter().write(JSON.toJSONString(list));
 	}
-	
+
 	/**
 	 * 设置疾病是否常见
 	 * @param request
 	 * @param response
-	 * @throws Exception 
-	 * @throws  
+	 * @throws Exception
+	 * @throws
 	 */
 	@RequestMapping(value="/setIsCommon")
 	public void setIsCommon(HttpServletRequest request,HttpServletResponse response) throws Exception {
@@ -65,12 +65,12 @@ public class DiseaseController {
 			response.getWriter().write(JSON.toJSONString("error"));
 		}
 	}
-	
+
 	/**
 	 * 科室下疾病列表
 	 * @param sectionId:科室ID
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@Deprecated
 	@RequestMapping(value="/getDiseaseList")
@@ -81,12 +81,12 @@ public class DiseaseController {
 		response.getWriter().write(JSON.toJSONString(list));
 //		return (JSON) JSON.toJSON(list);
 	}
-	
+
 	/**
 	 * 疾病详情
 	 * @param diseaseId:疾病ID
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping("/getDiseaseById")
 	public void getDiseaseById(HttpServletRequest request,HttpServletResponse response) throws Exception {

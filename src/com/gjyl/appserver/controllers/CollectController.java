@@ -26,8 +26,8 @@ public class CollectController {
 	 * 收藏文章
 	 * @param request
 	 * @return
-	 * @throws Exception 
-	 * @throws  
+	 * @throws Exception
+	 * @throws
 	 */
 	@RequestMapping(value="/collectCycl")
 	public void collectCycl(HttpServletRequest request,HttpServletResponse response) throws  Exception {
@@ -38,15 +38,15 @@ public class CollectController {
 		BeanUtils.populate(collect, request.getParameterMap());
 		Boolean result = collectService.collectCycl(collect);
 //		return (JSON) JSON.toJSON(result);
-		 response.getWriter().write(JSON.toJSONString(result));
+		response.getWriter().write(JSON.toJSONString(result));
 	}
-	
+
 	/**
 	 * 取消收藏
 	 * @param userId:用户ID
 	 * @param cyclId:文章ID
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping(value="/cancleCollect")
 	public void cancleCollect(HttpServletRequest request,HttpServletResponse response) throws Exception {
@@ -57,13 +57,13 @@ public class CollectController {
 		response.getWriter().write(JSON.toJSONString(result));
 //		return (JSON) JSON.toJSON(result);
 	}
-	
+
 	/**
 	 * 是否收藏
 	 * @param userId:用户ID
 	 * @param cyclId:文章ID
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping(value="isCollected")
 	public void isCollected(HttpServletRequest request,HttpServletResponse response) throws Exception {
@@ -74,12 +74,12 @@ public class CollectController {
 		response.getWriter().write(JSON.toJSONString(result));
 //		return (JSON) JSON.toJSON(result);
 	}
-	
+
 	/**
 	 * 收藏列表
 	 * @param userId:用户ID
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping(value="/getUserCollect")
 	public void getUserCollect(HttpServletRequest request,HttpServletResponse response) throws Exception {

@@ -18,14 +18,14 @@ import com.gjyl.appserver.service.HotSearchService;
 @Controller
 @RequestMapping("/hotSearch")
 public class HotSearchController {
-	
+
 	@Resource
 	private HotSearchService hotSearchService;
 	/**
 	 * 热门搜索
 	 * @param request
 	 * @param response
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping(value="/getHotSearch",method=RequestMethod.POST)
 	public void getHotSearch(HttpServletRequest request,HttpServletResponse response) throws Exception {
@@ -33,12 +33,12 @@ public class HotSearchController {
 		List<HotSearch> list= hotSearchService.getHotSearch();
 		response.getWriter().write(JSON.toJSONString(list));
 	}
-	
+
 	/**
 	 * 搜索结果
 	 * @param request
 	 * @param response
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping(value="/getSearchRst",method=RequestMethod.POST)
 	public void getSearchRst(HttpServletRequest request,HttpServletResponse response) throws Exception {
@@ -47,8 +47,8 @@ public class HotSearchController {
 		HotSearchResult rst= hotSearchService.getSearchRst(content);
 		response.getWriter().write(JSON.toJSONString(rst));
 	}
-	
-	
+
+
 	/**
 	 * 联想查询联想列表
 	 * @param content:搜索内容
@@ -61,6 +61,6 @@ public class HotSearchController {
 		List<String> relative= hotSearchService.getRelativeSearch(content);
 		response.getWriter().write(JSON.toJSONString(relative));
 	}
-	
-	
+
+
 }

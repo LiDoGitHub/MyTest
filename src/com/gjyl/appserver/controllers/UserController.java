@@ -43,7 +43,7 @@ public class UserController {
 	 * 根据用户ID获取用户信息
 	 * @param request
 	 * @return
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	@RequestMapping("/getUserById")
 	public void getUserById(HttpServletRequest request,HttpServletResponse response) throws IOException {
@@ -58,7 +58,7 @@ public class UserController {
 	 * @param phone:手机号
 	 * @param password:密码
 	 * @return 用户信息
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	@RequestMapping(value="/Login")
 	public void loginWithPwd(HttpServletRequest request,HttpServletResponse response) throws IOException{
@@ -80,7 +80,7 @@ public class UserController {
 					response.getWriter().print(JSON.toJSONString("pwdError"));
 //					return (JSON) JSON.toJSON("pwdError");
 //					return "pwdError";
-					
+
 				}
 			}else {//用户名不正确
 				//无用户信息
@@ -95,8 +95,8 @@ public class UserController {
 //			return "error";
 		}
 	}
-	
-	
+
+
 	/**
 	 * 获取验证码
 	 * @param phone:手机号
@@ -105,7 +105,7 @@ public class UserController {
 	 */
 	@RequestMapping(value="/getVerification")
 	public void getVerification(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+								HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
 		String phone = request.getParameter("phone");
 		if (phone != null && phone.toString() != "" && phone.length() == 11) {
@@ -128,7 +128,7 @@ public class UserController {
 //			return (JSON) JSON.toJSON("phoneError");
 		}
 	}
-	
+
 	/**
 	 * 众合泰,发送短信
 	 * @param msgCode
@@ -175,7 +175,7 @@ public class UserController {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * 一键登录
 	 * @param phone:手机号
@@ -208,14 +208,14 @@ public class UserController {
 			return JSON.toJSON("codeError");
 		}
 	}
-	
-	
+
+
 	/**
 	 * 用户注册
 	 * @param request
 	 * @return
-	 * @throws Exception 
-	 * @throws  
+	 * @throws Exception
+	 * @throws
 	 */
 	@RequestMapping(value="/registUser")
 	public void registUser(HttpServletRequest request,HttpServletResponse response) throws  Exception{
@@ -232,13 +232,13 @@ public class UserController {
 //			return (JSON) JSON.toJSON("phoneError");
 		}
 	}
-	
-	
+
+
 	/**
 	 * 重置密码
 	 * @param request
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping(value="/resetPwd")
 	public void resetPassword(HttpServletRequest request,HttpServletResponse response) throws Exception {
@@ -263,29 +263,30 @@ public class UserController {
 //			return (JSON) JSON.toJSON("codeError");
 		}
 	}
-	
+
 	/**
 	 * 更新用户信息
 	 * @param request
 	 * @return
-	 * @throws Exception 
-	 * @throws  
+	 * @throws Exception
+	 * @throws
 	 */
 	@RequestMapping(value="/updateUser")
 	public void updateUser(HttpServletRequest request,HttpServletResponse response) throws  Exception{
 		response.setContentType("text/json;charset=utf-8");
 		AppUser user = userService.GetUserById(request.getParameter("userid"));
 		BeanUtils.populate(user, request.getParameterMap());
+		System.out.println("updateUser..............................\n"+user);
 		Boolean result = userService.updateUser(user);
 		response.getWriter().write(JSON.toJSONString(result));
 //		return (JSON) JSON.toJSON(result);
 	}
-	
+
 	/**
 	 * 友盟登录
 	 * @param uid:友盟返回的用户id,对应QQ,微信,微博
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping(value="/umLogin")
 	public void UMLogin(HttpServletRequest request,HttpServletResponse response) throws Exception {
@@ -299,10 +300,10 @@ public class UserController {
 			response.getWriter().write(JSON.toJSONString(Boolean.FALSE));
 //			return (JSON) JSON.toJSON("FALSE");
 		}
-		
+
 	}
-	
-	
+
+
 	/**
 	 * 三方登录绑定手机号
 	 * @param phone:手机号
@@ -312,8 +313,8 @@ public class UserController {
 	 * @param uid:三方登录唯一标识
 	 * @param icon:头像
 	 * @return
-	 * @throws Exception 
-	 * @throws  
+	 * @throws Exception
+	 * @throws
 	 */
 	@RequestMapping(value="/bindPhone")
 	public void bindPhone(HttpServletRequest request,HttpServletResponse response) throws Exception {

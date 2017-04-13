@@ -20,12 +20,12 @@ import com.gjyl.appserver.service.UserService;
 @Controller
 @RequestMapping("/registration")
 public class RegistrationController {
-	
+
 	@Resource
 	private RegistrationService registrationService;
 	@Resource
 	private UserService userService;
-	
+
 	/**
 	 * 医生端添加挂号信息
 	 * @param city:城市
@@ -36,8 +36,8 @@ public class RegistrationController {
 	 * @param age:年龄
 	 * @param phone:手机号
 	 * @return
-	 * @throws Exception 
-	 * @throws  
+	 * @throws Exception
+	 * @throws
 	 */
 	@RequestMapping(value="/addRegUser")
 	public void addRegUser(HttpServletRequest request,HttpServletResponse response) throws Exception {
@@ -45,7 +45,7 @@ public class RegistrationController {
 		Registration registration = new Registration();
 		//订单号 start
 		String orderCode = new SimpleDateFormat("yyyyMMddHHmmss")
-		.format(new Date());
+				.format(new Date());
 		registration.setOrdercode(orderCode);
 		//订单号 end
 

@@ -16,16 +16,16 @@ import com.gjyl.appserver.service.CalendarCService;
 @Controller
 @RequestMapping("/calendar")
 public class CalendarController {
-	
+
 	@Resource
 	private CalendarCService calendarService;
-	
+
 	/**
 	 * 获取当月日历事件
 	 * @param userid:用户id
 	 * @param date:要获取的日期,精确到月
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping(value="/getCalendarList")
 	public void getCalendarList(HttpServletRequest request,HttpServletResponse response) throws Exception {
@@ -36,7 +36,7 @@ public class CalendarController {
 //		return (JSON) JSON.toJSON(list);
 		response.getWriter().write(JSON.toJSONString(list));
 	}
-	
+
 	public void getCalendarInfo(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
 		String userid = request.getParameter("userid");

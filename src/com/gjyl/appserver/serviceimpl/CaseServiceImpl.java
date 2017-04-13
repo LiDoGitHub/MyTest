@@ -17,7 +17,7 @@ public class CaseServiceImpl implements CaseService {
 	private CasesMapper dao;
 
 	public List<Cases> getMyCases(String userid) {
-		
+
 		return dao.getMyCases(userid);
 	}
 
@@ -30,13 +30,21 @@ public class CaseServiceImpl implements CaseService {
 	}
 
 	public Cases getCaseInfo(String id) {
-		
+
 		return dao.getCaseInfo(id);
 	}
 
 	public Boolean deleteCase(String id) {
 		int rst=dao.deleteByPrimaryKey(id);
 		if (rst>0) {
+			return true;
+		}
+		return false;
+	}
+
+	public Boolean updateCases(Cases cases) {
+		int i=dao.updateByPrimaryKeySelective(cases);
+		if (i>0) {
 			return true;
 		}
 		return false;

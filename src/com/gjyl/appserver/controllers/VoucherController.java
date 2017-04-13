@@ -1,21 +1,17 @@
 package com.gjyl.appserver.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-
-
+import com.alibaba.fastjson.JSON;
+import com.gjyl.appserver.pojo.UserVoucher;
+import com.gjyl.appserver.service.VoucherService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.alibaba.fastjson.JSON;
-import com.gjyl.appserver.pojo.UserVoucher;
-import com.gjyl.appserver.service.VoucherService;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/voucher")
@@ -23,12 +19,12 @@ public class VoucherController {
 
 	@Resource
 	private VoucherService voucherService;
-	
+
 	/**
 	 * 我的代金券
 	 * @param userId:用户ID
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping(value="/getMyVoucher")
 	public void getMyVoucher(HttpServletRequest request,HttpServletResponse response) throws Exception {
@@ -38,10 +34,10 @@ public class VoucherController {
 		response.getWriter().write(JSON.toJSONString(list));
 //		return (JSON) JSON.toJSON(list);
 	}
-	
+
 	/**
 	 * 分享赠送代金券
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping(value="/getShareVoucher")
 	public void getShareVoucher(HttpServletRequest request,HttpServletResponse response) throws Exception {
@@ -73,5 +69,5 @@ public class VoucherController {
 //		return (JSON) JSON.toJSON(result);
 		response.getWriter().write(JSON.toJSONString(result));
 	}
-	
+
 }

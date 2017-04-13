@@ -26,7 +26,7 @@ public class CommentController {
 	private DocCommentService docComService;
 	/**
 	 * 获取用户对医生的评价
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping(value="/getUserComment")
 	public void getUserComment(HttpServletRequest request,HttpServletResponse response) throws Exception {
@@ -36,10 +36,10 @@ public class CommentController {
 		response.getWriter().write(JSON.toJSONString(list));
 //		return (JSON) JSON.toJSON(list);
 	}
-	
+
 	/**
 	 * 用户对医生评价
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping(value="/addComment")
 	public void addComment(HttpServletRequest request,HttpServletResponse response) throws  Exception {
@@ -55,10 +55,10 @@ public class CommentController {
 //			return (JSON) JSON.toJSON("FAILED");
 		}
 	}
-	
+
 	/**
 	 * 根据healthId获取医生对健康状况的评价
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping(value="/getHealthComment")
 	public void getHealthComment(HttpServletRequest request,HttpServletResponse response) throws Exception {
@@ -68,15 +68,15 @@ public class CommentController {
 		response.getWriter().write(JSON.toJSONString(list));
 //		return (JSON) JSON.toJSON(list);
 	}
-	
+
 	/**
 	 * 医生对健康状况进行评价
 	 * @param doctorid:医生ID
 	 * @param healthid:健康ID
 	 * @param content:评价内容
 	 * @return
-	 * @throws Exception 
-	 * @throws  
+	 * @throws Exception
+	 * @throws
 	 */
 	@RequestMapping(value="/addDocComment")
 	public void addDocComment(HttpServletRequest request,HttpServletResponse response) throws Exception {

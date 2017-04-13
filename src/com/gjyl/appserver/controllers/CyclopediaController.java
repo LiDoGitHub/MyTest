@@ -18,17 +18,17 @@ import com.gjyl.appserver.service.CyclopediaService;
 @Controller
 @RequestMapping(value="/cyclopedia")
 public class CyclopediaController {
-	
+
 	private static final String HOTID="66c1b532f82b4017b53f8ae2cf3c05a7";
-	
+
 	@Resource
 	private CyclopediaService cyclopediaService;
-	
+
 	/**
 	 * 随机获取三篇文章
 	 * @param request
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping(value="/getTwoCycl")
 	public void getTwoCyclopedia(HttpServletRequest request,HttpServletResponse response) throws Exception {
@@ -42,7 +42,7 @@ public class CyclopediaController {
 	 * 分页获取文章
 	 * @param pageNum:页号
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping(value="/getCyclByPage",method=RequestMethod.GET)
 	public void getCyclByPage(HttpServletRequest request,HttpServletResponse response) throws Exception{
@@ -52,12 +52,12 @@ public class CyclopediaController {
 		response.getWriter().write(JSON.toJSONString(list));
 //		return (JSON) JSON.toJSON(list);
 	}
-	
+
 	/**
 	 * 获取文章详情
 	 * @param cyclId:文章ID
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping(value="/getCyclInfo",method=RequestMethod.GET)
 	public void getCyclInfo(HttpServletRequest request,HttpServletResponse response) throws Exception {
@@ -71,10 +71,14 @@ public class CyclopediaController {
 	 * 获取所有文章,后台用
 	 * @param request
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
-	@RequestMapping(value="/getAllCycl")
+	@RequestMapping(value="/getAllCycl",method=RequestMethod.POST)
 	public void getCyclopedia(HttpServletRequest request,HttpServletResponse response) throws Exception {
+		response.setContentType("application/json;charset=utf-8");
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Method", "*");
+		response.addHeader("Access-Control-Max-Age", "10000");
 		response.setContentType("text/json;charset=utf-8");
 		List<Cyclopedia> list = cyclopediaService.getAllCyclopedias();
 		response.getWriter().write(JSON.toJSONString(list));
@@ -84,7 +88,7 @@ public class CyclopediaController {
 	 * 删除文章
 	 * @param cyclId:文章ID
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping(value="/delCyclopedia",method=RequestMethod.POST)
 	public void delCyclopedia(HttpServletRequest request,HttpServletResponse response) throws Exception {
@@ -94,13 +98,13 @@ public class CyclopediaController {
 		response.getWriter().write(JSON.toJSONString(result));
 //		return (JSON) JSON.toJSON(result);
 	}
-	
+
 
 	/**
 	 * 获取分类文章
 	 * @param typeId:分类ID
 	 * @param pageNum:页码
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping(value="/getCyclByType",method=RequestMethod.POST)
 	public void getCyclByType(HttpServletRequest request,HttpServletResponse response) throws Exception {

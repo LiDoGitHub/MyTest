@@ -25,7 +25,7 @@ public class RemindController {
 
 	@Resource
 	private RemindService remindService;
-	
+
 	/**
 	 * 获取我的用药提醒
 	 * @param userid:用户ID
@@ -40,7 +40,7 @@ public class RemindController {
 		List<Remind> list= remindService.getRemind(userid,startDate);
 		response.getWriter().write(JSON.toJSONString(list));
 	}
-	
+
 	/**
 	 * 获取详情
 	 * @param request
@@ -54,7 +54,7 @@ public class RemindController {
 		Remind remind= remindService.getRemindById(id);
 		response.getWriter().write(JSON.toJSONString(remind));
 	}
-	
+
 	/**
 	 * 添加用药提醒
 	 * @param request:一个提醒实体对象
@@ -63,7 +63,7 @@ public class RemindController {
 	 */
 	@RequestMapping(value = "/addRemind", method = RequestMethod.POST)
 	public void addRemind(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+						  HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
 		Remind remind = new Remind();
 		// 注册处理日期的转换器
@@ -80,38 +80,35 @@ public class RemindController {
 			response.getWriter().write(JSON.toJSONString("error"));
 		}
 	}
-	
+
 	/**
 	 * 编辑提醒
 	 * @param request:一个提醒实体对象
 	 * @param response
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping(value="/editRemind",method=RequestMethod.POST)
 	public void editRemind(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		String remindId = request.getParameter("remindid");
-		Remind remind = new Remind();
-		try {
-			BeanUtils.populate(remind, request.getParameterMap());
-			remind.setRemindid(remindId);
-			Boolean rst = remindService.updateRemind(remind);
-			response.getWriter().write(JSON.toJSONString(rst));
-		} catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().write(JSON.toJSONString("error"));
-		}
+		Remind remind = remindService.getRemindById(remindId);
+		// 注册处理日期的转换器
+		DateLocaleConverter dc = new DateLocaleConverter("yyyy-MM-dd 00:00:00");
+		ConvertUtils.register(dc, Date.class);
+		BeanUtils.populate(remind, request.getParameterMap());
+		Boolean rst = remindService.updateRemind(remind);
+		response.getWriter().write(JSON.toJSONString(rst));
 	}
-	
+
 	/**
 	 * 删除提醒
 	 * @param remindid:提醒ID
 	 * @param response
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public void deleteRemind(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		String id = request.getParameter("remindid");
 		Boolean rst=remindService.deleteRemind(id);
 		response.getWriter().write(JSON.toJSONString(rst));
 	}
-	
+
 }

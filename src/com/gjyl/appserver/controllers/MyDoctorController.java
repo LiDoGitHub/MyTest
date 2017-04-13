@@ -24,12 +24,12 @@ public class MyDoctorController {
 
 	@Resource
 	private MyDoctorService myDrService;
-	
+
 	/**
 	 * 我的医生
 	 * @param userId:用户ID
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping(value="/getMyDoctor")
 	public void getMyDoctor(HttpServletRequest request,HttpServletResponse response) throws Exception {
@@ -44,7 +44,7 @@ public class MyDoctorController {
 	 * @param userid:用户ID
 	 * @param doctorid:医生ID
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping(value="/addMyDoctor")
 	public void addMyDoctor(HttpServletRequest request,HttpServletResponse response) throws Exception {

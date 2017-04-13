@@ -1,8 +1,8 @@
 package com.gjyl.appserver.service;
 
-import java.util.List;
-
 import com.gjyl.appserver.pojo.Cases;
+
+import java.util.List;
 
 public interface CaseService {
 
@@ -13,5 +13,7 @@ public interface CaseService {
 	Cases getCaseInfo(String id);
 
 	Boolean deleteCase(String id);
+
+	Boolean updateCases(Cases cases);
 
 }

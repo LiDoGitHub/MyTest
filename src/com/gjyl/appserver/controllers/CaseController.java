@@ -23,7 +23,7 @@ import com.gjyl.appserver.service.CaseService;
 @Controller
 @RequestMapping("/case")
 public class CaseController {
-	
+
 	@Resource
 	private CaseService caseService;
 
@@ -40,7 +40,7 @@ public class CaseController {
 		List<Cases> list= caseService.getMyCases(userid);
 		response.getWriter().write(JSON.toJSONString(list));
 	}
-	
+
 	/**
 	 * 添加病例
 	 * @param request
@@ -59,7 +59,22 @@ public class CaseController {
 			response.getWriter().write(JSON.toJSONString("Error"));
 		}
 	}
-	
+
+	/**
+	 * 遍历病例
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/editCases",method=RequestMethod.POST)
+	public void editCases(HttpServletRequest request,HttpServletResponse response) throws Exception {
+		Cases cases=caseService.getCaseInfo(request.getParameter("caseid"));
+		BeanUtils.populate(cases, request.getParameterMap());
+		Boolean rst = caseService.updateCases(cases);
+		response.getWriter().write(JSON.toJSONString(rst));
+	}
+
+
 	/**
 	 * 病例详情
 	 * @param caseid:病例ID
@@ -73,7 +88,7 @@ public class CaseController {
 		Cases mycase = caseService.getCaseInfo(id);
 		response.getWriter().write(JSON.toJSONString(mycase));
 	}
-	
+
 	/**
 	 * 删除病例
 	 * @param caseid:病例ID
@@ -87,5 +102,5 @@ public class CaseController {
 		Boolean rst=caseService.deleteCase(id);
 		response.getWriter().write(JSON.toJSONString(rst));
 	}
-	
+
 }
