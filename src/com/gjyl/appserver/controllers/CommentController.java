@@ -1,20 +1,18 @@
 package com.gjyl.appserver.controllers;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.beanutils.BeanUtils;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.alibaba.fastjson.JSON;
 import com.gjyl.appserver.pojo.Comment;
 import com.gjyl.appserver.pojo.DocComment;
 import com.gjyl.appserver.service.CommentService;
 import com.gjyl.appserver.service.DocCommentService;
+import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Controller
 @RequestMapping("/comment")
@@ -26,7 +24,7 @@ public class CommentController {
 	private DocCommentService docComService;
 	/**
 	 * 获取用户对医生的评价
-	 * @throws Exception
+	 * @throws Exception:异常
 	 */
 	@RequestMapping(value="/getUserComment")
 	public void getUserComment(HttpServletRequest request,HttpServletResponse response) throws Exception {
@@ -46,7 +44,7 @@ public class CommentController {
 		response.setContentType("text/json;charset=utf-8");
 		Comment comment = new Comment();
 		BeanUtils.populate(comment, request.getParameterMap());
-		if (comment.getContent() != null && comment.getContent() != "") {
+		if (comment.getContent() != null && (!comment.getContent().equals(""))) {
 			Boolean result = commentService.addComment(comment);
 			response.getWriter().write(JSON.toJSONString(result));
 //			return (JSON) JSON.toJSON(result);

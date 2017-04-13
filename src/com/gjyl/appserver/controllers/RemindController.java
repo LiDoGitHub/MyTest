@@ -105,10 +105,10 @@ public class RemindController {
 	 * @param response
 	 * @throws Exception
 	 */
+	@RequestMapping(value = "/deleteRemind",method = RequestMethod.POST)
 	public void deleteRemind(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		String id = request.getParameter("remindid");
 		Boolean rst=remindService.deleteRemind(id);
 		response.getWriter().write(JSON.toJSONString(rst));
 	}
-
 }

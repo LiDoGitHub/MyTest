@@ -8,10 +8,8 @@ import com.gjyl.appserver.service.HotService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
@@ -26,26 +24,23 @@ public class BannerController {
 
 	/**
 	 * 获取主页的轮播图
-	 * @param request
-	 * @return
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/getHomeBanners")
-	public @ResponseBody List<Banner> getHomeBanners(HttpServletRequest request,HttpServletResponse response) throws Exception {
-		List<Banner> banners = bannerService.getHomeBanners();
+	public void getHomeBanners(HttpServletResponse response) throws Exception {
+		response.setContentType("text/json;charset=utf-8");
+		List<Banner> list = bannerService.getHomeBanners();
 //		return (JSON) JSON.toJSON(banners);
-//		response.getWriter().write(JSON.toJSONString(banners));
-		return banners;
+		response.getWriter().write(JSON.toJSONString(list));
+//		return banners;
 	}
 
 	/**
 	 * 疾病库轮播图
-	 * @param request
-	 * @return
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/getDisBanners")
-	public void getDisBanners(HttpServletRequest request,HttpServletResponse response) throws Exception {
+	public void getDisBanners(HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
 		List<Banner> banners = bannerService.getDisBanners();
 		response.getWriter().write(JSON.toJSONString(banners));
@@ -54,12 +49,10 @@ public class BannerController {
 
 	/**
 	 * 获取所有热点文章
-	 * @param request
-	 * @return
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/getAllHots",method=RequestMethod.GET)
-	public void getHotArticles(HttpServletRequest request,HttpServletResponse response) throws Exception {
+	public void getHotArticles(HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
 		List<Hot> articles = hotService.getHotArticles();
 		response.getWriter().write(JSON.toJSONString(articles));

@@ -1,22 +1,13 @@
 package com.gjyl.appserver.controllers;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-
+import com.alibaba.fastjson.JSON;
+import com.gjyl.appserver.pojo.AppUser;
+import com.gjyl.appserver.service.UserService;
+import com.gjyl.appserver.utils.MD5Utils;
+import com.gjyl.appserver.utils.MsgCodeUtils;
+import com.gjyl.appserver.utils.RedisUtil;
+import com.gjyl.appserver.utils.SMSUtils;
+import okhttp3.*;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,13 +17,15 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import com.alibaba.fastjson.JSON;
-import com.gjyl.appserver.pojo.AppUser;
-import com.gjyl.appserver.service.UserService;
-import com.gjyl.appserver.utils.MD5Utils;
-import com.gjyl.appserver.utils.MsgCodeUtils;
-import com.gjyl.appserver.utils.RedisUtil;
-import com.gjyl.appserver.utils.SMSUtils;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
@@ -67,8 +60,8 @@ public class UserController {
 		response.addHeader("Access-Control-Allow-Method", "*");
 		response.addHeader("Access-Control-Max-Age", "10000");
 		String phone = request.getParameter("phone");
-		String password = request.getParameter("password").toString().toUpperCase();
-		if (phone!=null&&phone.toString()!=""&&password!=null&&password.toString()!="") {
+		String password = request.getParameter("password").toUpperCase();
+		if (phone!=null&&(!phone.equals(""))&&(!password.equals(""))) {
 			AppUser user = userService.GetUserByPhone(phone);
 			if (user!= null) {
 				if (MD5Utils.md5(password).equals(user.getPassword())) {
@@ -108,7 +101,7 @@ public class UserController {
 								HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
 		String phone = request.getParameter("phone");
-		if (phone != null && phone.toString() != "" && phone.length() == 11) {
+		if (phone != null && (!phone.equals("")) && phone.length() == 11) {
 			String msgCode = MsgCodeUtils.RandomCode();
 			if ("ok".equals(RedisUtil.set(phone, msgCode).toLowerCase())) {// redis本地缓存
 				if (sendMsg(msgCode, phone)) {// 短信发送成功
@@ -140,17 +133,15 @@ public class UserController {
 		OkHttpClient client = new OkHttpClient();
 		MediaType MEDIA_TYPE = MediaType
 				.parse("application/x-www-form-urlencoded;charset=utf-8");
-		StringBuffer sb = new StringBuffer();
-		sb.append("action=send&userid=" + SMSUtils.USERID);
-		sb.append("&account=" + SMSUtils.ACCOUNT);
-		sb.append("&password=" + SMSUtils.PASSWORD);
-		sb.append("&mobile=" + phone);
-		sb.append("&content=您好,您的验证码为:" + msgCode + "。10分钟内有效!【儿医天使】");
-		sb.append("&sendTime=&extno=");
-		String postBody=sb.toString();
+		String builder="action=send&userid=" + SMSUtils.USERID
+				+ "&account=" + SMSUtils.ACCOUNT
+				+ "&password=" + SMSUtils.PASSWORD
+				+ "&mobile=" + phone
+				+ "&content=您好,您的验证码为:" + msgCode + "。10分钟内有效!【儿医天使】"
+				+ "&sendTime=&extno=";
 		Request req = new Request.Builder()
 				.url("http://121.43.192.197:8888/sms.aspx")
-				.post(RequestBody.create(MEDIA_TYPE, postBody))
+				.post(RequestBody.create(MEDIA_TYPE, builder))
 				.build();
 		Response resp = client.newCall(req).execute();
 		String result = resp.body().string();
@@ -160,7 +151,7 @@ public class UserController {
 		Document document = db.parse(new InputSource(new StringReader(
 				result)));
 		NodeList returnsms = document.getChildNodes();
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, String> map = new HashMap<>();
 		for (int i = 0; i < returnsms.getLength(); i++) {
 			Node node = returnsms.item(i);
 			NodeList nodeList = node.getChildNodes();
@@ -169,11 +160,13 @@ public class UserController {
 				map.put(nodeValue.getNodeName(), nodeValue.getTextContent());
 			}
 		}
-		if ("ok".equals(map.get("message").toLowerCase())) {
+
+		return  "ok".equals(map.get("message").toLowerCase());
+		/*if ("ok".equals(map.get("message").toLowerCase())) {
 			return true;
 		}else {
 			return false;
-		}
+		}*/
 	}
 
 	/**
@@ -187,7 +180,7 @@ public class UserController {
 	public @ResponseBody Object oneKeyLogin(HttpServletRequest request) {
 		String phone = request.getParameter("phone");
 		String msgCode=request.getParameter("code");
-		if (msgCode!=null&&msgCode.toString()!=""&&msgCode.equals(RedisUtil.get(phone))) {
+		if (msgCode!=null&&(!msgCode.equals(""))&&msgCode.equals(RedisUtil.get(phone))) {
 			AppUser user = userService.GetUserByPhone(phone);
 			if (user==null) {//未注册用户,自动注册
 				user=new AppUser();
@@ -223,7 +216,7 @@ public class UserController {
 		AppUser user = new AppUser();
 		BeanUtils.populate(user, request.getParameterMap());
 		System.out.println("注册用户信息\n" + user.toString());
-		if (user.getPhone() != null && user.getPhone() != "") {
+		if (user.getPhone() != null && (!user.getPhone().equals(""))) {
 			Boolean result = userService.addUser(user);
 			response.getWriter().write(JSON.toJSONString(result));
 //			return (JSON) JSON.toJSON(result);
@@ -246,7 +239,7 @@ public class UserController {
 		String phone = request.getParameter("phone");
 		String msgCode = request.getParameter("code");
 		String pwd = request.getParameter("password");
-		if (msgCode != null && msgCode.toString() != ""
+		if (msgCode != null && (!msgCode.equals(""))
 				&& msgCode.equals(RedisUtil.get(phone))) {
 			AppUser user = userService.GetUserByPhone(phone);
 			if (user!=null) {
@@ -323,7 +316,7 @@ public class UserController {
 		String msgCode = request.getParameter("code");
 		AppUser isExist = userService.GetUserByPhone(phone);
 		if (isExist == null) {
-			if (msgCode != null && msgCode.toString() != ""
+			if (msgCode != null && (!msgCode.equals(""))
 					&& msgCode.equals(RedisUtil.get(phone))) {
 				AppUser user = new AppUser();
 				BeanUtils.populate(user, request.getParameterMap());
