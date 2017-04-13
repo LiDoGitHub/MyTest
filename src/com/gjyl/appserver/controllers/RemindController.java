@@ -1,0 +1,117 @@
+package com.gjyl.appserver.controllers;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.locale.converters.DateLocaleConverter;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.alibaba.fastjson.JSON;
+import com.gjyl.appserver.pojo.Remind;
+import com.gjyl.appserver.service.RemindService;
+
+
+@Controller
+@RequestMapping("/remind")
+public class RemindController {
+
+	@Resource
+	private RemindService remindService;
+	
+	/**
+	 * 获取我的用药提醒
+	 * @param userid:用户ID
+	 * @param startDate:开始时间
+	 * @throws Exception 回写异常
+	 */
+	@RequestMapping(value="/getRemind",method=RequestMethod.POST)
+	public void getRemind(HttpServletRequest request,HttpServletResponse response) throws Exception {
+		response.setContentType("text/json;charset=utf-8");
+		String userid = request.getParameter("userid");
+		String startDate= request.getParameter("startDate");
+		List<Remind> list= remindService.getRemind(userid,startDate);
+		response.getWriter().write(JSON.toJSONString(list));
+	}
+	
+	/**
+	 * 获取详情
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/getRemindById",method=RequestMethod.POST)
+	public void getRemindById(HttpServletRequest request,HttpServletResponse response) throws Exception {
+		response.setContentType("text/json;charset=utf-8");
+		String id = request.getParameter("remindid");
+		Remind remind= remindService.getRemindById(id);
+		response.getWriter().write(JSON.toJSONString(remind));
+	}
+	
+	/**
+	 * 添加用药提醒
+	 * @param request:一个提醒实体对象
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/addRemind", method = RequestMethod.POST)
+	public void addRemind(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		response.setContentType("text/json;charset=utf-8");
+		Remind remind = new Remind();
+		// 注册处理日期的转换器
+		DateLocaleConverter dc = new DateLocaleConverter("yyyy-MM-dd 00:00:00");
+		ConvertUtils.register(dc, Date.class);
+		BeanUtils.populate(remind, request.getParameterMap());
+		System.out.println(remind);
+		if (remind.getContent1() != "") {
+			Boolean rst = false;
+			rst = remindService.addRemind(remind);
+			System.out.println("结果................"+rst);
+			response.getWriter().write(JSON.toJSONString(rst));
+		} else {
+			response.getWriter().write(JSON.toJSONString("error"));
+		}
+	}
+	
+	/**
+	 * 编辑提醒
+	 * @param request:一个提醒实体对象
+	 * @param response
+	 * @throws Exception 
+	 */
+	@RequestMapping(value="/editRemind",method=RequestMethod.POST)
+	public void editRemind(HttpServletRequest request,HttpServletResponse response) throws Exception {
+		String remindId = request.getParameter("remindid");
+		Remind remind = new Remind();
+		try {
+			BeanUtils.populate(remind, request.getParameterMap());
+			remind.setRemindid(remindId);
+			Boolean rst = remindService.updateRemind(remind);
+			response.getWriter().write(JSON.toJSONString(rst));
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().write(JSON.toJSONString("error"));
+		}
+	}
+	
+	/**
+	 * 删除提醒
+	 * @param remindid:提醒ID
+	 * @param response
+	 * @throws Exception 
+	 */
+	public void deleteRemind(HttpServletRequest request,HttpServletResponse response) throws Exception {
+		String id = request.getParameter("remindid");
+		Boolean rst=remindService.deleteRemind(id);
+		response.getWriter().write(JSON.toJSONString(rst));
+	}
+	
+}

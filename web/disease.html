@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta name="renderer" content="webkit">
+	<title></title>
+	<link rel="stylesheet" href="assets/css/pintuer.css">
+	<link rel="stylesheet" href="assets/css/admin.css">
+	<script type="text/javascript" src="assets/js/jquery/jquery-3.1.0.min.js" ></script>
+	
+	<script src="assets/js/config.js"></script>
+	<script src="assets/js/jquery/jquery.js"></script>
+	<script src="assets/js/pintuer.js"></script>
+	<script src="assets/js/jquery.cookie.js"></script>
+</head>
+<body>
+<form method="post" action="" id="listform">
+  <div class="panel admin-panel">
+    <div class="padding border-bottom">
+      <ul class="search" style="padding-left:10px;">
+        <li> <a class="button border-main icon-plus-square-o" href="addDisease.html"> 添加内容</a> </li>
+        <li style="float: right">
+          <input type="text" placeholder="请输入搜索关键字" name="keywords" id="keywords" class="input" style="width:250px; line-height:17px;display:inline-block" />
+          <a href="javascript:void(0)" class="button border-main icon-search" id="seek" > 搜索</a></li>
+      </ul>
+    </div>
+    <table class="table table-hover text-center">
+      <tr>
+        <!-- <td width="4%">排序</td> -->
+        <td width="4%">疾病名</td>
+        <td width="16%">简介</td>
+        <td width="16%">症状</td>
+        <td width="16%">治疗</td>
+        <td width="10%">是否常见</td>
+        <td width="5%">科室</td>
+        <td width="5%">推荐医生</td>
+        <td width="10%">操作</td>
+      </tr>
+      <tbody  id="goods2">
+       
+      </tbody>
+      <tr>
+		<td colspan="8">
+			<div class="pagelist"> <span id="first">第一页</span> <span id="pre" >上一页</span> <span id="next" >下一页</span> <span id="last">最后一页</span> 第<span id="spanPageNum"></span>页/共<span id="spanTotalPage"></span>页</div>
+		</td>
+	 </tr>
+    </table>
+  </div>
+</form>
+<script type="text/javascript">
+//获取疾病列表
+$(document).ready(function() {
+	$.ajax({
+			url: serUrl+'/disease/getAllDiseases',
+			type: 'post',
+			dataType: 'json',
+			success: function(data) {
+				$.each(data, function(commentIndex, comment) {
+				var comMsg='';
+				if(comment['iscommon']==0){
+					comMsg= '<a class="button border-main edit1" val=' + comment['disid'] + ' href="javascript:void(0)"><span class="icon-edit"></span> 否</a>';
+				}else{
+					comMsg= '<a class="button border-red del1" 	val=' + comment['disid'] + ' href="javascript:void(0)"><span class="icon-trash-o"></span> 是</a>';
+				}
+					$("#goods2").html($("#goods2").html() + "<tr id='theade'>" +
+						"<td>" + comment['name']+"</td>"+
+						"<td>" + '<div class="operation"><p>' + comment['bio'] + '</p></div>' + "</td>" +
+						"<td>" + '<div class="operation"><p>' + comment['symptom'] + '</p></div>' + "</td>" +
+						"<td>" + '<div class="operation"><p>' + comment['cure'] + '</p></div>' + "</td>" +
+						"<td>" + '<div class="button-group">' +
+								comMsg+
+						'</div>' +
+						"</td>" +
+						"<td>" + comment['secname'] + "</td>" +
+						"<td>" + comment['docname'] + "</td>" +
+						"<td>" + '<div class="button-group">' +
+						'<a class="button border-main edit" val=' + comment['disid'] + ' href="javascript:void(0)"><span class="icon-edit"></span> 修改</a>' +
+						'<a class="button border-red del" 	val=' + comment['disid'] + ' href="javascript:void(0)"><span class="icon-trash-o"></span> 删除</a>' +
+						'</div>' +
+						"</td>" +
+						"</tr>");
+				});
+				var theTable = document.getElementById("goods2");
+				var totalPage = document.getElementById("spanTotalPage");   
+				var pageNum = document.getElementById("spanPageNum");   
+				   
+				var numberRowsInTable = theTable.rows.length;   
+				var pageSize = 10;   
+				var page = 1;
+				
+				//隐藏表格
+				function hide() {     
+					for(var i = pageSize; i < numberRowsInTable; i++) {       
+						theTable.rows[i].style.display = 'none';     
+					}
+					totalPage.innerHTML = pageCount();     
+					pageNum.innerHTML = '1';
+				}   
+				hide();
+				
+				 //下一页
+				$("#next").click(function(){
+					hideTable();
+					currentRow = pageSize * page;     
+					maxRow = currentRow + pageSize;     
+					if(maxRow > numberRowsInTable) maxRow = numberRowsInTable;     
+					for(var i = currentRow; i < maxRow; i++) {       
+						theTable.rows[i].style.display = '';     
+					}     
+					page++;
+					showPage();     
+					
+				})
+
+				 //上一页
+				 $("#pre").click(function(){
+					hideTable();
+					page--;
+					currentRow = pageSize * page;     
+					maxRow = currentRow - pageSize;     
+					if(currentRow > numberRowsInTable) currentRow = numberRowsInTable;     
+					for(var i = maxRow; i < currentRow; i++) {       
+						theTable.rows[i].style.display = '';     
+					}
+					showPage();   
+				 })
+				//第一页
+				$("#first").click(function(){
+					page = 1;     
+					for(var i = 0; i < pageSize; i++) {       
+						theTable.rows[i].style.display = '';     
+					}     
+					showPage();
+				})
+				 //最后一页
+				$("#last").click(function(){
+					hideTable();
+					page = pageCount();     
+					currentRow = pageSize * (page - 1);     
+					for(var i = currentRow; i < numberRowsInTable; i++) {       
+						theTable.rows[i].style.display = '';     
+					}     
+					showPage();
+				})
+				
+				function hideTable() {     
+					for(var i = 0; i < numberRowsInTable; i++) {       
+						theTable.rows[i].style.display = 'none';     
+					}   
+				}
+				function showPage() {     
+					pageNum.innerHTML = page;   
+				}
+				    //总共页数
+				function pageCount() {     
+					var count = 0;     
+					if(numberRowsInTable % pageSize != 0) count = 1;     
+					return parseInt(numberRowsInTable / pageSize) + count;   
+				}
+		//删除
+		  $("#goods2").find(".del").on("click", function() {
+			var id = $(this).attr("val");
+			del(id);
+		});
+		
+		//设为不常见疾病
+		  $("#goods2").find(".del1").on("click", function() {
+			var id = $(this).attr("val");
+			if(id!=undefined){
+				setIsCommon(id,0,$(this));
+			}
+		});
+		
+		//设为常见疾病
+	   	$("#goods2").find(".edit1").on("click", function() {
+			var id = $(this).attr("val");
+			if(id!=undefined){
+				setIsCommon(id,1,$(this));
+			}
+		});
+    //更新疾病
+   	$("#goods2").find(".edit").on("click", function() {
+	var id = $(this).attr("val");
+    $.cookie("diseaseUp",id);
+	window.location.href = "updateDisease.html";
+	});
+	  },
+	});
+	 /*搜索*/
+    $("#seek").click(function() {
+		var txt = $("#keywords").val();
+		if($.trim(txt) != "") {
+			//$("#goods3 tr:not('#theader')").hide().filter(":contains('" + txt + "')").show().css("background", "red");
+			$("#goods2").find("tr").hide();
+			$("#goods2").find("tr").filter(":contains('" + txt + "')").show().css("background", "#CCFFFF");
+		} else {
+			$("#goods2 tr:not('#theader')").css("background", "#fff").show();
+		}
+	});
+	});
+	//删除文章
+	function del(id) {
+		$.ajax({
+			url: 'DeleteDeseaseById',
+			type: 'post',
+			dataType: 'json',
+			data: {'id': id},
+			success: function() {
+				alert("删除成功");
+				window.location.reload();
+			},
+			error: function() {
+				alert("服务器错误，请稍后重试！");
+			}
+		});    
+	}
+	//设置疾病是否常见
+	function setIsCommon(id,iscommon,node){
+	var html="";
+		$.ajax({
+			url: serUrl+'disease/setIsCommon',
+			type: 'post',
+			dataType: 'json',
+			data: {'disid': id,"iscommon":iscommon},
+			success: function(data) {
+				if(data){
+					if(iscommon==0){
+						html='<a class="button border-main edit1" val=' + id + ' href="javascript:void(0)"><span class="icon-edit"></span> 否</a>';
+					}else{
+						html='<a class="button border-red del1" val=' + id + ' href="javascript:void(0)"><span class="icon-trash-o"></span> 是</a>';
+					}
+				}
+				$(node).parent().html(html);
+			},
+			error: function(data) {
+				alert("服务器错误，请稍后重试！");
+			}
+		});
+	}
+</script>
+</body>
+</html>

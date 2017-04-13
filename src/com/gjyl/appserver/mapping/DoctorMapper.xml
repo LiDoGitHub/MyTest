@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gjyl.appserver.dao.DoctorMapper" >
+  <resultMap id="BaseResultMap" type="com.gjyl.appserver.pojo.Doctor" >
+    <id column="DoctorId" property="doctorid" jdbcType="CHAR" />
+    <result column="Name" property="name" jdbcType="VARCHAR" />
+    <result column="UserName" property="username" jdbcType="VARCHAR" />
+    <result column="Password" property="password" jdbcType="VARCHAR" />
+    <result column="Icon" property="icon" jdbcType="VARCHAR" />
+    <result column="Title" property="title" jdbcType="VARCHAR" />
+    <result column="SectionId" property="sectionid" jdbcType="CHAR" />
+    <result column="Section" property="section" jdbcType="VARCHAR" />
+    <result column="Hospital" property="hospital" jdbcType="VARCHAR" />
+    <result column="ChatCost" property="chatcost" jdbcType="VARCHAR" />
+    <result column="CallCost" property="callcost" jdbcType="VARCHAR" />
+    <result column="Seniority" property="seniority" jdbcType="VARCHAR" />
+    <result column="CommentCount" property="commentcount" jdbcType="INTEGER" />
+    <result column="City" property="city" jdbcType="VARCHAR" />
+    <result column="TitleId" property="titleid" jdbcType="CHAR" />
+    <result column="isExpert" property="isexpert" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.gjyl.appserver.pojo.DoctorWithBLOBs" extends="BaseResultMap" >
+    <result column="Bio" property="bio" jdbcType="LONGVARCHAR" />
+    <result column="Adept" property="adept" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    DoctorId, Name, UserName, Password, Icon, Title, SectionId, Section, Hospital, ChatCost, 
+    CallCost, Seniority, CommentCount, City, TitleId,isExpert
+  </sql>
+  <sql id="Blob_Column_List" >
+    Bio, Adept
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from Doctor
+    where DoctorId = #{doctorid,jdbcType=CHAR}
+  </select>
+  
+  <!-- 主页随机获取三名医生 -->
+  <select id="getRandomDr" resultMap="ResultMapWithBLOBs" >
+  	select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from Doctor order by Rand() limit 3
+  </select>
+  
+  <!-- 获取医生列表 -->
+  <select id="getDrList" resultMap="ResultMapWithBLOBs" >
+  	select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from Doctor
+  </select>
+  <!-- 获取医生信息 -->
+  <select id="getDrInfo" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+  	select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from Doctor 
+    where DoctorId=#{doctorid,jdbcType=CHAR}
+  </select>
+  <!-- 联想查询 -->
+  <select id="getDocInfoByContent" resultType="java.lang.String" parameterType="java.lang.String" >
+  	select Name from Doctor 
+  	where Name like 
+  	concat ('%',#{content,jdbcType=VARCHAR},'%')
+  </select>
+  <!-- 搜索结果 -->
+  <select id="getDoctorByContent" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+  select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from Doctor 
+    where Section like
+    concat ('%',#{content,jdbcType=VARCHAR},'%')
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from Doctor
+    where DoctorId = #{doctorid,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.gjyl.appserver.pojo.DoctorWithBLOBs" >
+    insert into Doctor (DoctorId, Name, UserName, 
+      Password, Icon, Title, 
+      SectionId, Section, Hospital, 
+      ChatCost, CallCost, Seniority, 
+      CommentCount, City, TitleId, 
+      Bio, Adept)
+    values (#{doctorid,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{sectionid,jdbcType=CHAR}, #{section,jdbcType=VARCHAR}, #{hospital,jdbcType=VARCHAR}, 
+      #{chatcost,jdbcType=VARCHAR}, #{callcost,jdbcType=VARCHAR}, #{seniority,jdbcType=VARCHAR}, 
+      #{commentcount,jdbcType=INTEGER}, #{city,jdbcType=VARCHAR}, #{titleid,jdbcType=CHAR}, 
+      #{bio,jdbcType=LONGVARCHAR}, #{adept,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gjyl.appserver.pojo.DoctorWithBLOBs" >
+    insert into Doctor
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="doctorid != null" >
+        DoctorId,
+      </if>
+      <if test="name != null" >
+        Name,
+      </if>
+      <if test="username != null" >
+        UserName,
+      </if>
+      <if test="password != null" >
+        Password,
+      </if>
+      <if test="icon != null" >
+        Icon,
+      </if>
+      <if test="title != null" >
+        Title,
+      </if>
+      <if test="sectionid != null" >
+        SectionId,
+      </if>
+      <if test="section != null" >
+        Section,
+      </if>
+      <if test="hospital != null" >
+        Hospital,
+      </if>
+      <if test="chatcost != null" >
+        ChatCost,
+      </if>
+      <if test="callcost != null" >
+        CallCost,
+      </if>
+      <if test="seniority != null" >
+        Seniority,
+      </if>
+      <if test="commentcount != null" >
+        CommentCount,
+      </if>
+      <if test="city != null" >
+        City,
+      </if>
+      <if test="titleid != null" >
+        TitleId,
+      </if>
+      <if test="isexpert != null" >
+        isExpert,
+      </if>
+      <if test="bio != null" >
+        Bio,
+      </if>
+      <if test="adept != null" >
+        Adept,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="doctorid != null" >
+        #{doctorid,jdbcType=CHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="sectionid != null" >
+        #{sectionid,jdbcType=CHAR},
+      </if>
+      <if test="section != null" >
+        #{section,jdbcType=VARCHAR},
+      </if>
+      <if test="hospital != null" >
+        #{hospital,jdbcType=VARCHAR},
+      </if>
+      <if test="chatcost != null" >
+        #{chatcost,jdbcType=VARCHAR},
+      </if>
+      <if test="callcost != null" >
+        #{callcost,jdbcType=VARCHAR},
+      </if>
+      <if test="seniority != null" >
+        #{seniority,jdbcType=VARCHAR},
+      </if>
+      <if test="commentcount != null" >
+        #{commentcount,jdbcType=INTEGER},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="titleid != null" >
+        #{titleid,jdbcType=CHAR},
+      </if>
+      <if test="isexpert != null" >
+        #{isExpert,jdbcType=INTEGER},
+      </if>
+      <if test="bio != null" >
+        #{bio,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="adept != null" >
+        #{adept,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gjyl.appserver.pojo.DoctorWithBLOBs" >
+    update Doctor
+    <set >
+      <if test="name != null" >
+        Name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        UserName = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        Password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        Icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        Title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="sectionid != null" >
+        SectionId = #{sectionid,jdbcType=CHAR},
+      </if>
+      <if test="section != null" >
+        Section = #{section,jdbcType=VARCHAR},
+      </if>
+      <if test="hospital != null" >
+        Hospital = #{hospital,jdbcType=VARCHAR},
+      </if>
+      <if test="chatcost != null" >
+        ChatCost = #{chatcost,jdbcType=VARCHAR},
+      </if>
+      <if test="callcost != null" >
+        CallCost = #{callcost,jdbcType=VARCHAR},
+      </if>
+      <if test="seniority != null" >
+        Seniority = #{seniority,jdbcType=VARCHAR},
+      </if>
+      <if test="commentcount != null" >
+        CommentCount = #{commentcount,jdbcType=INTEGER},
+      </if>
+      <if test="city != null" >
+        City = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="titleid != null" >
+        TitleId = #{titleid,jdbcType=CHAR},
+      </if>
+       <if test="isexpert != null" >
+        isExpert = #{isExpert,jdbcType=INTEGER},
+      </if>
+      <if test="bio != null" >
+        Bio = #{bio,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="adept != null" >
+        Adept = #{adept,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where DoctorId = #{doctorid,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.gjyl.appserver.pojo.DoctorWithBLOBs" >
+    update Doctor
+    set Name = #{name,jdbcType=VARCHAR},
+      UserName = #{username,jdbcType=VARCHAR},
+      Password = #{password,jdbcType=VARCHAR},
+      Icon = #{icon,jdbcType=VARCHAR},
+      Title = #{title,jdbcType=VARCHAR},
+      SectionId = #{sectionid,jdbcType=CHAR},
+      Section = #{section,jdbcType=VARCHAR},
+      Hospital = #{hospital,jdbcType=VARCHAR},
+      ChatCost = #{chatcost,jdbcType=VARCHAR},
+      CallCost = #{callcost,jdbcType=VARCHAR},
+      Seniority = #{seniority,jdbcType=VARCHAR},
+      CommentCount = #{commentcount,jdbcType=INTEGER},
+      City = #{city,jdbcType=VARCHAR},
+      TitleId = #{titleid,jdbcType=CHAR},
+      Bio = #{bio,jdbcType=LONGVARCHAR},
+      Adept = #{adept,jdbcType=LONGVARCHAR}
+    where DoctorId = #{doctorid,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gjyl.appserver.pojo.Doctor" >
+    update Doctor
+    set Name = #{name,jdbcType=VARCHAR},
+      UserName = #{username,jdbcType=VARCHAR},
+      Password = #{password,jdbcType=VARCHAR},
+      Icon = #{icon,jdbcType=VARCHAR},
+      Title = #{title,jdbcType=VARCHAR},
+      SectionId = #{sectionid,jdbcType=CHAR},
+      Section = #{section,jdbcType=VARCHAR},
+      Hospital = #{hospital,jdbcType=VARCHAR},
+      ChatCost = #{chatcost,jdbcType=VARCHAR},
+      CallCost = #{callcost,jdbcType=VARCHAR},
+      Seniority = #{seniority,jdbcType=VARCHAR},
+      CommentCount = #{commentcount,jdbcType=INTEGER},
+      City = #{city,jdbcType=VARCHAR},
+      TitleId = #{titleid,jdbcType=CHAR}
+    where DoctorId = #{doctorid,jdbcType=CHAR}
+  </update>
+</mapper>
