@@ -1,8 +1,8 @@
 package com.gjyl.appserver.dao;
 
-import java.util.List;
-
 import com.gjyl.appserver.pojo.Section;
+
+import java.util.List;
 
 public interface SectionMapper {
     int deleteByPrimaryKey(String sectionid);
@@ -12,7 +12,7 @@ public interface SectionMapper {
     int insertSelective(Section record);
 
     Section selectByPrimaryKey(String sectionid);
-
+    //更新科室
     int updateByPrimaryKeySelective(Section record);
 
     int updateByPrimaryKey(Section record);
@@ -23,4 +23,7 @@ public interface SectionMapper {
 	List<String> getSectionByContent(String content);
 	//搜索结果相关
 	List<Section> getSecByContent(String content);
+
+    //科室详情,后台用
+    Section getSectionById(String secid);
 }

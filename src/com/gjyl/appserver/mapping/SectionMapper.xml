@@ -23,7 +23,14 @@
   	<include refid="Columns" />
   from Section
   </select>
-  
+
+  <!-- 科室详情 -->
+  <select id="getSectionById" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT
+    <include refid="Columns" />
+    FROM Section WHERE SectionId=#{secid,jdbcType=CHAR}
+  </select>
+
   <!-- 联想搜索 -->
   <select id="getSectionByContent" resultType="java.lang.String" parameterType="java.lang.String" >
   	select Name from Section
@@ -38,17 +45,20 @@
   	where Name like 
   	concat('%',#{content,jdbcType=VARCHAR},'%')  
   </select>
-  
+
+  <!-- 删除科室 -->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from Section
     where SectionId = #{sectionid,jdbcType=CHAR}
   </delete>
+
   <insert id="insert" parameterType="com.gjyl.appserver.pojo.Section" >
     insert into Section (SectionId, Name, Icon1, 
       Icon2, Memo)
     values (#{sectionid,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, #{icon1,jdbcType=VARCHAR}, 
       #{icon2,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR})
   </insert>
+  <!-- 新增科室 -->
   <insert id="insertSelective" parameterType="com.gjyl.appserver.pojo.Section" >
     insert into Section
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -86,6 +96,8 @@
       </if>
     </trim>
   </insert>
+
+  <!-- 更新科室 -->
   <update id="updateByPrimaryKeySelective" parameterType="com.gjyl.appserver.pojo.Section" >
     update Section
     <set >

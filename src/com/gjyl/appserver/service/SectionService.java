@@ -1,11 +1,20 @@
 package com.gjyl.appserver.service;
 
-import java.util.List;
-
 import com.gjyl.appserver.pojo.Section;
+
+import java.util.List;
 
 public interface SectionService {
 
-	public List<Section> getSecList();
+	List<Section> getSecList();
 
+	List<Section> getSections();
+
+	Section getSectionInfo(String id);
+
+    Boolean addSection(Section section);
+
+	Boolean delSection(String secid);
+
+	Boolean updateSection(Section section);
 }
