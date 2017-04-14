@@ -9,9 +9,11 @@
     <result column="EAgrees" property="eagrees" jdbcType="INTEGER" />
     <result column="ECommontCount" property="ecommontcount" jdbcType="INTEGER" />
     <result column="EMemo" property="ememo" jdbcType="VARCHAR" />
+    <result column="EPubTime" property="epubtime" jdbcType="TIMESTAMP" />
+    <result column="UserId" property="userid" jdbcType="CHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    EId, EContent, EImages, ETimes, EAgrees, ECommontCount, EMemo
+    EId, EContent, EImages, ETimes, EAgrees, ECommontCount, EMemo, EPubTime, UserId
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -19,6 +21,91 @@
     from Essay
     where EId = #{eid,jdbcType=CHAR}
   </select>
+
+  <!-- 所有内容,分页显示 -->
+  <select id="getAllEssaiesByPage" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from Essay order by EPubTime Desc
+    limit #{pageNum,jdbcType=INTEGER},30
+  </select>
+
+  <!-- 内容详情 -->
+  <select id="getEssayInfo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from Essay
+    where Eid=#{eid,jdbcType=CHAR}
+  </select>
+
+  <!-- 发布文章 -->
+  <insert id="publishEssay" parameterType="com.gjyl.appserver.pojo.Essay" >
+    insert into Essay
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="eid != null" >
+        EId,
+      </if>
+      <if test="econtent != null" >
+        EContent,
+      </if>
+      <if test="eimages != null" >
+        EImages,
+      </if>
+      <if test="etimes != null" >
+        ETimes,
+      </if>
+      <if test="eagrees != null" >
+        EAgrees,
+      </if>
+      <if test="ecommontcount != null" >
+        ECommontCount,
+      </if>
+      <if test="ememo != null" >
+        EMemo,
+      </if>
+      <if test="epubtime != null" >
+        EPubTime,
+      </if>
+      <if test="userid != null" >
+        UserId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="eid != null" >
+        #{eid,jdbcType=CHAR},
+      </if>
+      <if test="econtent != null" >
+        #{econtent,jdbcType=VARCHAR},
+      </if>
+      <if test="eimages != null" >
+        #{eimages,jdbcType=VARCHAR},
+      </if>
+      <if test="etimes != null" >
+        #{etimes,jdbcType=INTEGER},
+      </if>
+      <if test="eagrees != null" >
+        #{eagrees,jdbcType=INTEGER},
+      </if>
+      <if test="ecommontcount != null" >
+        #{ecommontcount,jdbcType=INTEGER},
+      </if>
+      <if test="ememo != null" >
+        #{ememo,jdbcType=VARCHAR},
+      </if>
+      <if test="epubtime != null" >
+        #{EPubTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!--增加访问量 -->
+  <update id="updateETImes" parameterType="java.lang.String" >
+    UPDATE Essay SET ETimes=ETimes+1 WHERE Eid=#{eid,jdbcType=CHAR}
+  </update>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from Essay
     where EId = #{eid,jdbcType=CHAR}

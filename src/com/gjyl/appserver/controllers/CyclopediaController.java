@@ -1,19 +1,16 @@
 package com.gjyl.appserver.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.alibaba.fastjson.JSON;
+import com.gjyl.appserver.pojo.Cyclopedia;
+import com.gjyl.appserver.service.CyclopediaService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.alibaba.fastjson.JSON;
-import com.gjyl.appserver.pojo.Cyclopedia;
-import com.gjyl.appserver.service.CyclopediaService;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping(value="/cyclopedia")
@@ -44,7 +41,7 @@ public class CyclopediaController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value="/getCyclByPage",method=RequestMethod.GET)
+	@RequestMapping(value="/getCyclByPage")
 	public void getCyclByPage(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		response.setContentType("text/json;charset=utf-8");
 		Integer pageNum =Integer.valueOf(request.getParameter("pageNum"));
@@ -59,9 +56,12 @@ public class CyclopediaController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value="/getCyclInfo",method=RequestMethod.GET)
+	@RequestMapping(value="/getCyclInfo")
 	public void getCyclInfo(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Method", "*");
+		response.addHeader("Access-Control-Max-Age", "10000");
 		String cyclId = request.getParameter("cyclId");
 		Cyclopedia cyclInfo = cyclopediaService.getCyclInfo(cyclId);
 		response.getWriter().write(JSON.toJSONString(cyclInfo));
@@ -73,7 +73,7 @@ public class CyclopediaController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value="/getAllCycl",method=RequestMethod.POST)
+	@RequestMapping(value="/getAllCycl")
 	public void getCyclopedia(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("application/json;charset=utf-8");
 		response.addHeader("Access-Control-Allow-Origin", "*");
@@ -90,9 +90,12 @@ public class CyclopediaController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value="/delCyclopedia",method=RequestMethod.POST)
+	@RequestMapping(value="/delCyclopedia")
 	public void delCyclopedia(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Method", "*");
+		response.addHeader("Access-Control-Max-Age", "10000");
 		String cycId = request.getParameter("cyclId");
 		Boolean result = cyclopediaService.delCyclopedia(cycId);
 		response.getWriter().write(JSON.toJSONString(result));
@@ -106,7 +109,7 @@ public class CyclopediaController {
 	 * @param pageNum:页码
 	 * @throws Exception
 	 */
-	@RequestMapping(value="/getCyclByType",method=RequestMethod.POST)
+	@RequestMapping(value="/getCyclByType")
 	public void getCyclByType(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
 		String typeId = request.getParameter("typeId");
@@ -114,7 +117,7 @@ public class CyclopediaController {
 		if (page==null||page=="") {
 			page="0";
 		}
-		List<Cyclopedia> list=new ArrayList<Cyclopedia>();
+		List<Cyclopedia> list=new ArrayList<>();
 		if (typeId.equals(HOTID)) {
 			list= cyclopediaService.getHotCycl();
 		}else {

@@ -10,16 +10,10 @@ import com.gjyl.appserver.utils.FileUploadUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -45,12 +39,15 @@ public class FileUpload {
 	@RequestMapping(value="/ImgUpload",method=RequestMethod.POST)
 	public void imgUpload(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
-		String prePath = getPrePath(request);
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Method", "*");
+		response.addHeader("Access-Control-Max-Age", "10000");
+//		String prePath = FileUploadUtils.getPrePath(request);
 		//封装数据
 		Cyclopedia cyclopedia = new Cyclopedia();
 		cyclopedia.setContent(request.getParameter("content"));
 		cyclopedia.setTitle(request.getParameter("title"));
-		List<String> list = uploadImage(request,prePath);
+		List<String> list = FileUploadUtils.uploadImage(request);
 		if (list.size()==2) {
 			cyclopedia.setIcon(list.get(0));
 			cyclopedia.setCover(list.get(1));
@@ -82,8 +79,7 @@ public class FileUpload {
 		String userid = request.getParameter("userid");
 		AppUser user = userService.GetUserById(userid);
 
-		String prePath = getPrePath(request);
-		List<String> list = uploadImage(request, prePath);
+		List<String> list = FileUploadUtils.uploadImage(request);
 		if (list.size()==1) {
 			user.setIcon(list.get(0));
 		}
@@ -95,68 +91,4 @@ public class FileUpload {
 			response.getWriter().write(JSON.toJSONString(result));
 		}
 	}
-
-	/**
-	 * 图片路径前缀
-	 * @param request
-	 * @return
-	 */
-	private String getPrePath(HttpServletRequest request) {
-		// 拼接可供网络访问的图片地址
-		String preName = request.getContextPath();
-		StringBuffer sb = new StringBuffer();
-		sb.append(request.getScheme() + "://");
-		sb.append(request.getServerName() + ":");
-		sb.append(request.getServerPort());
-		sb.append(preName + "/images");
-		System.out.println("prePath============================"+sb.toString());
-		return sb.toString();
-	}
-
-
-	//图片上传,保存到本地
-	private List<String> uploadImage(HttpServletRequest request,String prePath) {
-		List<String> filePath=new ArrayList<String>();
-		CommonsMultipartResolver resolver = new CommonsMultipartResolver(request.getServletContext());
-		if (resolver.isMultipart(request)) {
-			//将request变成多部分request  
-			MultipartHttpServletRequest multiRequest=(MultipartHttpServletRequest)request;
-			//获取multiRequest 中所有的文件名
-			Iterator<String> iter=multiRequest.getFileNames();
-			while(iter.hasNext()) {
-				//一次遍历所有文件
-				MultipartFile file=multiRequest.getFile(iter.next().toString());
-				if(!file.isEmpty()) {
-					String name = file.getOriginalFilename();
-					String filename = FileUploadUtils.getRealName(name);
-					// 得到随机名称
-					String uuidname = FileUploadUtils.getUUIDFileName(filename);
-					// 得到随机目录
-					String randomDirectory = FileUploadUtils.getRandomDirectory(filename);
-					//父目录
-					String parentPath = request.getServletContext().getRealPath("/images");
-					File rd = new File(parentPath, randomDirectory);
-					// 注意:随机目录可能不存在，需要创建.
-					if (!rd.exists()) {
-						rd.mkdirs();
-					}
-					//上传
-					try {
-						file.transferTo(new File(rd,uuidname));
-						if (file.getName().equals("imgIcon")) {
-							filePath.add(0,prePath+randomDirectory+"/"+uuidname);
-						}else if (file.getName().equals("imgCover")) {
-							filePath.add(1,prePath+randomDirectory+"/"+uuidname);
-						}else {
-							filePath.add(prePath+randomDirectory+"/"+uuidname);
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-		return filePath;
-	}
-
 }

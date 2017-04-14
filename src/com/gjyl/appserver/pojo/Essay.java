@@ -1,5 +1,6 @@
 package com.gjyl.appserver.pojo;
 
+import java.util.Date;
 import java.util.UUID;
 
 public class Essay {
@@ -16,6 +17,10 @@ public class Essay {
     private Integer ecommontcount;
 
     private String ememo;
+
+    private String userid;
+
+    private Date epubtime;
 
     public String getEid() {
         return eid;
@@ -73,11 +78,37 @@ public class Essay {
         this.ememo = ememo == null ? null : ememo.trim();
     }
 
-	public Essay() {
+    public Date getEpubtime() {
+        return epubtime;
+    }
+
+    public void setEpubtime(Date epubtime) {
+        this.epubtime = epubtime;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid == null ? null : userid.trim();
+    }
+
+    public Essay() {
 		this.eid=UUID.randomUUID().toString().replace("-", "");
 	}
-    
-    
-    
-    
+
+    public String toString() {
+        return "Essay{" +
+                "eid='" + eid + '\'' +
+                ", econtent='" + econtent + '\'' +
+                ", eimages='" + eimages + '\'' +
+                ", etimes=" + etimes +
+                ", eagrees=" + eagrees +
+                ", ecommontcount=" + ecommontcount +
+                ", ememo='" + ememo + '\'' +
+                ", userid='" + userid + '\'' +
+                ", epubtime=" + epubtime +
+                '}';
+    }
 }
