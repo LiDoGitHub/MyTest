@@ -1,20 +1,18 @@
 package com.gjyl.appserver.controllers;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.alibaba.fastjson.JSON;
+import com.gjyl.appserver.pojo.Collect;
+import com.gjyl.appserver.service.CollectService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.converters.DateConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.alibaba.fastjson.JSON;
-import com.gjyl.appserver.pojo.Collect;
-import com.gjyl.appserver.service.CollectService;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Controller
 @RequestMapping("/collect")
@@ -65,7 +63,7 @@ public class CollectController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value="isCollected")
+	@RequestMapping(value="/isCollected")
 	public void isCollected(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
 		String userId = request.getParameter("userId");

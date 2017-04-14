@@ -1,16 +1,14 @@
 package com.gjyl.appserver.serviceimpl;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
 import com.gjyl.appserver.dao.CyclopediaMapper;
 import com.gjyl.appserver.pojo.Cyclopedia;
 import com.gjyl.appserver.service.CyclopediaService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service("cyclopediaService")
 public class CyclopediaServiceImpl implements CyclopediaService {
@@ -71,5 +69,13 @@ public class CyclopediaServiceImpl implements CyclopediaService {
 	public List<Cyclopedia> getHotCycl() {
 		
 		return mapper.getHotCycl();
+	}
+
+	public Boolean updateCyclopedia(Cyclopedia cyclopedia) {
+		int rst=mapper.updateCycl(cyclopedia);
+		if (rst>0){
+			return true;
+		}
+		return false;
 	}
 }

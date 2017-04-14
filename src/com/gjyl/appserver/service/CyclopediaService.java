@@ -1,8 +1,8 @@
 package com.gjyl.appserver.service;
 
-import java.util.List;
-
 import com.gjyl.appserver.pojo.Cyclopedia;
+
+import java.util.List;
 
 public interface CyclopediaService {
 
@@ -22,4 +22,5 @@ public interface CyclopediaService {
 
 	List<Cyclopedia> getHotCycl();
 
+    Boolean updateCyclopedia(Cyclopedia cyclopedia);
 }
