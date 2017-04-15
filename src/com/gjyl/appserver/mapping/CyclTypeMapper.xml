@@ -21,7 +21,16 @@
     select 
     <include refid="Base_Column_List" />
     from CyclType order by memo asc
-    </select>
+  </select>
+
+  <!-- 分类详情 -->
+  <select id="getTypeById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from CyclType
+    where TypeId = #{typeid,jdbcType=CHAR}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from CyclType
     where TypeId = #{typeid,jdbcType=CHAR}

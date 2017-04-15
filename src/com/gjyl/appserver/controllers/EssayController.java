@@ -8,6 +8,7 @@ import com.gjyl.appserver.utils.FileUploadUtils;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +27,7 @@ public class EssayController {
 	 * @param pageNum:页码
 	 * @param response
 	 */
-	@RequestMapping(value="/getAllEssaiesByPage")
+	@RequestMapping(value="/getAllEssaiesByPage",method = RequestMethod.GET)
 	public void getAllEssaies(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
 		String pageNum = request.getParameter("pageNum");
@@ -40,7 +41,7 @@ public class EssayController {
 	 * @param response
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/getEssayInfo")
+	@RequestMapping(value = "/getEssayInfo",method = RequestMethod.GET)
 	public void getEssayInfo(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
 		String id = request.getParameter("eid");
@@ -79,6 +80,7 @@ public class EssayController {
 	 * @param response
 	 * @throws Exception
 	 */
+	@RequestMapping(value = "/deleteEssay",method = RequestMethod.GET)
 	public void deleteEssay(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
 		String id= request.getParameter("essayid");
@@ -92,7 +94,7 @@ public class EssayController {
 	 * @param response
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/agreeWithEssay")
+	@RequestMapping(value = "/agreeWithEssay",method = RequestMethod.POST)
 	public void agreeWithEssay(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
 		EssayAgree ea=new EssayAgree();
@@ -113,7 +115,7 @@ public class EssayController {
 	 * @param response
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/disAgreeWithEssay")
+	@RequestMapping(value = "/disAgreeWithEssay",method = RequestMethod.POST)
 	public void disAgreeWithEssay(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
 		String userid=request.getParameter("userid");

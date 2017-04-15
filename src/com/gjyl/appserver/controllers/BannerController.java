@@ -13,7 +13,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+
 @Controller
+
 @RequestMapping("/banner")
 public class BannerController {
 

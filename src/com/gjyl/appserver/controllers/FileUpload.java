@@ -63,9 +63,8 @@ public class FileUpload {
 //			return (JSON) JSON.toJSON(Boolean.FALSE);
 			response.getWriter().write(JSON.toJSONString(Boolean.FALSE));
 		}
-
-
 	}
+
 
 	/**
 	 * 上传头像

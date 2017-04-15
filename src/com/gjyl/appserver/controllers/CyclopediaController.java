@@ -134,25 +134,30 @@ public class CyclopediaController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/updateCyclopedia")
-	public void updateCyclopedia(HttpServletRequest request,HttpServletResponse response) throws Exception{
+	public void updateCyclopedia(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		response.addHeader("Access-Control-Allow-Method", "*");
 		response.addHeader("Access-Control-Max-Age", "10000");
-		String cyclId=request.getParameter("cyclId");
-		Cyclopedia cyclopedia=cyclopediaService.getCyclInfo(cyclId);
-		BeanUtils.populate(cyclopedia,request.getParameterMap());
-		List<String> list = FileUploadUtils.uploadImage(request);
-		if (list.size()==2) {
-			cyclopedia.setIcon(list.get(0));
-			cyclopedia.setCover(list.get(1));
-		}
-		if (cyclopedia.getIcon()!=null&&cyclopedia.getCover()!=null) {
-			//图片已保存,才存储数据
-			Boolean result = cyclopediaService.addCycl(cyclopedia);
-			response.getWriter().write(JSON.toJSONString(result));
+		String cyclId = request.getParameter("cyclopediaid");
+		System.out.println("cyclId......................" + cyclId);
+		if (cyclId != null && !cyclId.equals("")) {
+			Cyclopedia cyclopedia = cyclopediaService.getCyclInfo(cyclId);
+			BeanUtils.populate(cyclopedia, request.getParameterMap());
+			List<String> list = FileUploadUtils.uploadImage(request);
+			if (list.size() == 2) {
+				cyclopedia.setIcon(list.get(0));
+				cyclopedia.setCover(list.get(1));
+			}
+			if (cyclopedia.getIcon() != null && cyclopedia.getCover() != null) {
+				//图片已保存,才存储数据
+				Boolean result = cyclopediaService.updateCyclopedia(cyclopedia);
+				response.getWriter().write(JSON.toJSONString(result));
+			} else {
+				response.getWriter().write(JSON.toJSONString(Boolean.FALSE));
+			}
 		}else {
-			response.getWriter().write(JSON.toJSONString(Boolean.FALSE));
+			response.getWriter().write(JSON.toJSONString("error"));
 		}
 	}
 }

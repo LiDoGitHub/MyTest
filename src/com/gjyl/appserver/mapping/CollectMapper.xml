@@ -24,15 +24,19 @@
     from Collect
     where userid=#{userid,jdbcType=CHAR}
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from Collect
     where id = #{id,jdbcType=CHAR}
   </delete>
+
   <!-- 取消收藏 -->
-  <delete id="cancleCollect" parameterType="java.lang.String">
-  	delete form Collect
-  	where userid=#{userid,jdbcType=CHAR} and cyclopediaid=#{cyclopediaid,jdbcType=CHAR}
+  <delete id="cancleCollect" parameterType="java.util.Map" >
+  	delete from Collect
+    where UserId = #{userid,jdbcType=CHAR}
+    and cyclopediaid=#{cyclId,jdbcType=CHAR}
   </delete>
+
   <!-- 是否收藏 -->
   <select id="isExists" parameterType="java.util.Map" resultType="java.lang.Integer">
   select count(*) from Collect

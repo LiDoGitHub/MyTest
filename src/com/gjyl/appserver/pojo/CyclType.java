@@ -1,5 +1,7 @@
 package com.gjyl.appserver.pojo;
 
+import java.util.UUID;
+
 public class CyclType {
     private String typeid;
 
@@ -31,7 +33,11 @@ public class CyclType {
         this.memo = memo == null ? null : memo.trim();
     }
 
-	@Override
+    public CyclType() {
+        this.typeid= UUID.randomUUID().toString().replace("-","");
+    }
+
+    @Override
 	public String toString() {
 		return "CyclType [typeid=" + typeid + ", typename=" + typename
 				+ ", memo=" + memo + "]";

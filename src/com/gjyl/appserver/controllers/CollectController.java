@@ -5,13 +5,14 @@ import com.gjyl.appserver.pojo.Collect;
 import com.gjyl.appserver.service.CollectService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
-import org.apache.commons.beanutils.converters.DateConverter;
+import org.apache.commons.beanutils.locale.converters.DateLocaleConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -31,12 +32,17 @@ public class CollectController {
 	public void collectCycl(HttpServletRequest request,HttpServletResponse response) throws  Exception {
 		response.setContentType("text/json;charset=utf-8");
 		Collect collect = new Collect();
-		DateConverter dc = new DateConverter("yyyy-MM-dd hh:mm:ss");
-		ConvertUtils.register(dc, java.util.Date.class);
+		DateLocaleConverter dc = new DateLocaleConverter("yyyy-MM-dd hh:mm:ss");
+		ConvertUtils.register(dc, Date.class);
 		BeanUtils.populate(collect, request.getParameterMap());
-		Boolean result = collectService.collectCycl(collect);
-//		return (JSON) JSON.toJSON(result);
-		response.getWriter().write(JSON.toJSONString(result));
+		System.out.println("收藏..................\n" + collect);
+		if (collect.getUserid()!=null&&collect.getCyclopediaid()!=null) {
+			Boolean result = collectService.collectCycl(collect);
+			//		return (JSON) JSON.toJSON(result);
+			response.getWriter().write(JSON.toJSONString(result));
+		}else {
+			response.getWriter().write(JSON.toJSONString("error"));
+		}
 	}
 
 	/**
@@ -47,13 +53,18 @@ public class CollectController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/cancleCollect")
-	public void cancleCollect(HttpServletRequest request,HttpServletResponse response) throws Exception {
+	public void cancleCollect(HttpServletRequest request,HttpServletResponse response) throws  Exception {
 		response.setContentType("text/json;charset=utf-8");
 		String userId = request.getParameter("userId");
 		String cyclId = request.getParameter("cyclId");
-		Boolean result = collectService.cancleCollect(userId,cyclId);
-		response.getWriter().write(JSON.toJSONString(result));
+		if (userId != null && cyclId != null) {
+			Boolean result = collectService.cancleCollect(userId, cyclId);
+			response.getWriter().write(JSON.toJSONString(result));
+		} else {
+			response.getWriter().write(JSON.toJSONString("error"));
+		}
 //		return (JSON) JSON.toJSON(result);
+
 	}
 
 	/**

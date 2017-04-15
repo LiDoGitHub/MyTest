@@ -1,9 +1,9 @@
 package com.gjyl.appserver.dao;
 
+import com.gjyl.appserver.pojo.Collect;
+
 import java.util.List;
 import java.util.Map;
-
-import com.gjyl.appserver.pojo.Collect;
 
 public interface CollectMapper {
     int deleteByPrimaryKey(String id);
@@ -20,10 +20,9 @@ public interface CollectMapper {
 
 	int collectCycl(Collect collect);
 
-	int cancleCollect(String userId, String cyclId);
-
 	int isExists(Map<String, String> map);
 
 	List<Collect> getCollectByUserId(String userId);
-	
+
+    int cancleCollect(Map<String, String> map);
 }

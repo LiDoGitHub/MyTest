@@ -46,5 +46,13 @@ public class Collect {
 	public Collect() {
 		this.id=UUID.randomUUID().toString().replace("-", "");
 	}
-    
+
+    public String toString() {
+        return "Collect{" +
+                "id='" + id + '\'' +
+                ", userid='" + userid + '\'' +
+                ", cyclopediaid='" + cyclopediaid + '\'' +
+                ", ctime='" + ctime + '\'' +
+                '}';
+    }
 }
