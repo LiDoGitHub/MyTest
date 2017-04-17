@@ -7,7 +7,7 @@ public class CyclType {
 
     private String typename;
 
-    private String memo;
+    private Integer memo;
 
     public String getTypeid() {
         return typeid;
@@ -25,12 +25,12 @@ public class CyclType {
         this.typename = typename == null ? null : typename.trim();
     }
 
-    public String getMemo() {
+    public Integer getMemo() {
         return memo;
     }
 
-    public void setMemo(String memo) {
-        this.memo = memo == null ? null : memo.trim();
+    public void setMemo(Integer memo) {
+        this.memo = memo;
     }
 
     public CyclType() {

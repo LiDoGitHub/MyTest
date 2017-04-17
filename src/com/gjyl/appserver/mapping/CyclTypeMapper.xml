@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.gjyl.appserver.pojo.CyclType" >
     <id column="TypeId" property="typeid" jdbcType="CHAR" />
     <result column="TypeName" property="typename" jdbcType="VARCHAR" />
-    <result column="Memo" property="memo" jdbcType="VARCHAR" />
+    <result column="Memo" property="memo" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     TypeId, TypeName, Memo
@@ -38,7 +38,7 @@
   <insert id="insert" parameterType="com.gjyl.appserver.pojo.CyclType" >
     insert into CyclType (TypeId, TypeName, Memo
       )
-    values (#{typeid,jdbcType=CHAR}, #{typename,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}
+    values (#{typeid,jdbcType=CHAR}, #{typename,jdbcType=VARCHAR}, #{memo,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.gjyl.appserver.pojo.CyclType" >
@@ -62,7 +62,7 @@
         #{typename,jdbcType=VARCHAR},
       </if>
       <if test="memo != null" >
-        #{memo,jdbcType=VARCHAR},
+        #{memo,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -73,7 +73,7 @@
         TypeName = #{typename,jdbcType=VARCHAR},
       </if>
       <if test="memo != null" >
-        Memo = #{memo,jdbcType=VARCHAR},
+        Memo = #{memo,jdbcType=INTEGER},
       </if>
     </set>
     where TypeId = #{typeid,jdbcType=CHAR}
@@ -81,7 +81,7 @@
   <update id="updateByPrimaryKey" parameterType="com.gjyl.appserver.pojo.CyclType" >
     update CyclType
     set TypeName = #{typename,jdbcType=VARCHAR},
-      Memo = #{memo,jdbcType=VARCHAR}
+      Memo = #{memo,jdbcType=INTEGER}
     where TypeId = #{typeid,jdbcType=CHAR}
   </update>
 </mapper>

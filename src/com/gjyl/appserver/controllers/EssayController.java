@@ -6,6 +6,8 @@ import com.gjyl.appserver.pojo.EssayAgree;
 import com.gjyl.appserver.service.EssayService;
 import com.gjyl.appserver.utils.FileUploadUtils;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.locale.converters.DateLocaleConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -55,16 +58,18 @@ public class EssayController {
 	 * @param response
 	 * @throws Exception
 	 */
-	@RequestMapping(value="/publishEssay")
+	@RequestMapping(value="/publishEssay",method = RequestMethod.POST)
 	public void publishEssay(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
 		Essay essay = new Essay();
+		DateLocaleConverter dlc=new DateLocaleConverter("yyyy-MM-dd hh:mm:ss");
+		ConvertUtils.register(dlc, Date.class);
 		BeanUtils.populate(essay, request.getParameterMap());
 		List<String> paths= FileUploadUtils.uploadImage(request);
 		if (paths.size()>0) {
 			String imgPath="";
-			for (int i = 0; i < paths.size(); i++) {
-				imgPath += paths.get(i) + ";";
+			for (String path : paths) {
+				imgPath += path + ";";
 			}
 			System.out.println("ImgPath========================\n"+imgPath);
 			essay.setEimages(imgPath);
@@ -83,7 +88,7 @@ public class EssayController {
 	@RequestMapping(value = "/deleteEssay",method = RequestMethod.GET)
 	public void deleteEssay(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
-		String id= request.getParameter("essayid");
+		String id= request.getParameter("eid");
 		Boolean rst= essayService.deleteEssayById(id);
 		response.getWriter().write(JSON.toJSONString(rst));
 	}
@@ -97,15 +102,10 @@ public class EssayController {
 	@RequestMapping(value = "/agreeWithEssay",method = RequestMethod.POST)
 	public void agreeWithEssay(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
-		EssayAgree ea=new EssayAgree();
-		try {
-			BeanUtils.populate(ea,request.getParameterMap());
-			Boolean rst= essayService.agreeWithEssay(ea);
-			response.getWriter().write(JSON.toJSONString(rst));
-		} catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().write(JSON.toJSONString("error"));
-		}
+		EssayAgree ea = new EssayAgree();
+		BeanUtils.populate(ea, request.getParameterMap());
+		Boolean rst = essayService.agreeWithEssay(ea);
+		response.getWriter().write(JSON.toJSONString(rst));
 	}
 
 	/**

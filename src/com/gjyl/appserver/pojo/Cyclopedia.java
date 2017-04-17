@@ -103,6 +103,4 @@ public class Cyclopedia {
 				+ ", collectcount=" + collectcount + ", content=" + content
 				+ ", typeid=" + typeid + ", readtimes=" + readtimes + "]";
 	}
-
-	
 }

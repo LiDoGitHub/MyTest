@@ -1,0 +1,137 @@
+<link rel="stylesheet" href="assets/css/upload.css">
+<style type="text/css">
+    #imgIcon,#imgCover{
+        border: 1px solid red;
+        position:relative;
+        right:230px;
+    }
+</style>
+<div class="panel admin-panel margin-top" id="add">
+    <div class="panel-head"><strong><span class="icon-pencil-square-o"></span>新增资讯</strong></div>
+    <form  method="post"  name="form" enctype="multipart/form-data">
+        <div class="body-content">
+            <div name="form1" class="form-x">
+                <input type="hidden" name="cyclopediaid" value="" id="cyclId"/>
+                <div class="form-group">
+                    <div class="label">
+                        <label>缩略图片：</label>
+                    </div>
+                    <div class="uploader blue">
+                        <input type="text" class="filename" readonly/>
+                        <input type="button" class="button" value="浏览上传"/>
+                        <input type="file" name="imgIcon" size="50" id="imgIcon" multiple="multiple"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="label">
+                        <label>文章图片：</label>
+                    </div>
+                    <div class="uploader blue">
+                        <input type="text" class="filename" readonly/>
+                        <input type="button" class="button" value="浏览上传"/>
+                        <input type="file" name="imgCover" size="50" id="imgCover" multiple="multiple" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="label">
+                        <label>标题：</label>
+                    </div>
+                    <div class="field">
+                        <input type="text" class="input w50" id="title" name="title"/>
+                        <div class="tips"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="label">
+                        <label>描述：</label>
+                    </div>
+                    <div class="field">
+                        <textarea class="input" id="content" style=" height:90px; width:450px" name="content"></textarea>
+                        <div class="tips"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="label">
+                        <label></label>
+                    </div>
+                    <div class="field">
+                        <button class="button bg-main icon-check-square-o" id="update">提交</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+
+    //文章修改
+    var textAlter={
+            getData:function(id){
+                var fileUrl=$(".filename");
+                if(id){
+                    $.ajax({
+                        url:serUrl+'cyclopedia/getCyclInfo',
+                        type:'POST',
+                        dataType:'JSON',
+                        data:{"cyclId":id},
+                        crossDomain:true,
+                        success:function(data){
+                            fileUrl.eq(0).val(data.cover);
+                            fileUrl.eq(1).val(data.icon);
+                            $("#title").val(data.title);
+                            $("#content").val(data.content);
+                        }
+                    });
+                }
+            },
+           update:function(){
+               $("#update").click(function(){
+                   //获取值的计算----表单中的内容
+                   var formData=new FormData();
+                   formData.append("title", $("#title").val());
+                   formData.append("content", $("#content").val());
+                   formData.append("imgIcon", $("#imgIcon")[0].files[0]);
+                   formData.append("imgCover", $("#imgCover")[0].files[0]);
+                   formData.append("cyclopediaid",$("#cyclId").val());
+                   $.ajax({
+                       url:serUrl+'cyclopedia/updateCyclopedia',
+                       type:'POST',
+                       dataType:'JSON',
+                       crossDomain:true,
+                       data:formData,
+                       processData: false,
+                       contentType: false,
+                       success:function(){
+                           window.location.reload();
+                       },
+                       error:function(){
+                           alert("发生错误了.....无法进行更新操作....")
+                       }
+                   });
+                   return false;
+               });
+           }
+    };
+
+
+    (function(){
+        var input_file= $("input[type=file]");
+        var id = $.cookie("cyclopediaUp");
+        //console.log(id);
+        $("#cyclId").val(id);
+
+        input_file.change(function(){
+            $(this).parents(".uploader").find(".filename").val($(this).val());
+        });
+        input_file.each(function(){
+            if($(this).val()==""){
+                $(this).parents(".uploader").find(".filename").val("未选择文件...");
+            }
+        });
+        //将上一个页面的内容添加进来-------让用户进行修改
+        textAlter.getData(id);
+        //修改文章
+        textAlter.update();
+    })();
+</script>
+
