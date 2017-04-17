@@ -1,5 +1,6 @@
 package com.gjyl.appserver.serviceimpl;
 
+import com.gjyl.appserver.dao.CyclTypeMapper;
 import com.gjyl.appserver.dao.CyclopediaMapper;
 import com.gjyl.appserver.pojo.Cyclopedia;
 import com.gjyl.appserver.service.CyclopediaService;
@@ -15,6 +16,8 @@ public class CyclopediaServiceImpl implements CyclopediaService {
 
 	@Resource
 	private CyclopediaMapper mapper;
+	@Resource
+	private CyclTypeMapper typeMapper;
 
 	public List<Cyclopedia> getRandomArt() {
 		
@@ -29,6 +32,7 @@ public class CyclopediaServiceImpl implements CyclopediaService {
 	public Cyclopedia getCyclInfo(String cyclId) {
 		
 		Cyclopedia cyclopedia = mapper.getCyclInfo(cyclId);
+		cyclopedia.setType(typeMapper.getTypeById(cyclopedia.getTypeid()));
 		cyclopedia.setReadtimes(cyclopedia.getReadtimes()+1);
 		mapper.updateCycl(cyclopedia);
 		return cyclopedia;
@@ -59,7 +63,7 @@ public class CyclopediaServiceImpl implements CyclopediaService {
 
 	public List<Cyclopedia> getCyclByType(String typeId,String page) {
 
-		Map<String, Object>map=new HashMap<String, Object>();
+		Map<String, Object>map= new HashMap<>();
 		map.put("typeId", typeId);
 		map.put("pageNum", Integer.valueOf(page));
 		return mapper.getCyclByType(map);

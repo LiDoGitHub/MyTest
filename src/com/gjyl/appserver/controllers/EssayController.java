@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.List;
 
@@ -59,12 +61,18 @@ public class EssayController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/publishEssay",method = RequestMethod.POST)
-	public void publishEssay(HttpServletRequest request,HttpServletResponse response) throws Exception {
+	public void publishEssay(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		response.setContentType("text/json;charset=utf-8");
 		Essay essay = new Essay();
 		DateLocaleConverter dlc=new DateLocaleConverter("yyyy-MM-dd hh:mm:ss");
 		ConvertUtils.register(dlc, Date.class);
-		BeanUtils.populate(essay, request.getParameterMap());
+		try {
+			BeanUtils.populate(essay, request.getParameterMap());
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
 		List<String> paths= FileUploadUtils.uploadImage(request);
 		if (paths.size()>0) {
 			String imgPath="";

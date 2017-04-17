@@ -65,6 +65,7 @@ public class CyclopediaController {
 		response.addHeader("Access-Control-Max-Age", "10000");
 		String cyclId = request.getParameter("cyclId");
 		Cyclopedia cyclInfo = cyclopediaService.getCyclInfo(cyclId);
+		System.out.println(cyclInfo.toString());
 		response.getWriter().write(JSON.toJSONString(cyclInfo));
 //		return (JSON) JSON.toJSON(cyclInfo);
 	}
@@ -82,7 +83,7 @@ public class CyclopediaController {
 		response.addHeader("Access-Control-Max-Age", "10000");
 		response.setContentType("text/json;charset=utf-8");
 		List<Cyclopedia> list = cyclopediaService.getAllCyclopedias();
-		response.getWriter().write(JSON.toJSONString(list));
+        response.getWriter().write(JSON.toJSONString(list));
 //		return (JSON) JSON.toJSON(list);
 	}
 	/**

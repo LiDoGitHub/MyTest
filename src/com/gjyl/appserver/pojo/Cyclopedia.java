@@ -21,6 +21,16 @@ public class Cyclopedia {
     
     private Integer readtimes;
 
+    private CyclType type;
+
+    public CyclType getType() {
+        return type;
+    }
+
+    public void setType(CyclType type) {
+        this.type = type;
+    }
+
     public Integer getReadtimes() {
 		return readtimes;
 	}
@@ -97,10 +107,18 @@ public class Cyclopedia {
 		this.cyclopediaid=UUID.randomUUID().toString().replace("-", "");
 	}
 
-	public String toString() {
-		return "Cyclopedia [cyclopediaid=" + cyclopediaid + ", icon=" + icon
-				+ ", cover=" + cover + ", title=" + title + ", ctime=" + ctime
-				+ ", collectcount=" + collectcount + ", content=" + content
-				+ ", typeid=" + typeid + ", readtimes=" + readtimes + "]";
-	}
+    @Override
+    public String toString() {
+        return "Cyclopedia{" +
+                "cyclopediaid='" + cyclopediaid + '\'' +
+                ", icon='" + icon + '\'' +
+                ", cover='" + cover + '\'' +
+                ", title='" + title + '\'' +
+                ", ctime='" + ctime + '\'' +
+                ", collectcount=" + collectcount +
+                ", content='" + content + '\'' +
+                ", typeid='" + typeid + '\'' +
+                ", readtimes=" + readtimes +
+                '}';
+    }
 }
