@@ -141,7 +141,6 @@ public class CyclopediaController {
 		response.addHeader("Access-Control-Allow-Method", "*");
 		response.addHeader("Access-Control-Max-Age", "10000");
 		String cyclId = request.getParameter("cyclopediaid");
-		System.out.println("cyclId......................" + cyclId);
 		if (cyclId != null && !cyclId.equals("")) {
 			Cyclopedia cyclopedia = cyclopediaService.getCyclInfo(cyclId);
 			BeanUtils.populate(cyclopedia, request.getParameterMap());
