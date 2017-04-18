@@ -4,3 +4,6 @@ MyTest.iml
 out/*
 web/WEB-INF/classes/*
 .idea/*
+*.iml
+AppServer.properties
+AppServer.xml
