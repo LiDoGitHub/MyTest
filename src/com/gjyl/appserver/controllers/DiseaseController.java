@@ -1,19 +1,17 @@
 package com.gjyl.appserver.controllers;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.alibaba.fastjson.JSON;
+import com.gjyl.appserver.pojo.DiseaseLibraryWithBLOBs;
+import com.gjyl.appserver.service.DiseaseService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.alibaba.fastjson.JSON;
-import com.gjyl.appserver.pojo.DiseaseLibraryWithBLOBs;
-import com.gjyl.appserver.service.DiseaseService;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Controller
 @RequestMapping("/disease")
@@ -31,6 +29,9 @@ public class DiseaseController {
 	@RequestMapping(value="/getAllDiseases")
 	public void getAllDisease(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Method", "*");
+		response.addHeader("Access-Control-Max-Age", "10000");
 		List<DiseaseLibraryWithBLOBs> list= diseaseService.getAllDiseases();
 		response.getWriter().write(JSON.toJSONString(list));
 	}
@@ -56,6 +57,9 @@ public class DiseaseController {
 	 */
 	@RequestMapping(value="/setIsCommon")
 	public void setIsCommon(HttpServletRequest request,HttpServletResponse response) throws Exception {
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Method", "*");
+		response.addHeader("Access-Control-Max-Age", "10000");
 		DiseaseLibraryWithBLOBs disease=new DiseaseLibraryWithBLOBs();
 		BeanUtils.populate(disease, request.getParameterMap());
 		if (disease.getDisid()!=null&&disease.getIscommon()!=null) {
@@ -91,6 +95,9 @@ public class DiseaseController {
 	@RequestMapping("/getDiseaseById")
 	public void getDiseaseById(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Method", "*");
+		response.addHeader("Access-Control-Max-Age", "10000");
 		String disId = request.getParameter("diseaseId");
 		DiseaseLibraryWithBLOBs disease = diseaseService.getDiseaseById(disId);
 		response.getWriter().write(JSON.toJSONString(disease));

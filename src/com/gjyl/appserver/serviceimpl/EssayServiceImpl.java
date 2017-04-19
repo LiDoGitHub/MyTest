@@ -51,9 +51,8 @@ public class EssayServiceImpl implements EssayService {
 
 		List<Essay> list = dao.getAllEssaiesByPage(Integer.valueOf(pageNum));
 		for (Essay essay:list) {//是否关注
-			String essayUserid = essay.getUserid();
 			Map<String,String> map=new HashMap<>();
-			map.put("pubUserId",essayUserid);
+			map.put("pubUserId",essay.getUserid());
 			map.put("userid",userid);
 			int rst= focDao.isExist(map);
 			if (rst>0){
@@ -62,7 +61,7 @@ public class EssayServiceImpl implements EssayService {
 				essay.setIsfocus(false);
 			}
 			//用户信息
-			AppUser user = userDao.getUserById(userid);
+			AppUser user = userDao.getUserById(essay.getUserid());
 			if (user.getName()!=null&&(!user.getName().equals(""))) {
 				essay.setUser(user);
 			}
@@ -101,10 +100,23 @@ public class EssayServiceImpl implements EssayService {
 
 	//我的关注
 	public List<Essay> getFocusEssayByPage(String pageNum, String userid) {
-		Map<String,String> map=new HashMap<>();
-		map.put("userid",userid);
-		map.put("pageNum",pageNum);
-		return dao.getFocusEssayByPage(map);
+		List<String> focUsers=focDao.getMyFocus(userid);//关注的用户列表
+		if (focUsers.size()>0) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("pageNum", Integer.valueOf(pageNum));
+			map.put("list", focUsers);
+			List<Essay> list = dao.getFocusEssayByPage(map);
+			for (Essay essay : list) {
+				//用户信息
+				AppUser user = userDao.getUserById(essay.getUserid());
+				if (user.getName() != null && (!user.getName().equals(""))) {
+					essay.setUser(user);
+				}
+			}
+			return list;
+		}else {
+			return null;
+		}
 	}
 
 

@@ -5,7 +5,7 @@ import com.gjyl.appserver.pojo.Cases;
 import com.gjyl.appserver.service.CaseService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
-import org.apache.commons.beanutils.locale.converters.DateLocaleConverter;
+import org.apache.commons.beanutils.converters.DateConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,8 +52,9 @@ public class CaseController {
 	public void addCases(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
 		Cases cases = new Cases();
-		DateLocaleConverter dlc=new DateLocaleConverter("yyyy-MM-dd hh:mm:ss");
-		ConvertUtils.register(dlc, Date.class);
+		DateConverter dc=new DateConverter();
+		dc.setPattern("yyyy-MM-dd hh:mm:ss");
+		ConvertUtils.register(dc, Date.class);
 		BeanUtils.populate(cases, request.getParameterMap());
 		if (cases.getCasename()!=null) {
 			Boolean rst= caseService.addCases(cases);
@@ -72,8 +73,9 @@ public class CaseController {
 	@RequestMapping(value="/editCases",method=RequestMethod.POST)
 	public void editCases(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		Cases cases=caseService.getCaseInfo(request.getParameter("caseid"));
-		DateLocaleConverter dlc=new DateLocaleConverter("yyyy-MM-dd hh:mm:ss");
-		ConvertUtils.register(dlc,Date.class);
+		DateConverter dc=new DateConverter();
+		dc.setPattern("yyyy-MM-dd hh:mm:ss");
+		ConvertUtils.register(dc,Date.class);
 		BeanUtils.populate(cases, request.getParameterMap());
 		Boolean rst = caseService.updateCases(cases);
 		response.getWriter().write(JSON.toJSONString(rst));

@@ -1,22 +1,20 @@
 package com.gjyl.appserver.controllers;
 
-import java.util.Date;
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.alibaba.fastjson.JSON;
+import com.gjyl.appserver.pojo.Remind;
+import com.gjyl.appserver.service.RemindService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
-import org.apache.commons.beanutils.locale.converters.DateLocaleConverter;
+import org.apache.commons.beanutils.converters.DateConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.alibaba.fastjson.JSON;
-import com.gjyl.appserver.pojo.Remind;
-import com.gjyl.appserver.service.RemindService;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
+import java.util.List;
 
 
 @Controller
@@ -67,7 +65,8 @@ public class RemindController {
 		response.setContentType("text/json;charset=utf-8");
 		Remind remind = new Remind();
 		// 注册处理日期的转换器
-		DateLocaleConverter dc = new DateLocaleConverter("yyyy-MM-dd 00:00:00");
+		DateConverter dc=new DateConverter();
+		dc.setPattern("yyyy-MM-dd hh:mm:ss");
 		ConvertUtils.register(dc, Date.class);
 		BeanUtils.populate(remind, request.getParameterMap());
 		System.out.println(remind);
@@ -92,7 +91,8 @@ public class RemindController {
 		String remindId = request.getParameter("remindid");
 		Remind remind = remindService.getRemindById(remindId);
 		// 注册处理日期的转换器
-		DateLocaleConverter dc = new DateLocaleConverter("yyyy-MM-dd 00:00:00");
+		DateConverter dc=new DateConverter();
+		dc.setPattern("yyyy-MM-dd hh:mm:ss");
 		ConvertUtils.register(dc, Date.class);
 		BeanUtils.populate(remind, request.getParameterMap());
 		Boolean rst = remindService.updateRemind(remind);

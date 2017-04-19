@@ -1,9 +1,11 @@
 package com.gjyl.appserver.pojo;
 
+import java.util.UUID;
+
 public class MyFocuses {
     private String focusid;
 
-    private String userid;
+    private String fuserid;
 
     private String username;
 
@@ -21,12 +23,12 @@ public class MyFocuses {
         this.focusid = focusid == null ? null : focusid.trim();
     }
 
-    public String getUserid() {
-        return userid;
+    public String getFuserid() {
+        return fuserid;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid == null ? null : userid.trim();
+    public void setFuserid(String fuserid) {
+        this.fuserid = fuserid;
     }
 
     public String getUsername() {
@@ -59,5 +61,9 @@ public class MyFocuses {
 
     public void setMemo(String memo) {
         this.memo = memo == null ? null : memo.trim();
+    }
+
+    public MyFocuses() {
+        this.focusid= UUID.randomUUID().toString().replace("-","");
     }
 }

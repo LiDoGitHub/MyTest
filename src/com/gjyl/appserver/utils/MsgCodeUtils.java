@@ -17,7 +17,6 @@ public class MsgCodeUtils {
         for(int i = 0; i < 5; i++){
             str.append((int)(Math.random()*10));
         }
-        System.out.println("短信验证码............................"+str.toString());
 		return str.toString();
 	}
 }

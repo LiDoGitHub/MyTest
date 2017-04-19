@@ -41,6 +41,18 @@
   from User_t
   	where QQ=#{uid,jdbcType=VARCHAR} or Weibo=#{uid,jdbcType=VARCHAR} or wechat=#{uid,jdbcType=VARCHAR}
   </select>
+
+  <!-- 关注用户 -->
+  <select id="getFocusUsers" resultMap="BaseResultMap" parameterType="java.util.List">
+    SELECT
+    <include refid="Columns" />
+    from User_t WHERE  UserId IN
+    <foreach collection="list" item="item" index="index" open="(" close=")" separator="," >
+      #{item}
+    </foreach>
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from User_t
     where UserId = #{userid,jdbcType=CHAR}

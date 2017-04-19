@@ -53,7 +53,7 @@ public class FileUpload {
 			cyclopedia.setCover(list.get(1));
 		}
 		cyclopedia.setCtime(DateUtils.getNowDateStr());
-
+		cyclopedia.setTypeid(request.getParameter("typeid"));
 		if (cyclopedia.getIcon()!=null&&cyclopedia.getCover()!=null) {
 			//图片已保存,才存储数据
 			Boolean result = cyclopediaService.addCycl(cyclopedia);

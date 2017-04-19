@@ -43,11 +43,13 @@ public class EssayController {
 	 * @param response
 	 * @throws Exception
 	 */
+	@RequestMapping(value = "/getMyFocusEssay",method = RequestMethod.GET)
 	public  void getMyFocusEssay(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		response.setContentType("text/json;charset=utf-8");
 		String pageNum = request.getParameter("pageNum");
 		String userid = request.getParameter("userid");
 		List<Essay> list= essayService.getFocusEssayByPage(pageNum,userid);
+		response.getWriter().write(JSON.toJSONString(list));
 	}
 
 

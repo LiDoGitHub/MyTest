@@ -39,13 +39,18 @@
     from Essay order by EPubTime Desc
     limit #{pageNum,jdbcType=INTEGER},30
   </select>
+
   <!-- 关注内容,分页显示 -->
-  <select id="getFocusEssayByPage">
-  SELECT
-    <include refid="Base_Column_List" />
+  <select id="getFocusEssayByPage" parameterType="java.util.Map" resultMap="ResultMapWithBLOBs" >
+    SELECT
+    <include refid="Base_Column_List"/>
     ,
-    <include refid="Blob_Column_List" />
-    FROM Essay WHERE
+    <include refid="Blob_Column_List"/>
+    FROM Essay
+    WHERE UserId IN
+    <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+    #{item}
+    </foreach>
   </select>
 
   <!-- 内容详情 -->

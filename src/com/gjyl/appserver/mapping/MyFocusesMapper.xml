@@ -3,14 +3,14 @@
 <mapper namespace="com.gjyl.appserver.dao.MyFocusesMapper" >
   <resultMap id="BaseResultMap" type="com.gjyl.appserver.pojo.MyFocuses" >
     <id column="FocusId" property="focusid" jdbcType="CHAR" />
-    <result column="UserId" property="userid" jdbcType="CHAR" />
+    <result column="FUserId" property="fuserid" jdbcType="CHAR" />
     <result column="UserName" property="username" jdbcType="VARCHAR" />
     <result column="FocusedId" property="focusedid" jdbcType="CHAR" />
     <result column="FocusedName" property="focusedname" jdbcType="VARCHAR" />
     <result column="Memo" property="memo" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    FocusId, UserId, UserName, FocusedId, FocusedName, Memo
+    FocusId, FUserId, UserName, FocusedId, FocusedName, Memo
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -24,18 +24,28 @@
     SELECT
     count(*)
     FROM MyFocuses
-    WHERE UserId=#{userid,jdbcType=CHAR} AND FocusedId=#{pubUserId,jdbcType=CHAR}
+    WHERE FUserId=#{userid,jdbcType=CHAR} AND FocusedId=#{pubUserId,jdbcType=CHAR}
   </select>
 
+  <!-- 我关注的用户 -->
+  <select id="getMyFocus" resultType="java.lang.String" parameterType="java.lang.String" >
+    SELECT FocusedId
+    FROM MyFocuses WHERE FUserId=#{userid,jdbcType=CHAR}
+  </select>
+<!-- 取消关注 -->
+  <delete id="delMyFocus" parameterType="java.util.Map">
+    DELETE FROM MyFocuses
+    WHERE FUserId=#{userid,jdbcType=CHAR} AND FocusedId=#{fucUserId,jdbcType=CHAR}
+  </delete>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from MyFocuses
     where FocusId = #{focusid,jdbcType=CHAR}
   </delete>
   <insert id="insert" parameterType="com.gjyl.appserver.pojo.MyFocuses" >
-    insert into MyFocuses (FocusId, UserId, UserName, 
+    insert into MyFocuses (FocusId, FUserId, UserName,
       FocusedId, FocusedName, Memo
       )
-    values (#{focusid,jdbcType=CHAR}, #{userid,jdbcType=CHAR}, #{username,jdbcType=VARCHAR}, 
+    fvalues (#{focusid,jdbcType=CHAR}, #{fuserid,jdbcType=CHAR}, #{username,jdbcType=VARCHAR},
       #{focusedid,jdbcType=CHAR}, #{focusedname,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}
       )
   </insert>
@@ -45,8 +55,8 @@
       <if test="focusid != null" >
         FocusId,
       </if>
-      <if test="userid != null" >
-        UserId,
+      <if test="fuserid != null" >
+        FUserId,
       </if>
       <if test="username != null" >
         UserName,
@@ -65,8 +75,8 @@
       <if test="focusid != null" >
         #{focusid,jdbcType=CHAR},
       </if>
-      <if test="userid != null" >
-        #{userid,jdbcType=CHAR},
+      <if test="fuserid != null" >
+        #{fuserid,jdbcType=CHAR},
       </if>
       <if test="username != null" >
         #{username,jdbcType=VARCHAR},
@@ -85,8 +95,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.gjyl.appserver.pojo.MyFocuses" >
     update MyFocuses
     <set >
-      <if test="userid != null" >
-        UserId = #{userid,jdbcType=CHAR},
+      <if test="fuserid != null" >
+        FUserId = #{fuserid,jdbcType=CHAR},
       </if>
       <if test="username != null" >
         UserName = #{username,jdbcType=VARCHAR},
@@ -105,7 +115,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.gjyl.appserver.pojo.MyFocuses" >
     update MyFocuses
-    set UserId = #{userid,jdbcType=CHAR},
+    set FUserId = #{fuserid,jdbcType=CHAR},
       UserName = #{username,jdbcType=VARCHAR},
       FocusedId = #{focusedid,jdbcType=CHAR},
       FocusedName = #{focusedname,jdbcType=VARCHAR},

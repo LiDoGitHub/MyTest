@@ -33,5 +33,5 @@ public interface EssayMapper {
     int updateETImes(String eid);
 
     //我的关注
-    List<Essay> getFocusEssayByPage(Map<String, String> map);
+    List<Essay> getFocusEssayByPage(Map<String, Object> map);
 }

@@ -5,7 +5,7 @@ import com.gjyl.appserver.pojo.Collect;
 import com.gjyl.appserver.service.CollectService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
-import org.apache.commons.beanutils.locale.converters.DateLocaleConverter;
+import org.apache.commons.beanutils.converters.DateConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -32,7 +32,8 @@ public class CollectController {
 	public void collectCycl(HttpServletRequest request,HttpServletResponse response) throws  Exception {
 		response.setContentType("text/json;charset=utf-8");
 		Collect collect = new Collect();
-		DateLocaleConverter dc = new DateLocaleConverter("yyyy-MM-dd hh:mm:ss");
+		DateConverter dc=new DateConverter();
+		dc.setPattern("yyyy-MM-dd hh:mm:ss");
 		ConvertUtils.register(dc, Date.class);
 		BeanUtils.populate(collect, request.getParameterMap());
 		System.out.println("收藏..................\n" + collect);

@@ -104,6 +104,7 @@ public class UserController {
 		if (phone != null && (!phone.equals("")) && phone.length() == 11) {
 			String msgCode = MsgCodeUtils.RandomCode();
 			if ("ok".equals(RedisUtil.set(phone, msgCode).toLowerCase())) {// redis本地缓存
+				System.out.println(phone+"的验证码:"+msgCode);
 				if (sendMsg(msgCode, phone)) {// 短信发送成功
 					response.getWriter().write(JSON.toJSONString("success"));
 //					return (JSON) JSON.toJSON("success");

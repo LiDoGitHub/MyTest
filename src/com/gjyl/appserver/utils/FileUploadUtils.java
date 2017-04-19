@@ -115,7 +115,6 @@ public class FileUploadUtils {
 		sb.append(request.getServerName() + ":");
 		sb.append(request.getServerPort());
 		sb.append(preName + "/images");
-		System.out.println("prePath============================"+sb.toString());
 		return sb.toString();
 	}
 

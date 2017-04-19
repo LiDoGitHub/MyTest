@@ -2,6 +2,8 @@ package com.gjyl.appserver.dao;
 
 import com.gjyl.appserver.pojo.AppUser;
 
+import java.util.List;
+
 public interface AppUserMapper {
     int deleteByPrimaryKey(String userid);
 
@@ -22,4 +24,7 @@ public interface AppUserMapper {
 
 	//友盟登录
 	AppUser umLogin(String uid);
+
+    //关注用户
+    List<AppUser> getFocusUsers(List<String> myFocus);
 }
