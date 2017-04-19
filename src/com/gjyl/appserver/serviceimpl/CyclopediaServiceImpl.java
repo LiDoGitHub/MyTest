@@ -2,6 +2,7 @@ package com.gjyl.appserver.serviceimpl;
 
 import com.gjyl.appserver.dao.CyclTypeMapper;
 import com.gjyl.appserver.dao.CyclopediaMapper;
+import com.gjyl.appserver.pojo.CyclType;
 import com.gjyl.appserver.pojo.Cyclopedia;
 import com.gjyl.appserver.service.CyclopediaService;
 import org.springframework.stereotype.Service;
@@ -32,9 +33,11 @@ public class CyclopediaServiceImpl implements CyclopediaService {
 	public Cyclopedia getCyclInfo(String cyclId) {
 		
 		Cyclopedia cyclopedia = mapper.getCyclInfo(cyclId);
+		CyclType type = typeMapper.getTypeById(cyclopedia.getTypeid());
 		cyclopedia.setType(typeMapper.getTypeById(cyclopedia.getTypeid()));
 		cyclopedia.setReadtimes(cyclopedia.getReadtimes()+1);
 		mapper.updateCycl(cyclopedia);
+		cyclopedia.setType(type);
 		return cyclopedia;
 	}
 

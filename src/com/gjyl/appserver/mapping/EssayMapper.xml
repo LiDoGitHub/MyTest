@@ -4,7 +4,6 @@
   <resultMap id="BaseResultMap" type="com.gjyl.appserver.pojo.Essay" >
     <id column="EId" property="eid" jdbcType="CHAR" />
     <result column="EContent" property="econtent" jdbcType="VARCHAR" />
-    <result column="EImages" property="eimages" jdbcType="VARCHAR" />
     <result column="ETimes" property="etimes" jdbcType="INTEGER" />
     <result column="EAgrees" property="eagrees" jdbcType="INTEGER" />
     <result column="ECommontCount" property="ecommontcount" jdbcType="INTEGER" />
@@ -12,28 +11,49 @@
     <result column="EPubTime" property="epubtime" jdbcType="TIMESTAMP" />
     <result column="UserId" property="userid" jdbcType="CHAR" />
   </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.gjyl.appserver.pojo.Essay" extends="BaseResultMap" >
+    <result column="EImages" property="eimages" jdbcType="LONGVARCHAR" />
+  </resultMap>
   <sql id="Base_Column_List" >
-    EId, EContent, EImages, ETimes, EAgrees, ECommontCount, EMemo, EPubTime, UserId
+    EId, EContent, ETimes, EAgrees, ECommontCount, EMemo, EPubTime, UserId
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <sql id="Blob_Column_List" >
+    EImages
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from Essay
     where EId = #{eid,jdbcType=CHAR}
   </select>
 
   <!-- 所有内容,分页显示 -->
-  <select id="getAllEssaiesByPage" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="getAllEssaiesByPage" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from Essay order by EPubTime Desc
     limit #{pageNum,jdbcType=INTEGER},30
   </select>
+  <!-- 关注内容,分页显示 -->
+  <select id="getFocusEssayByPage">
+  SELECT
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    FROM Essay WHERE
+  </select>
 
   <!-- 内容详情 -->
-  <select id="getEssayInfo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="getEssayInfo" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from Essay
     where Eid=#{eid,jdbcType=CHAR}
   </select>
@@ -78,7 +98,7 @@
         #{econtent,jdbcType=VARCHAR},
       </if>
       <if test="eimages != null" >
-        #{eimages,jdbcType=VARCHAR},
+        #{eimages,jdbcType=LONGVARCHAR},
       </if>
       <if test="etimes != null" >
         #{etimes,jdbcType=INTEGER},
@@ -93,7 +113,7 @@
         #{ememo,jdbcType=VARCHAR},
       </if>
       <if test="epubtime != null" >
-        #{EPubTime,jdbcType=TIMESTAMP},
+        #{epubtime,jdbcType=TIMESTAMP},
       </if>
       <if test="userid != null" >
         #{userid,jdbcType=CHAR},
@@ -114,7 +134,7 @@
     insert into Essay (EId, EContent, EImages, 
       ETimes, EAgrees, ECommontCount, 
       EMemo)
-    values (#{eid,jdbcType=CHAR}, #{econtent,jdbcType=VARCHAR}, #{eimages,jdbcType=VARCHAR}, 
+    values (#{eid,jdbcType=CHAR}, #{econtent,jdbcType=VARCHAR}, #{eimages,jdbcType=LONGVARCHAR},
       #{etimes,jdbcType=INTEGER}, #{eagrees,jdbcType=INTEGER}, #{ecommontcount,jdbcType=INTEGER}, 
       #{ememo,jdbcType=VARCHAR})
   </insert>
@@ -151,7 +171,7 @@
         #{econtent,jdbcType=VARCHAR},
       </if>
       <if test="eimages != null" >
-        #{eimages,jdbcType=VARCHAR},
+        #{eimages,jdbcType=LONGVARCHAR},
       </if>
       <if test="etimes != null" >
         #{etimes,jdbcType=INTEGER},
@@ -174,7 +194,7 @@
         EContent = #{econtent,jdbcType=VARCHAR},
       </if>
       <if test="eimages != null" >
-        EImages = #{eimages,jdbcType=VARCHAR},
+        EImages = #{eimages,jdbcType=LONGVARCHAR},
       </if>
       <if test="etimes != null" >
         ETimes = #{etimes,jdbcType=INTEGER},
@@ -194,7 +214,7 @@
   <update id="updateByPrimaryKey" parameterType="com.gjyl.appserver.pojo.Essay" >
     update Essay
     set EContent = #{econtent,jdbcType=VARCHAR},
-      EImages = #{eimages,jdbcType=VARCHAR},
+      EImages = #{eimages,jdbcType=LONGVARCHAR},
       ETimes = #{etimes,jdbcType=INTEGER},
       EAgrees = #{eagrees,jdbcType=INTEGER},
       ECommontCount = #{ecommontcount,jdbcType=INTEGER},

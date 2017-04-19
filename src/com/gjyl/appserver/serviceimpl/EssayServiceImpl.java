@@ -1,7 +1,10 @@
 package com.gjyl.appserver.serviceimpl;
 
+import com.gjyl.appserver.dao.AppUserMapper;
 import com.gjyl.appserver.dao.EssayAgreeMapper;
 import com.gjyl.appserver.dao.EssayMapper;
+import com.gjyl.appserver.dao.MyFocusesMapper;
+import com.gjyl.appserver.pojo.AppUser;
 import com.gjyl.appserver.pojo.Essay;
 import com.gjyl.appserver.pojo.EssayAgree;
 import com.gjyl.appserver.service.EssayService;
@@ -19,6 +22,10 @@ public class EssayServiceImpl implements EssayService {
 	private EssayMapper dao;
 	@Resource
 	private EssayAgreeMapper eaDao;
+	@Resource
+	private MyFocusesMapper focDao;
+	@Resource
+	private AppUserMapper userDao;
 
 	public Boolean publishEssay(Essay essay) {
 
@@ -39,9 +46,29 @@ public class EssayServiceImpl implements EssayService {
 		return false;
 	}
 
-	public List<Essay> getAllEssaiesByPage(String pageNum) {
+	//分页显示所有说说
+	public List<Essay> getAllEssaiesByPage(String pageNum,String userid) {
 
-		return dao.getAllEssaiesByPage(Integer.valueOf(pageNum));
+		List<Essay> list = dao.getAllEssaiesByPage(Integer.valueOf(pageNum));
+		for (Essay essay:list) {//是否关注
+			String essayUserid = essay.getUserid();
+			Map<String,String> map=new HashMap<>();
+			map.put("pubUserId",essayUserid);
+			map.put("userid",userid);
+			int rst= focDao.isExist(map);
+			if (rst>0){
+				essay.setIsfocus(true);
+			}else {
+				essay.setIsfocus(false);
+			}
+			//用户信息
+			AppUser user = userDao.getUserById(userid);
+			if (user.getName()!=null&&(!user.getName().equals(""))) {
+				essay.setUser(user);
+			}
+		}
+
+		return list;
 	}
 
 	public Essay getEssayInfo(String id) {
@@ -70,6 +97,14 @@ public class EssayServiceImpl implements EssayService {
 			return  true;
 		}
 		return false;
+	}
+
+	//我的关注
+	public List<Essay> getFocusEssayByPage(String pageNum, String userid) {
+		Map<String,String> map=new HashMap<>();
+		map.put("userid",userid);
+		map.put("pageNum",pageNum);
+		return dao.getFocusEssayByPage(map);
 	}
 
 

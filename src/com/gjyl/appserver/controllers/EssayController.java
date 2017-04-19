@@ -6,8 +6,6 @@ import com.gjyl.appserver.pojo.EssayAgree;
 import com.gjyl.appserver.service.EssayService;
 import com.gjyl.appserver.utils.FileUploadUtils;
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.ConvertUtils;
-import org.apache.commons.beanutils.locale.converters.DateLocaleConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.List;
 
@@ -32,13 +28,28 @@ public class EssayController {
 	 * @param pageNum:页码
 	 * @param response
 	 */
-	@RequestMapping(value="/getAllEssaiesByPage",method = RequestMethod.GET)
+	@RequestMapping(value="/getAllEssaiesByPage")
 	public void getAllEssaies(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
 		String pageNum = request.getParameter("pageNum");
-		List<Essay> list = essayService.getAllEssaiesByPage(pageNum);
+		String userid = request.getParameter("userid");
+		List<Essay> list = essayService.getAllEssaiesByPage(pageNum,userid);
 		response.getWriter().write(JSON.toJSONString(list));
 	}
+
+	/**
+	 * 我的关注列表,分页显示
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	public  void getMyFocusEssay(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		response.setContentType("text/json;charset=utf-8");
+		String pageNum = request.getParameter("pageNum");
+		String userid = request.getParameter("userid");
+		List<Essay> list= essayService.getFocusEssayByPage(pageNum,userid);
+	}
+
 
 	/**
 	 * 成长树文章详情
@@ -61,28 +72,21 @@ public class EssayController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/publishEssay",method = RequestMethod.POST)
-	public void publishEssay(HttpServletRequest request,HttpServletResponse response) throws IOException {
+	public void publishEssay(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
 		Essay essay = new Essay();
-		DateLocaleConverter dlc=new DateLocaleConverter("yyyy-MM-dd hh:mm:ss");
-		ConvertUtils.register(dlc, Date.class);
-		try {
-			BeanUtils.populate(essay, request.getParameterMap());
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}
-		List<String> paths= FileUploadUtils.uploadImage(request);
+		Date now = new Date();
+		BeanUtils.populate(essay, request.getParameterMap());
+		List<String> paths = FileUploadUtils.uploadImage(request);
 		if (paths.size()>0) {
 			String imgPath="";
 			for (String path : paths) {
+				System.out.println("图片路径:\n"+path);
 				imgPath += path + ";";
 			}
-			System.out.println("ImgPath========================\n"+imgPath);
 			essay.setEimages(imgPath);
 		}
-		System.out.println(essay.toString());
+		essay.setEpubtime(now);
 		Boolean rst=essayService.publishEssay(essay);
 		response.getWriter().write(JSON.toJSONString(rst));
 	}

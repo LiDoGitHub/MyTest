@@ -1,17 +1,22 @@
 package com.gjyl.appserver.controllers;
 
 import com.alibaba.fastjson.JSON;
+import com.gjyl.appserver.pojo.CyclType;
 import com.gjyl.appserver.pojo.Cyclopedia;
+import com.gjyl.appserver.service.CyclTypeService;
 import com.gjyl.appserver.service.CyclopediaService;
 import com.gjyl.appserver.utils.FileUploadUtils;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value="/cyclopedia")
@@ -21,6 +26,8 @@ public class CyclopediaController {
 
 	@Resource
 	private CyclopediaService cyclopediaService;
+	@Resource
+	private CyclTypeService cyclTypeService;
 
 	/**
 	 * 随机获取三篇文章
@@ -57,17 +64,36 @@ public class CyclopediaController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value="/getCyclInfo")
+	@RequestMapping(value="/getCyclInfo",method = RequestMethod.POST)
 	public void getCyclInfo(HttpServletRequest request,HttpServletResponse response) throws Exception {
+		response.setContentType("text/json;charset=utf-8");
+		String cyclId = request.getParameter("cyclId");
+		Cyclopedia cyclInfo = cyclopediaService.getCyclInfo(cyclId);
+		List<CyclType> list=cyclTypeService.getAllTypes();
+		response.getWriter().write(JSON.toJSONString(cyclInfo));
+//		return (JSON) JSON.toJSON(cyclInfo);
+	}
+
+	/**
+	 * 文章详情,带文章全部类型,后台用
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/getCyclDetail",method = RequestMethod.POST)
+	public void getCyclDetail(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		response.addHeader("Access-Control-Allow-Method", "*");
 		response.addHeader("Access-Control-Max-Age", "10000");
 		String cyclId = request.getParameter("cyclId");
 		Cyclopedia cyclInfo = cyclopediaService.getCyclInfo(cyclId);
-		System.out.println(cyclInfo.toString());
-		response.getWriter().write(JSON.toJSONString(cyclInfo));
-//		return (JSON) JSON.toJSON(cyclInfo);
+		List<CyclType> types=cyclTypeService.getAllTypes();
+		Map<String,Object> map=new HashMap<>();
+		map.put("types",types);
+		map.put("cyclInfo",cyclInfo);
+		System.out.println(JSON.toJSONString(map));
+		response.getWriter().write(JSON.toJSONString(map));
 	}
 	/**
 	 * 获取所有文章,后台用

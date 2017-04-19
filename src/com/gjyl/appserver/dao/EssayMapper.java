@@ -3,6 +3,7 @@ package com.gjyl.appserver.dao;
 import com.gjyl.appserver.pojo.Essay;
 
 import java.util.List;
+import java.util.Map;
 
 public interface EssayMapper {
 
@@ -30,4 +31,7 @@ public interface EssayMapper {
 
     //更新浏览次数
     int updateETImes(String eid);
+
+    //我的关注
+    List<Essay> getFocusEssayByPage(Map<String, String> map);
 }

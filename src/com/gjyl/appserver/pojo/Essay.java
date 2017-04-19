@@ -22,6 +22,18 @@ public class Essay {
 
     private Date epubtime;
 
+    private Boolean isfocus;
+
+    private AppUser user;
+
+    public AppUser getUser() {
+        return user;
+    }
+
+    public void setUser(AppUser user) {
+        this.user = user;
+    }
+
     public String getEid() {
         return eid;
     }
@@ -92,6 +104,14 @@ public class Essay {
 
     public void setUserid(String userid) {
         this.userid = userid == null ? null : userid.trim();
+    }
+
+    public Boolean getIsfocus() {
+        return isfocus;
+    }
+
+    public void setIsfocus(Boolean isfocus) {
+        this.isfocus = isfocus;
     }
 
     public Essay() {

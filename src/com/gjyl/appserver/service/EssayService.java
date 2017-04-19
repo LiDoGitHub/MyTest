@@ -11,11 +11,13 @@ public interface EssayService {
 
     Boolean deleteEssayById(String id);
 
-    List<Essay> getAllEssaiesByPage(String pageNum);
+    List<Essay> getAllEssaiesByPage(String pageNum,String userid);
 
     Essay getEssayInfo(String id);
 
     Boolean agreeWithEssay(EssayAgree ea);
 
     Boolean disAgreeWithEssay(String userid, String eid);
+
+    List<Essay> getFocusEssayByPage(String pageNum, String userid);
 }
