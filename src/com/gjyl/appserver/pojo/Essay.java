@@ -26,6 +26,16 @@ public class Essay {
 
     private AppUser user;
 
+    private Boolean isagree;
+
+    public Boolean getIsagree() {
+        return isagree;
+    }
+
+    public void setIsagree(Boolean isagree) {
+        this.isagree = isagree;
+    }
+
     public AppUser getUser() {
         return user;
     }

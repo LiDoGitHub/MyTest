@@ -20,4 +20,7 @@ public interface EssayAgreeMapper {
 
     //取消点赞
     int disAgreeWithEssay(Map<String, String> map);
+
+    //是否点赞
+    int isExist(Map<String, String> map);
 }

@@ -51,6 +51,7 @@
     <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
     #{item}
     </foreach>
+    limit #{pageNum,jdbcType=INTEGER},30
   </select>
 
   <!-- 内容详情 -->

@@ -92,9 +92,9 @@ public class CyclopediaController {
 		Map<String,Object> map=new HashMap<>();
 		map.put("types",types);
 		map.put("cyclInfo",cyclInfo);
-		System.out.println(JSON.toJSONString(map));
 		response.getWriter().write(JSON.toJSONString(map));
 	}
+
 	/**
 	 * 获取所有文章,后台用
 	 * @param request

@@ -14,9 +14,9 @@ public class EssayComment {
 
     private Date ectime;
 
-    private String replyid;
+    private String replyid;//评论ID即回复哪一条说说的评论
 
-    private String ressayid;
+    private String ressayid;//说说ID
 
     private String ruserid;
 

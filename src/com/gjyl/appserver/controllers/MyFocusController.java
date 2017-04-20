@@ -59,7 +59,7 @@ public class MyFocusController {
      */
     @RequestMapping(value = "/delMyFocus")
     public void delMyFocus(HttpServletRequest request,HttpServletResponse response) throws Exception{
-        String focUserId = request.getParameter("focUserId");
+        String focUserId = request.getParameter("focuserid");
         String userid = request.getParameter("userid");
         Boolean rst=myfocueService.delMyFocus(focUserId,userid);
         response.getWriter().write(JSON.toJSONString(rst));

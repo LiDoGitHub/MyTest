@@ -6,6 +6,8 @@ import com.gjyl.appserver.pojo.EssayAgree;
 import com.gjyl.appserver.service.EssayService;
 import com.gjyl.appserver.utils.FileUploadUtils;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.converters.DateConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -117,6 +119,9 @@ public class EssayController {
 	public void agreeWithEssay(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
 		EssayAgree ea = new EssayAgree();
+		DateConverter dc=new DateConverter();
+		ConvertUtils.register(dc,Date.class);
+		dc.setPattern("yyyy-MM-dd HH:mm:ss");
 		BeanUtils.populate(ea, request.getParameterMap());
 		Boolean rst = essayService.agreeWithEssay(ea);
 		response.getWriter().write(JSON.toJSONString(rst));

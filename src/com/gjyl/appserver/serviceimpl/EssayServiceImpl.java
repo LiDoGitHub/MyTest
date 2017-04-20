@@ -50,15 +50,26 @@ public class EssayServiceImpl implements EssayService {
 	public List<Essay> getAllEssaiesByPage(String pageNum,String userid) {
 
 		List<Essay> list = dao.getAllEssaiesByPage(Integer.valueOf(pageNum));
-		for (Essay essay:list) {//是否关注
+		for (Essay essay:list) {
 			Map<String,String> map=new HashMap<>();
 			map.put("pubUserId",essay.getUserid());
 			map.put("userid",userid);
+			//是否关注
 			int rst= focDao.isExist(map);
 			if (rst>0){
 				essay.setIsfocus(true);
 			}else {
 				essay.setIsfocus(false);
+			}
+			//是否点赞
+			map.clear();
+			map.put("eid",essay.getEid());
+			map.put("userid",userid);
+			int result = eaDao.isExist(map);
+			if (result>0){
+				essay.setIsagree(true);
+			}else {
+				essay.setIsagree(false);
 			}
 			//用户信息
 			AppUser user = userDao.getUserById(essay.getUserid());
@@ -107,6 +118,15 @@ public class EssayServiceImpl implements EssayService {
 			map.put("list", focUsers);
 			List<Essay> list = dao.getFocusEssayByPage(map);
 			for (Essay essay : list) {
+				Map<String,String> map1=new HashMap<>();
+				map1.put("eid",essay.getEid());
+				map1.put("userid",userid);
+				int result = eaDao.isExist(map1);
+				if (result>0){
+					essay.setIsagree(true);
+				}else {
+					essay.setIsagree(false);
+				}
 				//用户信息
 				AppUser user = userDao.getUserById(essay.getUserid());
 				if (user.getName() != null && (!user.getName().equals(""))) {

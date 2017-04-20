@@ -45,9 +45,12 @@ public class MyFocusServiceImpl implements MyFocusService {
 
     public Boolean delMyFocus(String focUserId, String userid) {
         Map<String,String> map=new HashMap<>();
-        map.put("fucUserId",focUserId);
+        map.put("focUserId",focUserId);
         map.put("userid",userid);
         int rst=dao.delMyFocus(map);
+        if (rst>0){
+            return true;
+        }
         return false;
     }
 }

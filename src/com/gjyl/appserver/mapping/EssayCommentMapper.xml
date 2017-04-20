@@ -25,6 +25,15 @@
     from EssayComment
     where ECId = #{ecid,jdbcType=CHAR}
   </select>
+
+  <!-- 评论列表 -->
+  <select id="getCommentByEid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT
+    <include refid="Base_Column_List" />
+    from EssayComment
+    WHERE REssayId=#{eid,jdbcType=CHAR}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from EssayComment
     where ECId = #{ecid,jdbcType=CHAR}

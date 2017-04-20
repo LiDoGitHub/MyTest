@@ -35,7 +35,7 @@
 <!-- 取消关注 -->
   <delete id="delMyFocus" parameterType="java.util.Map">
     DELETE FROM MyFocuses
-    WHERE FUserId=#{userid,jdbcType=CHAR} AND FocusedId=#{fucUserId,jdbcType=CHAR}
+    WHERE FUserId=#{userid,jdbcType=CHAR} AND FocusedId=#{focUserId,jdbcType=CHAR}
   </delete>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from MyFocuses
