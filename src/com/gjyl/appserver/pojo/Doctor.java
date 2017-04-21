@@ -35,6 +35,16 @@ public class Doctor {
     
     private Integer isexpert;
 
+    private Integer canonline;
+
+    public Integer getCanonline() {
+        return canonline;
+    }
+
+    public void setCanonline(Integer canonline) {
+        this.canonline = canonline;
+    }
+
     public Integer getIsexpert() {
 		return isexpert;
 	}

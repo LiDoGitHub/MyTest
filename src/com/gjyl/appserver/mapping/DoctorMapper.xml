@@ -18,6 +18,7 @@
     <result column="City" property="city" jdbcType="VARCHAR" />
     <result column="TitleId" property="titleid" jdbcType="CHAR" />
     <result column="isExpert" property="isexpert" jdbcType="INTEGER" />
+    <result column="canOnline" property="canonline" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.gjyl.appserver.pojo.DoctorWithBLOBs" extends="BaseResultMap" >
     <result column="Bio" property="bio" jdbcType="LONGVARCHAR" />
@@ -25,7 +26,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     DoctorId, Name, UserName, Password, Icon, Title, SectionId, Section, Hospital, ChatCost, 
-    CallCost, Seniority, CommentCount, City, TitleId,isExpert
+    CallCost, Seniority, CommentCount, City, TitleId,isExpert,canOnline
   </sql>
   <sql id="Blob_Column_List" >
     Bio, Adept

@@ -1,10 +1,7 @@
 package com.gjyl.appserver.controllers;
 
 import com.alibaba.fastjson.JSON;
-import com.gjyl.appserver.pojo.ECDetailResult;
-import com.gjyl.appserver.pojo.Essay;
-import com.gjyl.appserver.pojo.EssayAgree;
-import com.gjyl.appserver.pojo.EssayComment;
+import com.gjyl.appserver.pojo.*;
 import com.gjyl.appserver.service.ECommentService;
 import com.gjyl.appserver.service.EssayAgreeService;
 import com.gjyl.appserver.service.EssayService;
@@ -33,7 +30,6 @@ public class EssayController {
 	@Resource
 	private ECommentService ecommentService;
 
-
 	/**
 	 * 成长树文章列表
 	 * @param pageNum:页码
@@ -45,7 +41,10 @@ public class EssayController {
 		String pageNum = request.getParameter("pageNum");
 		String userid = request.getParameter("userid");
 		List<Essay> list = essayService.getAllEssaiesByPage(pageNum,userid);
-		response.getWriter().write(JSON.toJSONString(list));
+		EssayResult result = new EssayResult();
+		result.setList(list);
+		result.setMaxPage(essayService.getMaxPage());
+		response.getWriter().write(JSON.toJSONString(result));
 	}
 
 	/**
@@ -60,7 +59,10 @@ public class EssayController {
 		String pageNum = request.getParameter("pageNum");
 		String userid = request.getParameter("userid");
 		List<Essay> list= essayService.getFocusEssayByPage(pageNum,userid);
-		response.getWriter().write(JSON.toJSONString(list));
+		EssayResult result = new EssayResult();
+		result.setList(list);
+		result.setMaxPage(essayService.getFocusMaxPage(userid));
+		response.getWriter().write(JSON.toJSONString(result));
 	}
 
 

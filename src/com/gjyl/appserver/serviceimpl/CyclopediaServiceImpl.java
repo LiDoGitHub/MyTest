@@ -20,6 +20,8 @@ public class CyclopediaServiceImpl implements CyclopediaService {
 	@Resource
 	private CyclTypeMapper typeMapper;
 
+	private static Integer pageSize=20;
+
 	public List<Cyclopedia> getRandomArt() {
 		
 		return mapper.getRandomAtr();
@@ -27,7 +29,7 @@ public class CyclopediaServiceImpl implements CyclopediaService {
 
 	public List<Cyclopedia> getCyclByPage(Integer pageNum) {
 		
-		return mapper.getCyclByPage(pageNum);
+		return mapper.getCyclByPage(pageNum*pageSize);
 	}
 
 	public Cyclopedia getCyclInfo(String cyclId) {
@@ -68,7 +70,7 @@ public class CyclopediaServiceImpl implements CyclopediaService {
 
 		Map<String, Object>map= new HashMap<>();
 		map.put("typeId", typeId);
-		map.put("pageNum", Integer.valueOf(page));
+		map.put("pageNum", Integer.valueOf(page)*pageSize);
 		return mapper.getCyclByType(map);
 	}
 

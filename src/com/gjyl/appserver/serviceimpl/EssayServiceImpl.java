@@ -24,6 +24,8 @@ public class EssayServiceImpl implements EssayService {
 	@Resource
 	private AppUserMapper userDao;
 
+	private static Integer pageSize=30;
+
 	public Boolean publishEssay(Essay essay) {
 
 		int rst=dao.publishEssay(essay);
@@ -46,7 +48,7 @@ public class EssayServiceImpl implements EssayService {
 	//分页显示所有说说
 	public List<Essay> getAllEssaiesByPage(String pageNum,String userid) {
 
-		List<Essay> list = dao.getAllEssaiesByPage(Integer.valueOf(pageNum));
+		List<Essay> list = dao.getAllEssaiesByPage(Integer.valueOf(pageNum)*pageSize);
 		for (Essay essay:list) {
 			Map<String,String> map=new HashMap<>();
 			map.put("pubUserId",essay.getUserid());
@@ -110,7 +112,7 @@ public class EssayServiceImpl implements EssayService {
 		List<String> focUsers=focDao.getMyFocus(userid);//关注的用户列表
 		if (focUsers.size()>0) {
 			Map<String, Object> map = new HashMap<>();
-			map.put("pageNum", Integer.valueOf(pageNum));
+			map.put("pageNum", Integer.valueOf(pageNum)*pageSize);
 			map.put("list", focUsers);
 			List<Essay> list = dao.getFocusEssayByPage(map);
 			for (Essay essay : list) {
@@ -134,6 +136,22 @@ public class EssayServiceImpl implements EssayService {
 		}else {
 			return null;
 		}
+	}
+
+	@Override
+	public Integer getMaxPage() {
+		int total= dao.getTotalNum();
+		return (int) Math.ceil(total / pageSize);
+	}
+
+	@Override
+	public Integer getFocusMaxPage(String userid) {
+		List<String> focUsers=focDao.getMyFocus(userid);//关注的用户列表
+		if (focUsers.size()>0) {
+			int total = dao.getFocusTotalNum(focUsers);
+			return (int)Math.ceil(total/pageSize);
+		}
+		return 0;
 	}
 
 

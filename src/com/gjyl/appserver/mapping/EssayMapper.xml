@@ -64,6 +64,19 @@
     where Eid=#{eid,jdbcType=CHAR}
   </select>
 
+  <!-- 总数 -->
+  <select id="getTotalNum" resultType="java.lang.Integer" >
+    select count(*) from Essay;
+  </select>
+
+  <!-- 关注总数 -->
+  <select id="getFocusTotalNum" resultType="java.lang.Integer" parameterType="java.util.List">
+    select COUNT(*) from Essay where UserId IN
+    <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+      #{item}
+    </foreach>
+  </select>
+
   <!-- 发布文章 -->
   <insert id="publishEssay" parameterType="com.gjyl.appserver.pojo.Essay" >
     insert into Essay

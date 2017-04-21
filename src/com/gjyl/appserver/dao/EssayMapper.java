@@ -34,4 +34,10 @@ public interface EssayMapper {
 
     //我的关注
     List<Essay> getFocusEssayByPage(Map<String, Object> map);
+
+    //总数
+    int getTotalNum();
+
+    //关注总数
+    int getFocusTotalNum(List<String> list);
 }

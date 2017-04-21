@@ -9,4 +9,5 @@ import java.util.List;
  */
 public interface EssayAgreeService {
     List<EssayAgree> getEssayAgreeList(String eid);
+
 }

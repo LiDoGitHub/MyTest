@@ -20,4 +20,8 @@ public interface EssayService {
     Boolean disAgreeWithEssay(String userid, String eid);
 
     List<Essay> getFocusEssayByPage(String pageNum, String userid);
+
+    Integer getMaxPage();
+
+    Integer getFocusMaxPage(String userid);
 }
