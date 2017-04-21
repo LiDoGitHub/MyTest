@@ -23,6 +23,15 @@
     SELECT COUNT(*) FROM EssayAgree
     WHERE EId=#{eid,jdbcType=CHAR} AND UserId=#{userid,jdbcType=CHAR}
   </select>
+
+  <!-- 点赞人 -->
+  <select id="getAgreeByEid" parameterType="java.lang.String" resultMap="BaseResultMap" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM EssayAgree
+    WHERE EId=#{eid,jdbcType=CHAR}
+  </select>
+
   <!-- 取消点赞 -->
   <delete id="disAgreeWithEssay" parameterType="java.util.Map" >
     DELETE FROM EssayAgree WHERE UserId=#{userid,jdbcType=CHAR} AND EId=#{eid,jdbcType=CHAR}

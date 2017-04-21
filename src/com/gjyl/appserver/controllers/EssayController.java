@@ -1,8 +1,12 @@
 package com.gjyl.appserver.controllers;
 
 import com.alibaba.fastjson.JSON;
+import com.gjyl.appserver.pojo.ECDetailResult;
 import com.gjyl.appserver.pojo.Essay;
 import com.gjyl.appserver.pojo.EssayAgree;
+import com.gjyl.appserver.pojo.EssayComment;
+import com.gjyl.appserver.service.ECommentService;
+import com.gjyl.appserver.service.EssayAgreeService;
 import com.gjyl.appserver.service.EssayService;
 import com.gjyl.appserver.utils.FileUploadUtils;
 import org.apache.commons.beanutils.BeanUtils;
@@ -24,6 +28,11 @@ public class EssayController {
 
 	@Resource
 	private EssayService essayService;
+	@Resource
+	private EssayAgreeService essayAgreeService;
+	@Resource
+	private ECommentService ecommentService;
+
 
 	/**
 	 * 成长树文章列表
@@ -61,12 +70,18 @@ public class EssayController {
 	 * @param response
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/getEssayInfo",method = RequestMethod.GET)
+	@RequestMapping(value = "/getEssayInfo")
 	public void getEssayInfo(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
 		String id = request.getParameter("eid");
 		Essay essay = essayService.getEssayInfo(id);
-		response.getWriter().write(JSON.toJSONString(essay));
+		List<EssayAgree> essayAgreeList = essayAgreeService.getEssayAgreeList(essay.getEid());
+		List<EssayComment> essayCommentList=ecommentService.getCommentByEid(essay.getEid());
+		ECDetailResult result = new ECDetailResult();
+		result.setEssay(essay);
+		result.setEssayAgreeList(essayAgreeList);
+		result.setEssayCommentList(essayCommentList);
+		response.getWriter().write(JSON.toJSONString(result));
 	}
 
 	/**

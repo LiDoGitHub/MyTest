@@ -1,9 +1,6 @@
 package com.gjyl.appserver.serviceimpl;
 
-import com.gjyl.appserver.dao.AppUserMapper;
-import com.gjyl.appserver.dao.EssayAgreeMapper;
-import com.gjyl.appserver.dao.EssayMapper;
-import com.gjyl.appserver.dao.MyFocusesMapper;
+import com.gjyl.appserver.dao.*;
 import com.gjyl.appserver.pojo.AppUser;
 import com.gjyl.appserver.pojo.Essay;
 import com.gjyl.appserver.pojo.EssayAgree;
@@ -71,13 +68,12 @@ public class EssayServiceImpl implements EssayService {
 			}else {
 				essay.setIsagree(false);
 			}
-			//用户信息
+			//发布说说的用户信息
 			AppUser user = userDao.getUserById(essay.getUserid());
 			if (user.getName()!=null&&(!user.getName().equals(""))) {
 				essay.setUser(user);
 			}
 		}
-
 		return list;
 	}
 
@@ -118,6 +114,7 @@ public class EssayServiceImpl implements EssayService {
 			map.put("list", focUsers);
 			List<Essay> list = dao.getFocusEssayByPage(map);
 			for (Essay essay : list) {
+				//是否点赞
 				Map<String,String> map1=new HashMap<>();
 				map1.put("eid",essay.getEid());
 				map1.put("userid",userid);
@@ -127,7 +124,7 @@ public class EssayServiceImpl implements EssayService {
 				}else {
 					essay.setIsagree(false);
 				}
-				//用户信息
+				//发布说说的用户信息
 				AppUser user = userDao.getUserById(essay.getUserid());
 				if (user.getName() != null && (!user.getName().equals(""))) {
 					essay.setUser(user);

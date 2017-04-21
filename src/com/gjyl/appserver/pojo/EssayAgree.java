@@ -14,6 +14,16 @@ public class EssayAgree {
 
     private String memo;
 
+    private AppUser user;
+
+    public AppUser getUser() {
+        return user;
+    }
+
+    public void setUser(AppUser user) {
+        this.user = user;
+    }
+
     public String getAgreeid() {
         return agreeid;
     }

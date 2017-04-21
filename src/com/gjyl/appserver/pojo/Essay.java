@@ -1,6 +1,7 @@
 package com.gjyl.appserver.pojo;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class Essay {
@@ -27,6 +28,16 @@ public class Essay {
     private AppUser user;
 
     private Boolean isagree;
+
+    private List<EssayComment> essayCommentList;
+
+    public List<EssayComment> getEssayCommentList() {
+        return essayCommentList;
+    }
+
+    public void setEssayCommentList(List<EssayComment> essayCommentList) {
+        this.essayCommentList = essayCommentList;
+    }
 
     public Boolean getIsagree() {
         return isagree;

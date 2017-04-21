@@ -12,11 +12,15 @@ public class EssayComment {
 
     private String ecusername;
 
+    private AppUser ecUser;//评论用户
+
     private Date ectime;
 
     private String replyid;//评论ID即回复哪一条说说的评论
 
     private String ressayid;//说说ID
+
+    private AppUser replyUser;//回复用户
 
     private String ruserid;
 
@@ -27,6 +31,22 @@ public class EssayComment {
     private Date rtime;
 
     private String memo;
+
+    public AppUser getEcUser() {
+        return ecUser;
+    }
+
+    public void setEcUser(AppUser ecUser) {
+        this.ecUser = ecUser;
+    }
+
+    public AppUser getReplyUser() {
+        return replyUser;
+    }
+
+    public void setReplyUser(AppUser replyUser) {
+        this.replyUser = replyUser;
+    }
 
     public String getEcid() {
         return ecid;

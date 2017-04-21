@@ -2,6 +2,7 @@ package com.gjyl.appserver.dao;
 
 import com.gjyl.appserver.pojo.EssayAgree;
 
+import java.util.List;
 import java.util.Map;
 
 public interface EssayAgreeMapper {
@@ -23,4 +24,7 @@ public interface EssayAgreeMapper {
 
     //是否点赞
     int isExist(Map<String, String> map);
+
+    //获取点赞人数
+    List<EssayAgree> getAgreeByEid(String eid);
 }
