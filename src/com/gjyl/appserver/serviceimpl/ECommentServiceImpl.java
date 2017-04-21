@@ -22,7 +22,7 @@ public class ECommentServiceImpl implements ECommentService {
     public List<EssayComment> getCommentByEid(String eid) {
         List<EssayComment> comments = dao.getCommentByEid(eid);
         for (EssayComment ec : comments) {
-            if (ec.getEcuserid() != null && (ec.getEcuserid().equals(""))) {
+            if (ec.getEcuserid() != null && (!ec.getEcuserid().equals(""))) {
                 //评论用户信息
                 AppUser ecUser = userDao.getUserById(ec.getEcuserid());
                 ec.setEcUser(ecUser);

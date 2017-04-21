@@ -65,7 +65,6 @@ public class EssayController {
 		response.getWriter().write(JSON.toJSONString(result));
 	}
 
-
 	/**
 	 * 成长树文章详情
 	 * @param eid:文章ID
