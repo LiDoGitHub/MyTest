@@ -60,20 +60,17 @@ public class RemindController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/addRemind", method = RequestMethod.POST)
-	public void addRemind(HttpServletRequest request,
-						  HttpServletResponse response) throws Exception {
+	public void addRemind(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
 		Remind remind = new Remind();
 		// 注册处理日期的转换器
 		DateConverter dc=new DateConverter();
-		dc.setPattern("yyyy-MM-dd hh:mm:ss");
+		dc.setPattern("yyyy-MM-dd HH:mm:ss");
 		ConvertUtils.register(dc, Date.class);
 		BeanUtils.populate(remind, request.getParameterMap());
 		System.out.println(remind);
-		if (remind.getContent1() != "") {
-			Boolean rst = false;
-			rst = remindService.addRemind(remind);
-			System.out.println("结果................"+rst);
+		if ((!remind.getContent1().equals(""))) {
+			Boolean rst = remindService.addRemind(remind);
 			response.getWriter().write(JSON.toJSONString(rst));
 		} else {
 			response.getWriter().write(JSON.toJSONString("error"));
@@ -92,7 +89,7 @@ public class RemindController {
 		Remind remind = remindService.getRemindById(remindId);
 		// 注册处理日期的转换器
 		DateConverter dc=new DateConverter();
-		dc.setPattern("yyyy-MM-dd hh:mm:ss");
+		dc.setPattern("yyyy-MM-dd HH:mm:ss");
 		ConvertUtils.register(dc, Date.class);
 		BeanUtils.populate(remind, request.getParameterMap());
 		Boolean rst = remindService.updateRemind(remind);

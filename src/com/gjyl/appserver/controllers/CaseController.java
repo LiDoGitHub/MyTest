@@ -53,7 +53,7 @@ public class CaseController {
 		response.setContentType("text/json;charset=utf-8");
 		Cases cases = new Cases();
 		DateConverter dc=new DateConverter();
-		dc.setPattern("yyyy-MM-dd hh:mm:ss");
+		dc.setPattern("yyyy-MM-dd HH:mm:ss");
 		ConvertUtils.register(dc, Date.class);
 		BeanUtils.populate(cases, request.getParameterMap());
 		if (cases.getCasename()!=null) {
@@ -74,7 +74,7 @@ public class CaseController {
 	public void editCases(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		Cases cases=caseService.getCaseInfo(request.getParameter("caseid"));
 		DateConverter dc=new DateConverter();
-		dc.setPattern("yyyy-MM-dd hh:mm:ss");
+		dc.setPattern("yyyy-MM-dd HH:mm:ss");
 		ConvertUtils.register(dc,Date.class);
 		BeanUtils.populate(cases, request.getParameterMap());
 		Boolean rst = caseService.updateCases(cases);

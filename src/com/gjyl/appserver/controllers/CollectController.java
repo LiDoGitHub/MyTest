@@ -33,7 +33,7 @@ public class CollectController {
 		response.setContentType("text/json;charset=utf-8");
 		Collect collect = new Collect();
 		DateConverter dc=new DateConverter();
-		dc.setPattern("yyyy-MM-dd hh:mm:ss");
+		dc.setPattern("yyyy-MM-dd HH:mm:ss");
 		ConvertUtils.register(dc, Date.class);
 		BeanUtils.populate(collect, request.getParameterMap());
 		System.out.println("收藏..................\n" + collect);

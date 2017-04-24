@@ -45,10 +45,14 @@ public class EssayCommentController {
 	public void addEComment(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		EssayComment comment = new EssayComment();
 		DateConverter dc=new DateConverter();
-		dc.setPattern("yyyy-MM-dd hh:mm:ss");
+		dc.setPattern("yyyy-MM-dd HH:mm:ss");
 		ConvertUtils.register(dc, Date.class);
 		BeanUtils.populate(comment,request.getParameterMap());
-		Boolean rst = ecommentService.addEComment(comment);
-		response.getWriter().write(JSON.toJSONString(rst));
+		if (!comment.getEctime().equals("")&&comment.getEctime()!=null) {
+			Boolean rst = ecommentService.addEComment(comment);
+			response.getWriter().write(JSON.toJSONString(rst));
+		}else {
+			response.getWriter().write("error");
+		}
 	}
 }
