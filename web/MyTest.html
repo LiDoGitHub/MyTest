@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>上传测试</title>
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/jquery/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("input[type=button]").click(function () {
+                var formData = new FormData();
+                formData.append("excelFile", $("#excelFile")[0].files[0]);
+                console.log($("#excelFile")[0].files[0]);
+                if ($("#excelFile")[0].files.length>0) {
+                    $.ajax({
+                        url: serUrl + '/section/getDataFromExcel',
+                        type: 'POST',
+                        cache: false,
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        crossDomain: true,
+                        dataType: "json",
+                        async:true,
+                        success: function (data) {
+                            alert(data);
+                        },
+                        error: function (error) {
+                            alert(error);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <form enctype="multipart/form-data">
+        <input type="file" name="excel" id="excelFile" /><br>
+        <input type="button" name="submit" value="提交" />
+    </form>
+</body>
+</html>

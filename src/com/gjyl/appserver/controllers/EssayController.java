@@ -97,7 +97,7 @@ public class EssayController {
 		Essay essay = new Essay();
 		Date now = new Date();
 		BeanUtils.populate(essay, request.getParameterMap());
-		List<String> paths = FileUploadUtils.uploadImage(request,"");
+		List<String> paths = FileUploadUtils.uploadImage(request);
 		if (paths.size()>0) {
 			String imgPath="";
 			for (String path : paths) {

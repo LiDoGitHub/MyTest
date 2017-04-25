@@ -3,6 +3,7 @@ package com.gjyl.appserver.controllers;
 import com.alibaba.fastjson.JSON;
 import com.gjyl.appserver.pojo.Section;
 import com.gjyl.appserver.service.SectionService;
+import com.gjyl.appserver.utils.ExcelUtil;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -122,5 +123,21 @@ public class SectionController {
 		BeanUtils.populate(section,request.getParameterMap());
 		Boolean rst = sectionService.updateSection(section);
 		response.getWriter().write(JSON.toJSONString(rst));
+	}
+
+	/**
+	 * 从Excel导入科室
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/getDataFromExcel")
+	public void getDataFromExcel(HttpServletRequest request,HttpServletResponse response) throws  Exception{
+		response.setContentType("text/json;charset=utf-8");
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Method", "*");
+		response.addHeader("Access-Control-Max-Age", "10000");
+		List<Object> list = ExcelUtil.getDataFromExcel(request, Section.class);
+		System.out.println(JSON.toJSONString(list));
 	}
 }

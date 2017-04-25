@@ -170,7 +170,7 @@ public class CyclopediaController {
 		if (cyclId != null && !cyclId.equals("")) {
 			Cyclopedia cyclopedia = cyclopediaService.getCyclInfo(cyclId);
 			BeanUtils.populate(cyclopedia, request.getParameterMap());
-			List<String> list = FileUploadUtils.uploadImage(request,"");
+			List<String> list = FileUploadUtils.uploadImage(request);
 			if (list.size() == 2) {
 				cyclopedia.setIcon(list.get(0));
 				cyclopedia.setCover(list.get(1));

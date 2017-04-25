@@ -13,21 +13,8 @@ import java.util.UUID;
 
 public class FileUploadUtils {
 
-	//文件上传,复用图片上传,单文件上传
-	public static String uploadFile(HttpServletRequest request){
-		List<String> list = uploadImage(request,"/files");
-		if (list.size()>0){
-			return list.get(0);
-		}else {
-			return "";
-		}
-	}
-
 	//图片上传,保存到本地
-	public static List<String> uploadImage(HttpServletRequest request,String dir) {
-		if (dir.equals("")){
-			dir="/images";
-		}
+	public static List<String> uploadImage(HttpServletRequest request) {
 		String prePath=getPrePath(request);
 		List<String> filePath=new ArrayList<>();
 		CommonsMultipartResolver resolver = new CommonsMultipartResolver(request.getServletContext());
@@ -47,7 +34,7 @@ public class FileUploadUtils {
 					// 得到随机目录
 					String randomDirectory = getRandomDirectory(filename);
 					//父目录
-					String parentPath = request.getServletContext().getRealPath(dir);
+					String parentPath = request.getServletContext().getRealPath("/images");
 					File rd = new File(parentPath, randomDirectory);
 					// 注意:随机目录可能不存在，需要创建.
 					if (!rd.exists()) {
@@ -130,8 +117,4 @@ public class FileUploadUtils {
 		sb.append(preName + "/images");
 		return sb.toString();
 	}
-
-
-
-
 }

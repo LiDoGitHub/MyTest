@@ -47,7 +47,7 @@ public class FileUpload {
 		Cyclopedia cyclopedia = new Cyclopedia();
 		cyclopedia.setContent(request.getParameter("content"));
 		cyclopedia.setTitle(request.getParameter("title"));
-		List<String> list = FileUploadUtils.uploadImage(request,"");
+		List<String> list = FileUploadUtils.uploadImage(request);
 		if (list.size()==2) {
 			cyclopedia.setIcon(list.get(0));
 			cyclopedia.setCover(list.get(1));
@@ -78,7 +78,7 @@ public class FileUpload {
 		String userid = request.getParameter("userid");
 		AppUser user = userService.GetUserById(userid);
 
-		List<String> list = FileUploadUtils.uploadImage(request,"");
+		List<String> list = FileUploadUtils.uploadImage(request);
 		if (list.size()==1) {
 			user.setIcon(list.get(0));
 		}

@@ -77,8 +77,8 @@ $(document).ready(function(){
 		formData.append("content", $("#content").val());
 		formData.append("imgIcon", $("#imgIcon")[0].files[0]);
 		formData.append("imgCover", $("#imgCover")[0].files[0]);
-		console.log($("#imgIcon")[0].files[0]);
-		console.log($("#imgCover")[0].files[0]);
+/*		console.log($("#imgIcon")[0].files[0]);
+		console.log($("#imgCover")[0].files[0]);*/
 		$.ajax({
 			url: serUrl+'/upload/ImgUpload',
     		type: 'POST',
