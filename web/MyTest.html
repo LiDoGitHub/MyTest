@@ -10,10 +10,9 @@
             $("input[type=button]").click(function () {
                 var formData = new FormData();
                 formData.append("excelFile", $("#excelFile")[0].files[0]);
-                console.log($("#excelFile")[0].files[0]);
                 if ($("#excelFile")[0].files.length>0) {
                     $.ajax({
-                        url: serUrl + '/section/getDataFromExcel',
+                        url: '/AppServer/section/getDataFromExcel',
                         type: 'POST',
                         cache: false,
                         data: formData,

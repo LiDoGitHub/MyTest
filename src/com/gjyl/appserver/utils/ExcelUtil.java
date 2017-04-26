@@ -16,17 +16,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by LiD on 2017/4/24.
  */
 public class ExcelUtil {
 
-    public static List<Object> getDataFromExcel(HttpServletRequest request, Class<?> clazz) throws IOException {
+    public static List<Object> getDataFromExcel(HttpServletRequest request, Class<?> clazz) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+
+        List<Object> objects=new ArrayList<>();
 
         //反射处理类
         int propertyNum = getPropertyNum(clazz);
@@ -124,26 +123,27 @@ public class ExcelUtil {
             //获取所有数据
             for (int i=1;i<totalRowNum;i++){//循环行
                 Row row=sheet.getRow(i);
-                for (int j=0;j<row.getPhysicalNumberOfCells();j++){//循环列
-                    for (int k=0;k<fields.length;k++){//循环属性
-                        Field f=fields[i];
-                        if (getECellType(row.getCell(j)).toString().equals(f.getName())){
-                            //取出相应单元格的数据,对属性赋值
-                            Integer integer = headMap.get(f.getName());
-                            Cell cell = row.getCell(integer);
-                            Object cellType = getECellType(cell);
-                            System.out.println(cellType+"..............");
+                Object obj = clazz.newInstance();
+                for (int j = 0; j < fields.length; j++) {
+                     Field f=fields[j];
+                    f.setAccessible(true);//设置属性可访问
+                    Integer position = headMap.get(f.getName());
+                    Cell cell;
+                    if (position!=null) {
+                        cell = row.getCell(position);
+                        if (cell!=null) {
+                            f.set(obj,getECellType(cell).toString());
                         }
-
                     }
                 }
-
+                objects.add(obj);
             }
+        }
 
+        if (objects.size()>0){
+            return objects;
         }
         return null;
-
-
     }
 
     /**
@@ -156,10 +156,6 @@ public class ExcelUtil {
         return fields.length;
     }
 
-//    private
-
-
-
     /**
      *
      * @param cell 一个单元格的对象
@@ -168,30 +164,27 @@ public class ExcelUtil {
     private static Object getECellType(Cell cell){
 
         Object object = null;
-        switch(cell.getCellType())
+        switch(cell.getCellTypeEnum())
         {
-            case Cell.CELL_TYPE_STRING :
+            case STRING :
             {
                 object=cell.getStringCellValue();
                 break;
             }
-            case Cell.CELL_TYPE_NUMERIC :
+            case NUMERIC:
             {
-                cell.setCellType(Cell.CELL_TYPE_NUMERIC);
+                object=(int)cell.getNumericCellValue();
+                break;
+            }
+
+            case FORMULA :
+            {
                 object=cell.getNumericCellValue();
                 break;
             }
 
-            case Cell.CELL_TYPE_FORMULA :
+            case BLANK :
             {
-                cell.setCellType(Cell.CELL_TYPE_NUMERIC);
-                object=cell.getNumericCellValue();
-                break;
-            }
-
-            case Cell.CELL_TYPE_BLANK :
-            {
-                cell.setCellType(Cell.CELL_TYPE_BLANK);
                 object=cell.getStringCellValue();
                 break;
             }

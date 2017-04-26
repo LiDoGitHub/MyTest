@@ -1,13 +1,13 @@
 package com.gjyl.appserver.serviceimpl;
 
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
 import com.gjyl.appserver.dao.AppUserMapper;
 import com.gjyl.appserver.pojo.AppUser;
 import com.gjyl.appserver.service.UserService;
 import com.gjyl.appserver.utils.MD5Utils;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -47,5 +47,10 @@ public class UserServiceImpl implements UserService {
 
 	public AppUser umLogin(String uid) {
 		return mapper.umLogin(uid);
+	}
+
+	public List<AppUser> getAllUsers() {
+
+		return mapper.getAllUsers();
 	}
 }

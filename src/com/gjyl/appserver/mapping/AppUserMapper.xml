@@ -18,6 +18,14 @@
   <sql id="Columns" >
     UserId, Phone, Password, Name, Gender, Age, Icon, QQ, Weibo, Wechat, Email, Role
   </sql>
+
+  <!-- 全部用户 -->
+  <select id="getAllUsers" resultMap="BaseResultMap" >
+    select
+    <include refid="Columns" />
+    from User_t
+  </select>
+
   <!-- 通过ID获取用户信息 -->
   <select id="getUserById" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 

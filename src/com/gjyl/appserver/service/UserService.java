@@ -2,16 +2,20 @@ package com.gjyl.appserver.service;
 
 import com.gjyl.appserver.pojo.AppUser;
 
+import java.util.List;
+
 
 public interface UserService {
 	
-	public AppUser GetUserById(String id);
+	AppUser GetUserById(String id);
 	
-	public AppUser GetUserByPhone(String phone);
+	AppUser GetUserByPhone(String phone);
 
-	public Boolean addUser(AppUser user);
+	Boolean addUser(AppUser user);
 
-	public Boolean updateUser(AppUser user);
+	Boolean updateUser(AppUser user);
 
-	public AppUser umLogin(String uid);
+	AppUser umLogin(String uid);
+
+    List<AppUser> getAllUsers();
 }

@@ -35,6 +35,7 @@
     values (#{id,jdbcType=CHAR}, #{userid,jdbcType=CHAR}, #{voutype,jdbcType=INTEGER}, 
       #{endtime,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
   </insert>
+
   <!-- 新增分享所得的代金券 -->
   <insert id="addShareVoucher" parameterType="com.gjyl.appserver.pojo.UserVoucher">
   insert into uservoucher

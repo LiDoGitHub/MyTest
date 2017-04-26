@@ -138,6 +138,11 @@ public class SectionController {
 		response.addHeader("Access-Control-Allow-Method", "*");
 		response.addHeader("Access-Control-Max-Age", "10000");
 		List<Object> list = ExcelUtil.getDataFromExcel(request, Section.class);
-		System.out.println(JSON.toJSONString(list));
+		if (list!=null&&list.size()>0) {
+			Boolean rst = sectionService.addSecFromExcel(list);
+			response.getWriter().write(JSON.toJSONString(rst));
+		}else {
+			response.getWriter().write(JSON.toJSONString("error"));
+		}
 	}
 }

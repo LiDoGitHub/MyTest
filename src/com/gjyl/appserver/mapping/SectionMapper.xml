@@ -97,6 +97,49 @@
     </trim>
   </insert>
 
+  <!-- 批量插入 -->
+  <update id="executeBatch" parameterType="java.util.List" >
+    <foreach collection="list" separator=";" close="" open="" item="item" index="index" >
+      insert into Section
+      <trim prefix="(" suffix=")" suffixOverrides="," >
+        <if test="item.sectionid != null" >
+          SectionId,
+        </if>
+        <if test="item.name != null" >
+          Name,
+        </if>
+        <if test="item.icon1 != null" >
+          Icon1,
+        </if>
+        <if test="item.icon2 != null" >
+          Icon2,
+        </if>
+        <if test="item.memo != null" >
+          Memo,
+        </if>
+      </trim>
+      <trim prefix="values (" suffix=")" suffixOverrides="," >
+        <if test="item.sectionid != null" >
+          #{item.sectionid,jdbcType=CHAR},
+        </if>
+        <if test="item.name != null" >
+          #{item.name,jdbcType=VARCHAR},
+        </if>
+        <if test="item.icon1 != null" >
+          #{item.icon1,jdbcType=VARCHAR},
+        </if>
+        <if test="item.icon2 != null" >
+          #{item.icon2,jdbcType=VARCHAR},
+        </if>
+        <if test="item.memo != null" >
+          #{item.memo,jdbcType=VARCHAR},
+        </if>
+      </trim>
+    </foreach>
+
+  </update>
+
+
   <!-- 更新科室 -->
   <update id="updateByPrimaryKeySelective" parameterType="com.gjyl.appserver.pojo.Section" >
     update Section

@@ -25,6 +25,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -214,16 +215,22 @@ public class UserController {
 	@RequestMapping(value="/registUser")
 	public void registUser(HttpServletRequest request,HttpServletResponse response) throws  Exception{
 		response.setContentType("text/json;charset=utf-8");
-		AppUser user = new AppUser();
-		BeanUtils.populate(user, request.getParameterMap());
-		System.out.println("注册用户信息\n" + user.toString());
-		if (user.getPhone() != null && (!user.getPhone().equals(""))) {
-			Boolean result = userService.addUser(user);
-			response.getWriter().write(JSON.toJSONString(result));
+		String phone = request.getParameter("phone");
+		String msgCode=request.getParameter("code");
+		if (msgCode!=null&&(!msgCode.equals(""))&&msgCode.equals(RedisUtil.get(phone))) {//验证验证码
+			AppUser user = new AppUser();
+			BeanUtils.populate(user, request.getParameterMap());
+			System.out.println("注册用户信息\n" + user.toString());
+			if (user.getPhone() != null && (!user.getPhone().equals(""))) {
+				Boolean result = userService.addUser(user);
+				response.getWriter().write(JSON.toJSONString(result));
 //			return (JSON) JSON.toJSON(result);
-		} else {
-			response.getWriter().write(JSON.toJSONString("phoneError"));
+			} else {
+				response.getWriter().write(JSON.toJSONString("phoneError"));
 //			return (JSON) JSON.toJSON("phoneError");
+			}
+		}else {
+			response.getWriter().write(JSON.toJSONString("codeError"));
 		}
 	}
 
@@ -339,5 +346,21 @@ public class UserController {
 			response.getWriter().write(JSON.toJSONString("used"));
 //			return (JSON) JSON.toJSON("used");
 		}
+	}
+
+	/**
+	 * 所有用户列表,后台用
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/getUserList")
+	public void getUserList(HttpServletRequest request,HttpServletResponse response) throws  Exception{
+		response.setContentType("text/json;charset=utf-8");
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Method", "*");
+		response.addHeader("Access-Control-Max-Age", "10000");
+		List<AppUser> list= userService.getAllUsers();
+		response.getWriter().write(JSON.toJSONString(list));
 	}
 }

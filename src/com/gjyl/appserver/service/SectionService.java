@@ -17,4 +17,6 @@ public interface SectionService {
 	Boolean delSection(String secid);
 
 	Boolean updateSection(Section section);
+
+    Boolean addSecFromExcel(List<Object> list);
 }

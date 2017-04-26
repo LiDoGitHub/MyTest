@@ -27,4 +27,7 @@ public interface AppUserMapper {
 
     //关注用户
     List<AppUser> getFocusUsers(List<String> myFocus);
+
+    //全部用户
+    List<AppUser> getAllUsers();
 }

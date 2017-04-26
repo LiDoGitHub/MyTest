@@ -60,5 +60,14 @@ public class SectionServiceImpl implements SectionService {
 		return false;
 	}
 
+	public Boolean addSecFromExcel(List<Object> list) {
+
+		int rst=mapper.executeBatch(list);
+		if (rst>0){
+			return true;
+		}
+		return false;
+	}
+
 
 }

@@ -26,4 +26,7 @@ public interface SectionMapper {
 
     //科室详情,后台用
     Section getSectionById(String secid);
+
+    //批量插入
+    int executeBatch(List<Object> list);
 }
