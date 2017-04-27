@@ -2,8 +2,8 @@ package com.gjyl.appserver.controllers;
 
 import com.alibaba.fastjson.JSON;
 import com.gjyl.appserver.pojo.Doctor;
-import com.gjyl.appserver.pojo.DoctorWithBLOBs;
 import com.gjyl.appserver.service.DoctorService;
+import com.gjyl.appserver.utils.ExcelUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -27,7 +27,7 @@ public class DoctorController {
 	@RequestMapping(value="/getRanDomDr")
 	public void getRandomDr(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
-		List<DoctorWithBLOBs> list = doctorService.getRandomDr();
+		List<Doctor> list = doctorService.getRandomDr();
 		response.getWriter().write(JSON.toJSONString(list));
 //		return (JSON) JSON.toJSON(list);
 	}
@@ -41,7 +41,7 @@ public class DoctorController {
 	@RequestMapping(value="/getDrList")
 	public void getDrList(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
-		List<DoctorWithBLOBs> list = doctorService.getDrList();
+		List<Doctor> list = doctorService.getDrList();
 //		return (JSON) JSON.toJSON(list);
 		response.getWriter().write(JSON.toJSONString(list));
 	}
@@ -58,4 +58,26 @@ public class DoctorController {
 		response.getWriter().write(JSON.toJSONString(doctor));
 //		return (JSON) JSON.toJSON(doctor);
 	}
+
+	/**
+	 * 导入Excel表格
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/getDataFromExcel")
+	public void getDataFromExcel(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		response.setContentType("text/json;charset=utf-8");
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Method", "*");
+		response.addHeader("Access-Control-Max-Age", "10000");
+		List<Object> list = ExcelUtil.getDataFromExcel(request, Doctor.class);
+		if (list!=null&&list.size()>0){
+			Boolean rst = doctorService.executeBatch(list);
+			response.getWriter().write(JSON.toJSONString(Boolean.TRUE));
+		}else {
+			response.getWriter().write(JSON.toJSONString(Boolean.FALSE));
+		}
+	}
+
 }

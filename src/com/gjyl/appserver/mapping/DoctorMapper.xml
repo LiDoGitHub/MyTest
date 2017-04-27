@@ -19,51 +19,38 @@
     <result column="TitleId" property="titleid" jdbcType="CHAR" />
     <result column="isExpert" property="isexpert" jdbcType="INTEGER" />
     <result column="canOnline" property="canonline" jdbcType="INTEGER" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.gjyl.appserver.pojo.DoctorWithBLOBs" extends="BaseResultMap" >
     <result column="Bio" property="bio" jdbcType="LONGVARCHAR" />
     <result column="Adept" property="adept" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     DoctorId, Name, UserName, Password, Icon, Title, SectionId, Section, Hospital, ChatCost, 
-    CallCost, Seniority, CommentCount, City, TitleId,isExpert,canOnline
+    CallCost, Seniority, CommentCount, City, TitleId,isExpert,canOnline,Bio, Adept
   </sql>
-  <sql id="Blob_Column_List" >
-    Bio, Adept
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from Doctor
     where DoctorId = #{doctorid,jdbcType=CHAR}
   </select>
   
   <!-- 主页随机获取三名医生 -->
-  <select id="getRandomDr" resultMap="ResultMapWithBLOBs" >
+  <select id="getRandomDr" resultMap="BaseResultMap" >
   	select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from Doctor order by Rand() limit 3
   </select>
   
   <!-- 获取医生列表 -->
-  <select id="getDrList" resultMap="ResultMapWithBLOBs" >
+  <select id="getDrList" resultMap="BaseResultMap" >
   	select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from Doctor
   </select>
   <!-- 获取医生信息 -->
-  <select id="getDrInfo" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+  <select id="getDrInfo" resultMap="BaseResultMap" parameterType="java.lang.String" >
   	select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from Doctor 
+    from Doctor
     where DoctorId=#{doctorid,jdbcType=CHAR}
   </select>
   <!-- 联想查询 -->
@@ -73,21 +60,139 @@
   	concat ('%',#{content,jdbcType=VARCHAR},'%')
   </select>
   <!-- 搜索结果 -->
-  <select id="getDoctorByContent" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+  <select id="getDoctorByContent" resultMap="BaseResultMap" parameterType="java.lang.String" >
   select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from Doctor 
+    from Doctor
     where Section like
     concat ('%',#{content,jdbcType=VARCHAR},'%')
   </select>
-  
+
+  <!-- 批量导入 -->
+  <update id="executeBatch" parameterType="java.util.List" >
+    <foreach collection="list" index="index" item="item" open="" close="" separator=";" >
+      insert into Doctor
+      <trim prefix="(" suffix=")" suffixOverrides="," >
+        <if test="item.doctorid != null" >
+          DoctorId,
+        </if>
+        <if test="item.name != null" >
+          Name,
+        </if>
+        <if test="item.username != null" >
+          UserName,
+        </if>
+        <if test="item.password != null" >
+          Password,
+        </if>
+        <if test="item.icon != null" >
+          Icon,
+        </if>
+        <if test="item.title != null" >
+          Title,
+        </if>
+        <if test="item.sectionid != null" >
+          SectionId,
+        </if>
+        <if test="item.section != null" >
+          Section,
+        </if>
+        <if test="item.hospital != null" >
+          Hospital,
+        </if>
+        <if test="item.chatcost != null" >
+          ChatCost,
+        </if>
+        <if test="item.callcost != null" >
+          CallCost,
+        </if>
+        <if test="item.seniority != null" >
+          Seniority,
+        </if>
+        <if test="item.commentcount != null" >
+          CommentCount,
+        </if>
+        <if test="item.city != null" >
+          City,
+        </if>
+        <if test="item.titleid != null" >
+          TitleId,
+        </if>
+        <if test="item.isexpert != null" >
+          isExpert,
+        </if>
+        <if test="item.bio != null" >
+          Bio,
+        </if>
+        <if test="item.adept != null" >
+          Adept,
+        </if>
+      </trim>
+      <trim prefix="values (" suffix=")" suffixOverrides="," >
+        <if test="item.doctorid != null" >
+          #{item.doctorid,jdbcType=CHAR},
+        </if>
+        <if test="item.name != null" >
+          #{item.name,jdbcType=VARCHAR},
+        </if>
+        <if test="item.username != null" >
+          #{item.username,jdbcType=VARCHAR},
+        </if>
+        <if test="item.password != null" >
+          #{item.password,jdbcType=VARCHAR},
+        </if>
+        <if test="item.icon != null" >
+          #{item.icon,jdbcType=VARCHAR},
+        </if>
+        <if test="item.title != null" >
+          #{item.title,jdbcType=VARCHAR},
+        </if>
+        <if test="item.sectionid != null" >
+          #{item.sectionid,jdbcType=CHAR},
+        </if>
+        <if test="item.section != null" >
+          #{item.section,jdbcType=VARCHAR},
+        </if>
+        <if test="item.hospital != null" >
+          #{item.hospital,jdbcType=VARCHAR},
+        </if>
+        <if test="item.chatcost != null" >
+          #{item.chatcost,jdbcType=VARCHAR},
+        </if>
+        <if test="item.callcost != null" >
+          #{item.callcost,jdbcType=VARCHAR},
+        </if>
+        <if test="item.seniority != null" >
+          #{item.seniority,jdbcType=VARCHAR},
+        </if>
+        <if test="item.commentcount != null" >
+          #{item.commentcount,jdbcType=INTEGER},
+        </if>
+        <if test="item.city != null" >
+          #{item.city,jdbcType=VARCHAR},
+        </if>
+        <if test="item.titleid != null" >
+          #{item.titleid,jdbcType=CHAR},
+        </if>
+        <if test="item.isexpert != null" >
+          #{item.isExpert,jdbcType=INTEGER},
+        </if>
+        <if test="item.bio != null" >
+          #{item.bio,jdbcType=LONGVARCHAR},
+        </if>
+        <if test="item.adept != null" >
+          #{item.adept,jdbcType=LONGVARCHAR},
+        </if>
+      </trim>
+    </foreach>
+  </update>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from Doctor
     where DoctorId = #{doctorid,jdbcType=CHAR}
   </delete>
-  <insert id="insert" parameterType="com.gjyl.appserver.pojo.DoctorWithBLOBs" >
+  <insert id="insert" parameterType="com.gjyl.appserver.pojo.Doctor" >
     insert into Doctor (DoctorId, Name, UserName, 
       Password, Icon, Title, 
       SectionId, Section, Hospital, 
@@ -101,7 +206,7 @@
       #{commentcount,jdbcType=INTEGER}, #{city,jdbcType=VARCHAR}, #{titleid,jdbcType=CHAR}, 
       #{bio,jdbcType=LONGVARCHAR}, #{adept,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.gjyl.appserver.pojo.DoctorWithBLOBs" >
+  <insert id="insertSelective" parameterType="com.gjyl.appserver.pojo.Doctor" >
     insert into Doctor
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="doctorid != null" >
@@ -216,7 +321,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.gjyl.appserver.pojo.DoctorWithBLOBs" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.gjyl.appserver.pojo.Doctor" >
     update Doctor
     <set >
       <if test="name != null" >
@@ -273,7 +378,7 @@
     </set>
     where DoctorId = #{doctorid,jdbcType=CHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.gjyl.appserver.pojo.DoctorWithBLOBs" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.gjyl.appserver.pojo.Doctor" >
     update Doctor
     set Name = #{name,jdbcType=VARCHAR},
       UserName = #{username,jdbcType=VARCHAR},

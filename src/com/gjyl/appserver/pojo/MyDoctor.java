@@ -11,7 +11,7 @@ public class MyDoctor {
 
     private String memo;
     
-    private DoctorWithBLOBs doctor;
+    private Doctor doctor;
 
     public String getMydrid() {
         return mydrid;
@@ -49,11 +49,11 @@ public class MyDoctor {
 		this.mydrid=UUID.randomUUID().toString().replace("-", "");
 	}
 
-	public DoctorWithBLOBs getDoctor() {
+	public Doctor getDoctor() {
 		return doctor;
 	}
 
-	public void setDoctor(DoctorWithBLOBs doctor) {
+	public void setDoctor(Doctor doctor) {
 		this.doctor = doctor;
 	}
     

@@ -1,16 +1,14 @@
 package com.gjyl.appserver.serviceimpl;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
 import com.gjyl.appserver.dao.DocCommentMapper;
 import com.gjyl.appserver.dao.DoctorMapper;
 import com.gjyl.appserver.pojo.DocComment;
-import com.gjyl.appserver.pojo.DoctorWithBLOBs;
+import com.gjyl.appserver.pojo.Doctor;
 import com.gjyl.appserver.service.DocCommentService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 @Service("docComService")
 public class DocCommentServiceImpl implements DocCommentService {
@@ -24,7 +22,7 @@ public class DocCommentServiceImpl implements DocCommentService {
 	public List<DocComment> getHealthComment(String healthId) {
 		List<DocComment> list = dao.getHealthComment(healthId);
 		for (DocComment docComment : list) {
-			DoctorWithBLOBs drInfo = docDao.getDrInfo(docComment.getDoctorid());
+			Doctor drInfo = docDao.getDrInfo(docComment.getDoctorid());
 			docComment.setDoctor(drInfo);
 		}
 		return list;

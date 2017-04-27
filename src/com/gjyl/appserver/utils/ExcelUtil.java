@@ -90,10 +90,9 @@ public class ExcelUtil {
 
             //得到一个工作表
             Sheet sheet = workbook.getSheetAt(0);
-            //得到表头
+
             Row th = sheet.getRow(0);
 
-            //根据不同的data放置不同的表头
             Map<Object, Integer> headMap = new HashMap<>();
 
             if (th.getPhysicalNumberOfCells() > propertyNum) {
@@ -102,7 +101,7 @@ public class ExcelUtil {
             }
 
 
-            try {//列名与下标对应
+            try {
                 for (int i = 0; i < th.getPhysicalNumberOfCells(); i++) {
                     Cell cell = th.getCell(i);
                     for (int j = 0; j < fields.length; j++) {
@@ -118,15 +117,14 @@ public class ExcelUtil {
                 System.out.println("表格不符合规范,请检查后重新导入.....");
             }
             System.out.println("headMap:"+headMap);
-            //获得数据的总行数
+            //处理数据
             int totalRowNum = sheet.getLastRowNum();
-            //获取所有数据
-            for (int i=1;i<totalRowNum;i++){//循环行
+            for (int i=1;i<totalRowNum;i++){
                 Row row=sheet.getRow(i);
                 Object obj = clazz.newInstance();
                 for (int j = 0; j < fields.length; j++) {
                      Field f=fields[j];
-                    f.setAccessible(true);//设置属性可访问
+                    f.setAccessible(true);
                     Integer position = headMap.get(f.getName());
                     Cell cell;
                     if (position!=null) {
@@ -163,7 +161,7 @@ public class ExcelUtil {
      */
     private static Object getECellType(Cell cell){
 
-        Object object = null;
+        Object object;
         switch(cell.getCellTypeEnum())
         {
             case STRING :
@@ -173,19 +171,28 @@ public class ExcelUtil {
             }
             case NUMERIC:
             {
-                object=(int)cell.getNumericCellValue();
+                object=String.valueOf(cell.getNumericCellValue());
                 break;
             }
 
             case FORMULA :
             {
-                object=cell.getNumericCellValue();
+                object=cell.getCellFormula();
                 break;
             }
 
             case BLANK :
             {
                 object=cell.getStringCellValue();
+                break;
+            }
+            case BOOLEAN:
+            {
+                object=String.valueOf(cell.getBooleanCellValue());
+                break;
+            }
+            default: {
+                object = null;
                 break;
             }
         }

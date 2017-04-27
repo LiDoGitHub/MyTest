@@ -11,7 +11,7 @@ public class DiseaseLibraryWithBLOBs extends DiseaseLibrary {
 
     private String prompt;
     
-    private DoctorWithBLOBs doctor;
+    private Doctor doctor;
 
     public String getUserputquestion() {
         return userputquestion;
@@ -57,11 +57,11 @@ public class DiseaseLibraryWithBLOBs extends DiseaseLibrary {
 		super();
 	}
 
-	public DoctorWithBLOBs getDoctor() {
+	public Doctor getDoctor() {
 		return doctor;
 	}
 
-	public void setDoctor(DoctorWithBLOBs doctor) {
+	public void setDoctor(Doctor doctor) {
 		this.doctor = doctor;
 	}
 

@@ -13,7 +13,7 @@ public class DocComment {
 
     private String healthid;
 
-    private DoctorWithBLOBs doctor;
+    private Doctor doctor;
     
     public String getComid() {
         return comid;
@@ -59,11 +59,11 @@ public class DocComment {
 		this.comid=UUID.randomUUID().toString().replace("-", "");
 	}
 
-	public DoctorWithBLOBs getDoctor() {
+	public Doctor getDoctor() {
 		return doctor;
 	}
 
-	public void setDoctor(DoctorWithBLOBs doctor) {
+	public void setDoctor(Doctor doctor) {
 		this.doctor = doctor;
 	}
     

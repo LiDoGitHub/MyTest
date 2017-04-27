@@ -37,6 +37,26 @@ public class Doctor {
 
     private Integer canonline;
 
+    private String bio;
+
+    private String adept;
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getAdept() {
+        return adept;
+    }
+
+    public void setAdept(String adept) {
+        this.adept = adept;
+    }
+
     public Integer getCanonline() {
         return canonline;
     }

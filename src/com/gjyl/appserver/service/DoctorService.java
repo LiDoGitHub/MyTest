@@ -1,16 +1,17 @@
 package com.gjyl.appserver.service;
 
-import java.util.List;
+import com.gjyl.appserver.pojo.Doctor;
 
-import com.gjyl.appserver.pojo.DoctorWithBLOBs;
+import java.util.List;
 
 
 public interface DoctorService {
 
-	public List<DoctorWithBLOBs> getRandomDr();
+	List<Doctor> getRandomDr();
 
-	public List<DoctorWithBLOBs> getDrList();
+	List<Doctor> getDrList();
 
-	public DoctorWithBLOBs getDrInfo(String docId);
+	Doctor getDrInfo(String docId);
 
+    Boolean executeBatch(List<Object> list);
 }

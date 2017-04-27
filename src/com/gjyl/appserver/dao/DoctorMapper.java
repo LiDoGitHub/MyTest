@@ -1,35 +1,36 @@
 package com.gjyl.appserver.dao;
 
-import java.util.List;
-
 import com.gjyl.appserver.pojo.Doctor;
-import com.gjyl.appserver.pojo.DoctorWithBLOBs;
+
+import java.util.List;
 
 public interface DoctorMapper {
     int deleteByPrimaryKey(String doctorid);
 
-    int insert(DoctorWithBLOBs record);
+    int insert(Doctor record);
 
-    int insertSelective(DoctorWithBLOBs record);
+    int insertSelective(Doctor record);
 
-    DoctorWithBLOBs selectByPrimaryKey(String doctorid);
+    Doctor selectByPrimaryKey(String doctorid);
 
-    int updateByPrimaryKeySelective(DoctorWithBLOBs record);
+    int updateByPrimaryKeySelective(Doctor record);
 
-    int updateByPrimaryKeyWithBLOBs(DoctorWithBLOBs record);
+    int updateByPrimaryKeyWithBLOBs(Doctor record);
 
     int updateByPrimaryKey(Doctor record);
     
-    List<DoctorWithBLOBs> getRandomDr();
+    List<Doctor> getRandomDr();
 
-	List<DoctorWithBLOBs> getDrList();
+	List<Doctor> getDrList();
 
-	DoctorWithBLOBs getDrInfo(String doctorid);
+	Doctor getDrInfo(String doctorid);
 
 	//联想查询用
 	List<String> getDocInfoByContent(String content);
 
 	//热搜用
 	List<Doctor> getDoctorByContent(String content);
-	
+
+    //Excel导入
+    int executeBatch(List<Object> list);
 }

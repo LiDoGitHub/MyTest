@@ -1,16 +1,14 @@
 package com.gjyl.appserver.serviceimpl;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
 import com.gjyl.appserver.dao.DoctorMapper;
 import com.gjyl.appserver.dao.MyDoctorMapper;
-import com.gjyl.appserver.pojo.DoctorWithBLOBs;
+import com.gjyl.appserver.pojo.Doctor;
 import com.gjyl.appserver.pojo.MyDoctor;
 import com.gjyl.appserver.service.MyDoctorService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 @Service("myDrService")
 public class MyDoctorServiceImpl implements MyDoctorService {
@@ -24,7 +22,7 @@ public class MyDoctorServiceImpl implements MyDoctorService {
 
 		List<MyDoctor> list = dao.getMyDoctor(userId);
 		for (MyDoctor doctor : list) {
-			DoctorWithBLOBs info = docDao.getDrInfo(doctor.getDoctorid());
+			Doctor info = docDao.getDrInfo(doctor.getDoctorid());
 			doctor.setDoctor(info);
 		}
 		return list;

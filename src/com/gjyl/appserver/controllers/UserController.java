@@ -363,4 +363,48 @@ public class UserController {
 		List<AppUser> list= userService.getAllUsers();
 		response.getWriter().write(JSON.toJSONString(list));
 	}
+
+
+	/**
+	 * 设置是否为管理员
+	 * @param userid:用户ID
+	 * @param role:用户角色
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/setManager")
+	public void setManager(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		response.setContentType("text/json;charset=utf-8");
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Method", "*");
+		response.addHeader("Access-Control-Max-Age", "10000");
+		String userid = request.getParameter("userid");
+		AppUser user = userService.GetUserById(userid);
+		BeanUtils.populate(user,request.getParameterMap());
+		Boolean rst = userService.updateUser(user);
+		response.getWriter().write(JSON.toJSONString(rst));
+	}
+
+	/**
+	 * 新增用户,后台用
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/addUser")
+	public void addUser(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		response.setContentType("text/json;charset=utf-8");
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Method", "*");
+		response.addHeader("Access-Control-Max-Age", "10000");
+		AppUser user=new AppUser();
+		BeanUtils.populate(user,request.getParameterMap());
+		if (user.getPhone() != null && !user.getPhone().equals("")) {
+			Boolean rst = userService.addUser(user);
+			response.getWriter().write(JSON.toJSONString(rst));
+		}else {
+			response.getWriter().write(JSON.toJSONString("error"));
+		}
+	}
+
 }
