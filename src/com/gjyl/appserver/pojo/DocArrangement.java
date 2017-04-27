@@ -1,5 +1,7 @@
 package com.gjyl.appserver.pojo;
 
+import java.util.UUID;
+
 public class DocArrangement {
     private String arrid;
 
@@ -20,6 +22,16 @@ public class DocArrangement {
     private String memo;
 
     private String docid;
+
+    private Doctor doctor;
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+    }
 
     public String getArrid() {
         return arrid;
@@ -99,5 +111,9 @@ public class DocArrangement {
 
     public void setDocid(String docid) {
         this.docid = docid == null ? null : docid.trim();
+    }
+
+    public DocArrangement() {
+        this.arrid= UUID.randomUUID().toString().replace("-","");
     }
 }

@@ -41,6 +41,16 @@ public class Doctor {
 
     private String adept;
 
+    private DocArrangement arrangement;
+
+    public DocArrangement getArrangement() {
+        return arrangement;
+    }
+
+    public void setArrangement(DocArrangement arrangement) {
+        this.arrangement = arrangement;
+    }
+
     public String getBio() {
         return bio;
     }

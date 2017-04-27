@@ -42,7 +42,6 @@ public class DoctorController {
 	public void getDrList(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
 		List<Doctor> list = doctorService.getDrList();
-//		return (JSON) JSON.toJSON(list);
 		response.getWriter().write(JSON.toJSONString(list));
 	}
 
@@ -56,7 +55,6 @@ public class DoctorController {
 		String docId = request.getParameter("docId");
 		Doctor doctor = doctorService.getDrInfo(docId);
 		response.getWriter().write(JSON.toJSONString(doctor));
-//		return (JSON) JSON.toJSON(doctor);
 	}
 
 	/**
