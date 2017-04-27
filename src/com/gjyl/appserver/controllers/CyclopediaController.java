@@ -146,12 +146,15 @@ public class CyclopediaController {
 			page="0";
 		}
 		List<Cyclopedia> list;
-		if (typeId.equals(HOTID)) {
-			list= cyclopediaService.getHotCycl();
-		}else {
-			list =cyclopediaService.getCyclByType(typeId,page);
+		if (typeId!=null) {
+			if (typeId.equals(HOTID)) {
+				list = cyclopediaService.getHotCycl();
+			} else {
+				list = cyclopediaService.getCyclByType(typeId, page);
+			}
+			response.getWriter().write(JSON.toJSONString(list));
 		}
-		response.getWriter().write(JSON.toJSONString(list));
+		response.getWriter().write(JSON.toJSONString("error"));
 	}
 
 	/**

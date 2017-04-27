@@ -6,6 +6,7 @@ import com.gjyl.appserver.service.DoctorService;
 import com.gjyl.appserver.utils.ExcelUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +34,7 @@ public class DoctorController {
 	}
 
 	/**
-	 * 获取医生列表
+	 * 获取医生列表,后台共用
 	 * @param request
 	 * @return
 	 * @throws Exception
@@ -41,6 +42,9 @@ public class DoctorController {
 	@RequestMapping(value="/getDrList")
 	public void getDrList(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Method", "*");
+		response.addHeader("Access-Control-Max-Age", "10000");
 		List<Doctor> list = doctorService.getDrList();
 		response.getWriter().write(JSON.toJSONString(list));
 	}
@@ -63,7 +67,7 @@ public class DoctorController {
 	 * @param response
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/getDataFromExcel")
+	@RequestMapping(value = "/getDataFromExcel",method = RequestMethod.POST)
 	public void getDataFromExcel(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		response.setContentType("text/json;charset=utf-8");
 		response.addHeader("Access-Control-Allow-Origin", "*");
