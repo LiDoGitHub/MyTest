@@ -17,8 +17,6 @@ public interface DoctorMapper {
 
     int updateByPrimaryKeyWithBLOBs(Doctor record);
 
-    int updateByPrimaryKey(Doctor record);
-    
     List<Doctor> getRandomDr();
 
 	List<Doctor> getDrList();

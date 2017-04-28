@@ -367,34 +367,19 @@
       <if test="titleid != null" >
         TitleId = #{titleid,jdbcType=CHAR},
       </if>
-       <if test="isexpert != null" >
-        isExpert = #{isexpert,jdbcType=INTEGER},
-      </if>
       <if test="bio != null" >
         Bio = #{bio,jdbcType=LONGVARCHAR},
       </if>
       <if test="adept != null" >
         Adept = #{adept,jdbcType=LONGVARCHAR},
       </if>
+      <if test="isexpert != null">
+        isExpert = #{isexpert,jdbcType=INTEGER},
+      </if>
+      <if test="canonline != null">
+        canOnline = #{canonline,jdbcType=INTEGER},
+      </if>
     </set>
-    where DoctorId = #{doctorid,jdbcType=CHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.gjyl.appserver.pojo.Doctor" >
-    update Doctor
-    set Name = #{name,jdbcType=VARCHAR},
-      UserName = #{username,jdbcType=VARCHAR},
-      Password = #{password,jdbcType=VARCHAR},
-      Icon = #{icon,jdbcType=VARCHAR},
-      Title = #{title,jdbcType=VARCHAR},
-      SectionId = #{sectionid,jdbcType=CHAR},
-      Section = #{section,jdbcType=VARCHAR},
-      Hospital = #{hospital,jdbcType=VARCHAR},
-      ChatCost = #{chatcost,jdbcType=VARCHAR},
-      CallCost = #{callcost,jdbcType=VARCHAR},
-      Seniority = #{seniority,jdbcType=VARCHAR},
-      CommentCount = #{commentcount,jdbcType=INTEGER},
-      City = #{city,jdbcType=VARCHAR},
-      TitleId = #{titleid,jdbcType=CHAR}
     where DoctorId = #{doctorid,jdbcType=CHAR}
   </update>
 </mapper>

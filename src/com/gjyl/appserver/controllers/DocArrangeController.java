@@ -33,8 +33,12 @@ public class DocArrangeController {
         response.addHeader("Access-Control-Allow-Method", "*");
         response.addHeader("Access-Control-Max-Age", "10000");
         String docid = request.getParameter("docid");
-        DocArrangement arrangement= docArrService.getDocArrByDocId(docid);
-        response.getWriter().write(JSON.toJSONString(arrangement));
+        if (docid!=null&&!docid.equals("")) {
+            DocArrangement arrangement = docArrService.getDocArrByDocId(docid);
+            response.getWriter().write(JSON.toJSONString(arrangement));
+        }else {
+            response.getWriter().write(JSON.toJSONString("error"));
+        }
     }
 
     /**
@@ -50,7 +54,11 @@ public class DocArrangeController {
         response.addHeader("Access-Control-Allow-Method", "*");
         response.addHeader("Access-Control-Max-Age", "10000");
         String arrid = request.getParameter("arrid");
-        DocArrangement arr = docArrService.getArrById(arrid);
-        response.getWriter().write(JSON.toJSONString(arr));
+        if (arrid!=null&&!arrid.equals("")) {
+            DocArrangement arr = docArrService.getArrById(arrid);
+            response.getWriter().write(JSON.toJSONString(arr));
+        }else {
+            response.getWriter().write(JSON.toJSONString("error"));
+        }
     }
 }

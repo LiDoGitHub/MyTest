@@ -58,8 +58,12 @@ public class DoctorController {
 	public void getDrInfo(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
 		String docId = request.getParameter("docId");
-		Doctor doctor = doctorService.getDrInfo(docId);
-		response.getWriter().write(JSON.toJSONString(doctor));
+		if (docId!=null&&!docId.equals("")) {
+			Doctor doctor = doctorService.getDrInfo(docId);
+			response.getWriter().write(JSON.toJSONString(doctor));
+		}else {
+			response.getWriter().write(JSON.toJSONString("error"));
+		}
 	}
 
 	/**
@@ -99,8 +103,7 @@ public class DoctorController {
 		if (docid!=null&&!docid.equals("")) {
 			Doctor doctor = doctorService.getDrInfo(docid);
 			BeanUtils.populate(doctor, request.getParameterMap());
-			System.out.println("是否专家............."+doctor.getIsexpert());
-			System.out.println("在线问诊............."+doctor.getCanonline());
+			System.out.println("密码.........\n"+doctor.getPassword());
 			Boolean rst = doctorService.updateDocInfo(doctor);
 			response.getWriter().write(JSON.toJSONString(rst));
 		}else {

@@ -31,11 +31,11 @@
 		</property>
 	</bean>
 	<!-- 定义跳转的文件的前后缀 ，视图模式配置-->
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
 		<!-- 这里的配置我的理解是自动给后面action的方法return的字符串加上前缀和后缀，变成一个 可用的url地址 -->
-		<property name="prefix" value="/" />
-		<property name="suffix" value=".html" />
-	</bean>
+		<!--<property name="prefix" value="/" />-->
+		<!--<property name="suffix" value=".html" />-->
+	<!--</bean>-->
 	<!-- 定义错误页面,上线时再启用,否则看不到错误堆栈信息 -->
 	<!--<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">-->
 		<!--<property name="exceptionMappings">-->

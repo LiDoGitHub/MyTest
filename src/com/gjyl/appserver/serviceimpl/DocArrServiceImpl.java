@@ -23,7 +23,12 @@ public class DocArrServiceImpl implements DocArrService {
     public DocArrangement getDocArrByDocId(String docid) {
         DocArrangement arrangement = dao.getArrangeByDocId(docid);
         Doctor doctor = docDao.getDrInfo(docid);
-        arrangement.setDoctor(doctor);
+        if (arrangement!=null&&!arrangement.getDocid().equals("")) {
+            arrangement.setDoctor(doctor);
+        }else {
+            arrangement=new DocArrangement();
+            arrangement.setDoctor(doctor);
+        }
         return arrangement;
     }
 
