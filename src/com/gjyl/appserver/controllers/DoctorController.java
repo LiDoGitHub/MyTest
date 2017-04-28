@@ -84,7 +84,7 @@ public class DoctorController {
 	}
 
 	/**
-	 * 更新医生信息
+	 * 更新医生信息,,后台用
 	 * @param request
 	 * @param response
 	 * @throws Exception
@@ -92,9 +92,19 @@ public class DoctorController {
 	@RequestMapping(value = "/updateDocInfo")
 	public void updateDocInfo(HttpServletRequest request,HttpServletResponse response)throws Exception{
 		response.setContentType("text/json;charset=utf-8");
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Method", "*");
+		response.addHeader("Access-Control-Max-Age", "10000");
 		String docid = request.getParameter("docid");
-		Doctor doctor = doctorService.getDrInfo(docid);
-		BeanUtils.populate(docid,request.getParameterMap());
-		Boolean rst = doctorService.updateDocInfo(doctor);
+		if (docid!=null&&!docid.equals("")) {
+			Doctor doctor = doctorService.getDrInfo(docid);
+			BeanUtils.populate(doctor, request.getParameterMap());
+			System.out.println("是否专家............."+doctor.getIsexpert());
+			System.out.println("在线问诊............."+doctor.getCanonline());
+			Boolean rst = doctorService.updateDocInfo(doctor);
+			response.getWriter().write(JSON.toJSONString(rst));
+		}else {
+			response.getWriter().write(JSON.toJSONString("error"));
+		}
 	}
 }

@@ -2,8 +2,6 @@ package com.gjyl.appserver.dao;
 
 import com.gjyl.appserver.pojo.DocArrangement;
 
-import java.util.List;
-
 public interface DocArrangementMapper {
     int deleteByPrimaryKey(String arrid);
 
@@ -18,9 +16,6 @@ public interface DocArrangementMapper {
     int updateByPrimaryKeySelective(DocArrangement record);
 
     int updateByPrimaryKey(DocArrangement record);
-
-    //排班列表
-    List<DocArrangement> getArrangeList();
 
     //查询
     DocArrangement getArrangeByDocId(String docId);

@@ -157,7 +157,7 @@ public class EssayServiceImpl implements EssayService {
 	public List<Essay> getUserEssaies(String userid,Integer pageNum) {
 		Map<String,Object> map=new HashMap<>();
 		map.put("userid",userid);
-		map.put("pageNum",pageNum);
+		map.put("pageNum",pageNum*pageSize);
 		return dao.getUserEssaies(map);
 	}
 

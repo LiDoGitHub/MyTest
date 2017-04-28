@@ -22,12 +22,6 @@
     from DocArrangement
     where arrid = #{arrid,jdbcType=CHAR}
   </select>
-  <!-- 排班列表 -->
-  <select id="getArrangeList" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from DocArrangement
-  </select>
 
   <!--医生排班-->
   <select id="getArrangeByDocId" resultMap="BaseResultMap">

@@ -8,7 +8,6 @@ import com.gjyl.appserver.service.DocArrService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * Created by LiD on 2017/4/27.
@@ -18,34 +17,17 @@ public class DocArrServiceImpl implements DocArrService {
 
     @Resource
     private DocArrangementMapper dao;
+    @Resource
     protected DoctorMapper docDao;
 
-    public Boolean addDocArrangement(DocArrangement arrangement) {
-
-        int rst = dao.insertSelective(arrangement);
-        if (rst>0)
-            return true;
-        return false;
+    public DocArrangement getDocArrByDocId(String docid) {
+        DocArrangement arrangement = dao.getArrangeByDocId(docid);
+        Doctor doctor = docDao.getDrInfo(docid);
+        arrangement.setDoctor(doctor);
+        return arrangement;
     }
 
-    public DocArrangement getArrangeById(String arrid) {
-
+    public DocArrangement getArrById(String arrid) {
         return dao.selectByPrimaryKey(arrid);
-    }
-
-    public Boolean delDocArrangeById(String arrid) {
-        int rst = dao.deleteByPrimaryKey(arrid);
-        if (rst > 0)
-            return true;
-        return false;
-    }
-
-    public List<DocArrangement> getArrangeList() {
-        List<DocArrangement> list= dao.getArrangeList();
-        for (DocArrangement arr : list) {
-            Doctor doctor = docDao.getDrInfo(arr.getDocid());
-            arr.setDoctor(doctor);
-        }
-        return list;
     }
 }

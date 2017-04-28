@@ -368,7 +368,7 @@
         TitleId = #{titleid,jdbcType=CHAR},
       </if>
        <if test="isexpert != null" >
-        isExpert = #{isExpert,jdbcType=INTEGER},
+        isExpert = #{isexpert,jdbcType=INTEGER},
       </if>
       <if test="bio != null" >
         Bio = #{bio,jdbcType=LONGVARCHAR},
