@@ -321,6 +321,7 @@
       </if>
     </trim>
   </insert>
+  <!-- 更新医生信息 -->
   <update id="updateByPrimaryKeySelective" parameterType="com.gjyl.appserver.pojo.Doctor" >
     update Doctor
     <set >
@@ -376,26 +377,6 @@
         Adept = #{adept,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    where DoctorId = #{doctorid,jdbcType=CHAR}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.gjyl.appserver.pojo.Doctor" >
-    update Doctor
-    set Name = #{name,jdbcType=VARCHAR},
-      UserName = #{username,jdbcType=VARCHAR},
-      Password = #{password,jdbcType=VARCHAR},
-      Icon = #{icon,jdbcType=VARCHAR},
-      Title = #{title,jdbcType=VARCHAR},
-      SectionId = #{sectionid,jdbcType=CHAR},
-      Section = #{section,jdbcType=VARCHAR},
-      Hospital = #{hospital,jdbcType=VARCHAR},
-      ChatCost = #{chatcost,jdbcType=VARCHAR},
-      CallCost = #{callcost,jdbcType=VARCHAR},
-      Seniority = #{seniority,jdbcType=VARCHAR},
-      CommentCount = #{commentcount,jdbcType=INTEGER},
-      City = #{city,jdbcType=VARCHAR},
-      TitleId = #{titleid,jdbcType=CHAR},
-      Bio = #{bio,jdbcType=LONGVARCHAR},
-      Adept = #{adept,jdbcType=LONGVARCHAR}
     where DoctorId = #{doctorid,jdbcType=CHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.gjyl.appserver.pojo.Doctor" >

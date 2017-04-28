@@ -34,9 +34,11 @@ var mainBox={
                 case 9:_self.ajaxData("consultation/consultClass.html",admin);break;//资讯分类
                 case 10:_self.ajaxData("video/lecture.html",admin);break;//视频管理
                 case 11:_self.ajaxData("keDepart/kedepart.html",admin);break;//科室管理
-                case 12:_self.ajaxData("health/health-records.html",admin);break;//健康管理管理
-                case 13:_self.ajaxData("register/registration.html",admin);break;//用户挂号
-                case 14:_self.ajaxData("remind/remind.html",admin);break;//用户用药提醒
+                case 12:_self.ajaxData("Manag/userManag.html",admin);break;//用户管理
+                case 13:_self.ajaxData("Doctor/Doctor.html",admin);break;//医生管理
+                case 14:_self.ajaxData("health/health-records.html",admin);break;//健康管理管理
+                case 15:_self.ajaxData("register/registration.html",admin);break;//用户挂号
+                case 16:_self.ajaxData("remind/remind.html",admin);break;//用户用药提醒
                 default:console.log("data is empty..........");break;//出现错误则提醒用户数据为空值
             }
         })

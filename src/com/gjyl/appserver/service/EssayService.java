@@ -24,4 +24,6 @@ public interface EssayService {
     Integer getMaxPage();
 
     Integer getFocusMaxPage(String userid);
+
+    List<Essay> getUserEssaies(String userid,Integer pageNum);
 }

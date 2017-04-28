@@ -1,7 +1,7 @@
 <div class="panel admin-panel">
     <div class="padding border-bottom">
         <ul class="search" style="padding-left:10px;">
-            <li> <a class="button border-main icon-plus-square-o" id="addPart" style="cursor:pointer"> 添加内容</a> </li>
+            <li> <a class="button border-main icon-plus-square-o" id="addPart" style="cursor:pointer"> 添加医生信息</a> </li>
             <!--<li> <a class="button border-main icon-plus-square-o" id="addFile" style="cursor:pointer"> 添加文件</a> </li>-->
             <li style=""> 
             	<a class="button border-main icon-plus-square-o" style="cursor:pointer;position: relative;"> 添加文件
@@ -12,9 +12,15 @@
     </div>
     <table class="table table-hover text-center">
         <tr>
-            <th width="8%">科室名称</th>
-            <th>备注</th>
-            <th width="20%">操作</th>
+            <th width="8%">姓名</th>
+            <th width="18%">科室</th>
+            <th width="12%">职称</th>
+            <th width="15%">手机</th>
+            <th width="8%">地区</th>
+            <th width="8%">排班</th>
+            <th width="8%">专家</th>
+            <th width="8%">问诊</th>
+            <th>操作</th>
         </tr>
         <tbody id="goods3">
             <!--<tr>
@@ -35,34 +41,50 @@
         getData:function(){
             var goodsBox=$("#goods3");//内容渲染盒子
             $.ajax({
-                url:serUrl+"section/getSections",
+                url:serUrl+"doctor/getDrList",
                 type:"post",
                 crossDomain:true,
                 dataType:"json",
                 success:function(data){
-                    //console.log(data);
+                    console.log(data);
                     var content="";//内容储存---------------
+                    var message="";
+                    var msg="";
                     for(var k=0;k<data.length;k++){
-                       content+='<tr>'+
-                                    '<td>'+data[k].name+'</td>'+
-                                    '<td>'+data[k].memo+'</td>'+
-                                    '<td>'+ '<a id="alter" val="'+data[k].sectionid+'" href="javascript:;" class="button border-main edit">修改</a>'+
-                                            '<a id="del" val="'+data[k].sectionid+'" href="javascript:;"  class="button border-red del">删除</a>'+
-                                    '</td>'+
-                               '</tr>';
+                    	if(data[k].canonline==1){
+                    		message='<td>'+'<a id="'+data[k].sectionid+'" href="javascript:;" class="button border-main edit icon-user expert"> 是</a>'+'</td>';
+                    	}else{
+                    		message='<td>'+'<a id="'+data[k].sectionid+'" href="javascript:;" class="button border-red edit icon-user expert"> 否</a>'+'</td>';
+                    	}
+                    	if(data[k].isexpert==1){
+                    		msg='<td>'+'<a id="alter" val="'+data[k].sectionid+'" href="javascript:;" class="button border-main edit icon-microphone"> 是</a>'+'</td>';
+                    	}else{
+                    		msg='<td>'+'<a id="alter" val="'+data[k].sectionid+'" href="javascript:;" class="button border-red edit icon-microphone"> 否</a>'+'</td>';
+                    	}
+                    	 content+='<tr>'+
+	                                    '<td>'+data[k].name+'</td>'+
+	                                    '<td>'+data[k].section+'</td>'+
+	                                    '<td>'+data[k].title+'</td>'+
+	                                    '<td>'+data[k].username+'</td>'+
+	                                    '<td>'+data[k].city+'</td>'+
+	                                    '<td>'+'<a id="Scheduling" val="'+data[k].sectionid+'" href="javascript:;" class="button border-red edit icon-edit (alias)"> 排班</a>'+'</td>'+
+	                                    message+
+	                                    msg+
+	                                    '<td>'+ '<a id="alter" val="'+data[k].sectionid+'" href="javascript:;" class="button border-red edit"> 修改</a>'+
+	                                    '</td>'+
+	                               '</tr>';
                     }
                     goodsBox.append(content);
                 },
                 error:function(){
                     console.log(".....请求发生错误了.....")
                 }
-
             })
         },
-        //删除方法---------------------------------------------------------
-        del:function(id){
-            $.ajax({
-                url:serUrl+"section/delSection",
+        //是否专家-----------------------------------------------------------------
+        expert:function(val){
+        	$.ajax({
+                url:serUrl+"doctor/updateDocInfo",
                 type:"post",
                 data:{"secid":id},
                 crossDomain:true,
@@ -75,7 +97,6 @@
                 }
             });
         }
-        
     };
 
     (function(){
@@ -95,12 +116,17 @@
             }
         });
 
-        //点击修改项目---------------------------------------------------------------------
-        tbody.on("click","#alter",function(){
-            var id=$(this).attr("val");
+        //点击修改是否专家---------------------------------------------------------------------
+        tbody.on("click",".expert",function(){
+            var id=$(this).attr("id");
             console.log(id);
-            sessionStorage.setItem("sectionid",id);
-            mainBox.ajaxData("keDepart/updateDepart.html",$(".admin"));
+           	if(id==1){
+           		$(this).attr("id",0)
+                   message='<td>'+'<a id="'+data[k].sectionid+'" href="javascript:;" class="button border-main edit icon-user expert"> 是</a>'+'</td>';
+            }else{
+            	$(this).attr("id",1)
+                   message='<td>'+'<a id="'+data[k].sectionid+'" href="javascript:;" class="button border-red edit icon-user expert"> 否</a>'+'</td>';
+            }
         })
         
         //上传文件-------------------------------------------------------------------------
@@ -108,7 +134,7 @@
         	var formData = new FormData();
                 formData.append("excelFile", $("#addFile")[0].files[0]);
         	$.ajax({
-                        url: serUrl+'/section/getDataFromExcel',
+                        url: serUrl+'/doctor/getDataFromExcel',
                         type: 'POST',
                         cache: false,
                         data: formData,

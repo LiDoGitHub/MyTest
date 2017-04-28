@@ -40,4 +40,7 @@ public interface EssayMapper {
 
     //关注总数
     int getFocusTotalNum(List<String> list);
+
+    //某一用户发布的说说
+    List<Essay> getUserEssaies(Map<String,Object> map);
 }

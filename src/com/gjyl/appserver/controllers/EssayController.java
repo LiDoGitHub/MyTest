@@ -158,4 +158,19 @@ public class EssayController {
 		Boolean rst = essayService.disAgreeWithEssay(userid, eid);
 		response.getWriter().write(JSON.toJSONString(rst));
 	}
+
+	/**
+	 * 某一用户发布的说说
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/getUserEssaies")
+	public void getUserEssaies(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		response.setContentType("text/json;charset=utf-8");
+		String userid = request.getParameter("userid");
+		String pageNum = request.getParameter("pageNum");
+		List<Essay> list=essayService.getUserEssaies(userid,Integer.valueOf(pageNum));
+		response.getWriter().write(JSON.toJSONString(list));
+	}
 }

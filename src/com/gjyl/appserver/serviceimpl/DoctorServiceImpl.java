@@ -41,4 +41,11 @@ public class DoctorServiceImpl implements DoctorService {
 		}
 		return false;
 	}
+
+	public Boolean updateDocInfo(Doctor doctor) {
+		int rst=mapper.updateByPrimaryKeySelective(doctor);
+		if (rst>0)
+			return true;
+		return false;
+	}
 }

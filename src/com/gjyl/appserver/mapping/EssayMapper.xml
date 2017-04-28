@@ -37,7 +37,7 @@
     ,
     <include refid="Blob_Column_List" />
     from Essay order by EPubTime Desc
-    limit #{pageNum,jdbcType=INTEGER},30
+    limit #{pageNum,jdbcType=INTEGER},20
   </select>
 
   <!-- 关注内容,分页显示 -->
@@ -51,8 +51,17 @@
     <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
     #{item}
     </foreach>
-    limit #{pageNum,jdbcType=INTEGER},30
+    limit #{pageNum,jdbcType=INTEGER},20
   </select>
+
+  <!-- 某一用户发布的说说 -->
+<select id="getUserEssaies" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+  select * from Essay
+   WHERE UserId=#{userid,jdbcType=CHAR}
+    ORDER BY EPubTime DESC
+    limit #{pageNum,jdbcType=INTEGER},20
+</select>
+
 
   <!-- 内容详情 -->
   <select id="getEssayInfo" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >

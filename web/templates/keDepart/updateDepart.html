@@ -35,8 +35,9 @@
     </div>
 </div>
 <script>
-    //修改科室--------------------------------------------
+    //修改科室----------------------------------------------------------------
     var alterPart={
+        //默认数据映射加载---------------------
         getData:function(id){
             if(id){
                 $.ajax({
@@ -54,7 +55,7 @@
         },
         updateData:function(){
             var formData=$("form").serializeArray();
-            console.log(formData);
+            //console.log(formData);
             $.ajax({
                 url:serUrl+'section/updateSection',
                 type:'POST',
@@ -74,11 +75,11 @@
 
     (function(){
         //默认映射-----------------------------------------------
-        var id=localStorage.getItem("sectionid");
+        var id=sessionStorage.getItem("sectionid");
         alterPart.getData(id);
         //点击提交------------------------------------------------
         $("#addBtn").click(function(){
-            var id =localStorage.getItem("sectionid");
+            var id =sessionStorage.getItem("sectionid");
             $("input[type=hidden]").val(id);
             alterPart.updateData();
         });

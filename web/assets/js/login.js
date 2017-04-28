@@ -33,8 +33,8 @@ var LoginBox={
 					}
 				},
 				error : function(data) {
-					//alert("error:"+data);
-					alert("系统错误");
+					alert("error:"+data);
+//					alert("系统错误");
 				}
 			});
 		}

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.gjyl.appserver.pojo.Doctor;
 import com.gjyl.appserver.service.DoctorService;
 import com.gjyl.appserver.utils.ExcelUtil;
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -82,4 +83,18 @@ public class DoctorController {
 		}
 	}
 
+	/**
+	 * 更新医生信息
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/updateDocInfo")
+	public void updateDocInfo(HttpServletRequest request,HttpServletResponse response)throws Exception{
+		response.setContentType("text/json;charset=utf-8");
+		String docid = request.getParameter("docid");
+		Doctor doctor = doctorService.getDrInfo(docid);
+		BeanUtils.populate(docid,request.getParameterMap());
+		Boolean rst = doctorService.updateDocInfo(doctor);
+	}
 }

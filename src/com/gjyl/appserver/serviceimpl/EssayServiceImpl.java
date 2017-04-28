@@ -154,5 +154,12 @@ public class EssayServiceImpl implements EssayService {
 		return 0;
 	}
 
+	public List<Essay> getUserEssaies(String userid,Integer pageNum) {
+		Map<String,Object> map=new HashMap<>();
+		map.put("userid",userid);
+		map.put("pageNum",pageNum);
+		return dao.getUserEssaies(map);
+	}
+
 
 }

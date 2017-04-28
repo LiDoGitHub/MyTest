@@ -1,0 +1,44 @@
+<div class="panel admin-panel">
+    <div class="padding border-bottom">
+        <ul class="search" style="padding-left:10px;">
+            <li> <a class="button border-main icon-plus-square-o" id="addImg" style="cursor:pointer"> 添加内容</a> </li>
+        </ul>
+    </div>
+    <table class="table table-hover text-center">
+        <tr>
+            <th width="20%">首页轮播图</th>
+            <th width="20%">缩略图</th>
+            <th width="20%">标题</th>
+            <th width="20%">添加时间</th>
+            <th width="20%">操作</th>
+        </tr>
+        <tbody id="goods3">
+
+
+        </tbody>
+        <tr class="transPage">
+            <td colspan="8">
+                <div class="pagelist"> <span id="first">第一页</span> <span id="pre" >上一页</span> <span id="next" >下一页</span> <span id="last">最后一页</span> 第<span id="spanPageNum"></span>页/共<span id="spanTotalPage"></span>页</div>
+            </td>
+        </tr>
+    </table>
+</div>
+<script>
+    //首页轮播-------------------------------------------------------
+    var carousel={
+        getData:function(){
+
+        }
+    };
+
+
+
+    (function(){
+        //添加内容[---图片----]-------------------------------------------
+        var addimgBtn=$("#addImg");
+        addimgBtn.click(function(){
+            mainBox.ajaxData("carousel/addCarousel.html",$(".admin"));
+        })
+    })();
+
+</script>

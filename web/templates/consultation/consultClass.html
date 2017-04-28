@@ -1,1 +1,107 @@
-.....................................
+<div class="panel admin-panel">
+    <div class="padding border-bottom">
+        <ul class="search" style="padding-left:10px;">
+            <li> <a class="button border-main icon-plus-square-o" id="addtxtClass" style="cursor:pointer"> 添加内容</a> </li>
+        </ul>
+    </div>
+    <table class="table table-hover text-center">
+        <tr>
+            <th width="8%">分类名称</th>
+            <th>备注</th>
+            <th width="20%">操作</th>
+        </tr>
+        <tbody id="goods3">
+        <!--<tr>
+            <td>咨询分类</td>
+            <td>33333333333</td>
+            <td>
+                <a href="javascript:;" class="button border-main edit">修改</a>
+                <a href="javascript:;" class="button border-main edit">删除</a>
+            </td>
+        </tr>-->
+        </tbody>
+    </table>
+</div>
+<script>
+    //资讯[文章]分类---------------------------------------------------------------------------------
+    var consultClass={
+        //后台数据调用----------------------------------------------------------------------
+        getData:function(){
+            var goodsBox=$("#goods3");//内容渲染盒子
+            $.ajax({
+                url:serUrl+"cyclType/getAllTypes",
+                type:"get",
+                crossDomain:true,
+                dataType:"json",
+                success:function(data){
+                   // console.log(data);
+                    var content="";//内容储存---------------
+                    for(var k=0;k<data.length;k++){
+                        content+='<tr>'+
+                                '<td>'+data[k].typename+'</td>'+
+                                '<td>'+data[k].memo+'</td>'+
+                                '<td>'+ '<a id="alter" val="'+data[k].typeid+'" href="javascript:;" class="button border-main edit">修改</a>'+
+                                '<a id="del" val="'+data[k].typeid+'" href="javascript:;"  class="button border-red del">删除</a>'+
+                                '</td>'+
+                                '</tr>';
+                    }
+                    goodsBox.append(content);
+                },
+                error:function(){
+                    console.log(".....请求发生错误了.....")
+                }
+            })
+        },
+        del:function(id){
+            $.ajax({
+                url:serUrl+"cyclType/deleCyclType",
+                type:"post",
+                data:{"typeid":id},
+                crossDomain:true,
+                dataType:"json",
+                success:function(data){
+                    console.log(data);
+                },
+                error:function(){
+                    console.log("请求发生错误,没有完成删除......");
+                }
+            });
+        }
+    };
+
+    (function(){
+        //页面的数据填充------------------------------------------------------------
+        consultClass.getData();
+
+
+        //添加内容点击事件---------------------------------------------------------
+        $("#addtxtClass").click(function(){
+            //跳转到添加内容界面-------------------------------------------------
+            mainBox.ajaxData("consultation/addconsult.html",$(".admin"));
+        });
+
+
+        //删除文章分类----------------------------------------------------------
+        var tbody=$("tbody");
+        tbody.on("click","#del",function(){
+            var id=$(this).attr("val");
+            if(confirm("你确定要删除这一条数据吗?")){
+                consultClass.del(id);
+                mainBox.ajaxData("consultation/consultClass.html",$(".admin"));
+            }
+        });
+
+        //修改文章分类-------------------------------------------------------------
+        tbody.on("click","#alter",function(){
+            var id=$(this).attr("val");
+            //console.log(id);
+            sessionStorage.setItem("typeid",id);
+            mainBox.ajaxData("consultation/updateConsult.html",$(".admin"));
+        })
+
+    })();
+
+
+
+
+</script>

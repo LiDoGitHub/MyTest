@@ -14,4 +14,6 @@ public interface DoctorService {
 	Doctor getDrInfo(String docId);
 
     Boolean executeBatch(List<Object> list);
+
+    Boolean updateDocInfo(Doctor doctor);
 }

@@ -21,7 +21,7 @@ var LoginBox={
 						var user=JSON.parse($.cookie("user"));
 						console.log($.cookie("user"));
 						console.log("Id："+user.userid+"昵称："+data.name+"手机号："+data.phone+"性别："+data.gender);
-						window.open("main.html");
+						window.open("main.html","_self");
 					}else if(data.role == "1"){
 						$.cookie("user",JSON.stringify(data));
 						console.log("Id："+data.id+"昵称："+data.name+"手机号："+data.phone+"性别："+data.gender);
@@ -58,13 +58,12 @@ $(function () {
 	//--------------------------------------点击登录事件-----------------------
 	login.on("click",function(){
 		LoginBox.login();
-		alert(3);
 	});
 	/* --------------------------回车键登录-------------------------------- */
 	$(document).on("keydown",function(ev){
 		ev=ev||window.event;
 		if(ev.keyCode==13){
-			//LoginBox.login();
+			LoginBox.login();
 		}
 	});
 });
