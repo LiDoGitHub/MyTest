@@ -10,4 +10,8 @@ public interface DocArrService {
     DocArrangement getDocArrByDocId(String docid);
 
     DocArrangement getArrById(String arrid);
+
+    Boolean addDocArrangement(DocArrangement arrangement);
+
+    Boolean updateDocArrangement(DocArrangement arr);
 }

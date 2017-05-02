@@ -153,8 +153,9 @@ public class CyclopediaController {
 				list = cyclopediaService.getCyclByType(typeId, page);
 			}
 			response.getWriter().write(JSON.toJSONString(list));
+		}else {
+			response.getWriter().write(JSON.toJSONString("error"));
 		}
-		response.getWriter().write(JSON.toJSONString("error"));
 	}
 
 	/**

@@ -35,4 +35,18 @@ public class DocArrServiceImpl implements DocArrService {
     public DocArrangement getArrById(String arrid) {
         return dao.selectByPrimaryKey(arrid);
     }
+
+    public Boolean addDocArrangement(DocArrangement arrangement) {
+        int rst=dao.insertSelective(arrangement);
+        if (rst>0)
+            return true;
+        return false;
+    }
+
+    public Boolean updateDocArrangement(DocArrangement arr) {
+        int rst=dao.updateByPrimaryKeySelective(arr);
+        if (rst>0)
+            return true;
+        return false;
+    }
 }

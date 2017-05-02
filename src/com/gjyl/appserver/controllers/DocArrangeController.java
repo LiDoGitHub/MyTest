@@ -3,6 +3,7 @@ package com.gjyl.appserver.controllers;
 import com.alibaba.fastjson.JSON;
 import com.gjyl.appserver.pojo.DocArrangement;
 import com.gjyl.appserver.service.DocArrService;
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -56,7 +57,17 @@ public class DocArrangeController {
         String arrid = request.getParameter("arrid");
         if (arrid!=null&&!arrid.equals("")) {
             DocArrangement arr = docArrService.getArrById(arrid);
-            response.getWriter().write(JSON.toJSONString(arr));
+            if(arr==null){//没有排班,新增排班
+                DocArrangement arrangement = new DocArrangement();
+                arrangement.setArrid(arrid);
+                BeanUtils.populate(arrangement,request.getParameterMap());
+                Boolean rst = docArrService.addDocArrangement(arrangement);
+                response.getWriter().write(JSON.toJSONString(rst));
+            }else {//已有排班,更新排班
+                BeanUtils.populate(arr,request.getParameterMap());
+                Boolean rst = docArrService.updateDocArrangement(arr);
+                response.getWriter().write(JSON.toJSONString(rst));
+            }
         }else {
             response.getWriter().write(JSON.toJSONString("error"));
         }

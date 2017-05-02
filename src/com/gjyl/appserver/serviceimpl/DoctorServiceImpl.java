@@ -8,7 +8,9 @@ import com.gjyl.appserver.service.DoctorService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service("doctorService")
 public class DoctorServiceImpl implements DoctorService {
@@ -30,7 +32,9 @@ public class DoctorServiceImpl implements DoctorService {
 	public Doctor getDrInfo(String docId) {
 		Doctor doctor = mapper.getDrInfo(docId);
 		DocArrangement arrangement= arrDao.getArrangeByDocId(docId);
-		doctor.setArrangement(arrangement);
+		if (arrangement!=null) {
+			doctor.setArrangement(arrangement);
+		}
 		return doctor;
 	}
 
@@ -44,6 +48,16 @@ public class DoctorServiceImpl implements DoctorService {
 
 	public Boolean updateDocInfo(Doctor doctor) {
 		int rst=mapper.updateByPrimaryKeySelective(doctor);
+		if (rst>0)
+			return true;
+		return false;
+	}
+
+	public Boolean updateDocIcon(String docid, String s) {
+		Map<String,String> map=new HashMap<>();
+		map.put("docid",docid);
+		map.put("path",s);
+		int rst = mapper.updateDocIcon(map);
 		if (rst>0)
 			return true;
 		return false;

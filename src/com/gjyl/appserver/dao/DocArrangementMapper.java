@@ -13,6 +13,7 @@ public interface DocArrangementMapper {
     //查询
     DocArrangement selectByPrimaryKey(String arrid);
 
+    //更新
     int updateByPrimaryKeySelective(DocArrangement record);
 
     int updateByPrimaryKey(DocArrangement record);

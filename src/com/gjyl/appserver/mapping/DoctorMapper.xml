@@ -382,4 +382,10 @@
     </set>
     where DoctorId = #{doctorid,jdbcType=CHAR}
   </update>
+
+  <!-- 更新医生头像 -->
+  <update id="updateDocIcon" parameterType="java.util.Map" >
+    UPDATE Doctor SET Icon=#{path,jdbcType=VARCHAR}
+     WHERE DocId=#{docid,jdbcType=CHAR};
+  </update>
 </mapper>

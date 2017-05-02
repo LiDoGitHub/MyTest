@@ -158,7 +158,14 @@ public class EssayServiceImpl implements EssayService {
 		Map<String,Object> map=new HashMap<>();
 		map.put("userid",userid);
 		map.put("pageNum",pageNum*pageSize);
-		return dao.getUserEssaies(map);
+		List<Essay> list = dao.getUserEssaies(map);
+		if (list!=null&&list.size()>0){
+			for (Essay es : list) {
+				AppUser user = userDao.getUserById(es.getUserid());
+				es.setUser(user);
+			}
+		}
+		return list;
 	}
 
 

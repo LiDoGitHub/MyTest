@@ -3,6 +3,7 @@ package com.gjyl.appserver.dao;
 import com.gjyl.appserver.pojo.Doctor;
 
 import java.util.List;
+import java.util.Map;
 
 public interface DoctorMapper {
     int deleteByPrimaryKey(String doctorid);
@@ -31,4 +32,7 @@ public interface DoctorMapper {
 
     //Excel导入
     int executeBatch(List<Object> list);
+
+    //更新医生头像
+    int updateDocIcon(Map<String, String> map);
 }
