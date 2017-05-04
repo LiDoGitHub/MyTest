@@ -66,14 +66,17 @@
 	                data:{"phone":userPhone,"password":pwd,"name":userName,"gender":userGender},
 	                success:function(data){
 	                	if(data){
-	                		 alert("添加成功")
+                            if(confirm("添加成功 是否返回上一页?")){
+                                //重新加载页面
+                                mainBox.ajaxData("Manag/userManag.html",$(".admin"));
+                            }
 	                	}
 	                	else{
-	                		alert("添加失败,发生了未知的错误")
+	                		alert("添加失败!");
 	                	}
 	                },
 	                error:function(){
-	                    console.log("数据传输发生错误了............")
+                        alert("发生了不可描述的错误...");
 	                }
 	            })
 	        }
@@ -85,7 +88,7 @@
         //手机正则判断----------------------------------------------------------
         $("#userPhone").blur(function(){
         	var phone=$("#userPhone").val();
-        	if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(phone))){ 
+        	if(phone.length!=11||isNaN(phone)){
 		        $("#Prompt").css("display","block")
 		        return false; 
 		    }else{

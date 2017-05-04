@@ -18,4 +18,6 @@ public interface DoctorService {
     Boolean updateDocInfo(Doctor doctor);
 
 	Boolean updateDocIcon(String docid, String s);
+
+    Boolean addDoctor(Doctor doctor);
 }

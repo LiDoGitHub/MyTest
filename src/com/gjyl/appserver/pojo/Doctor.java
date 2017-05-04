@@ -217,7 +217,4 @@ public class Doctor {
 				+ ", seniority=" + seniority + ", commentcount=" + commentcount
 				+ ", city=" + city + ", titleid=" + titleid + "]";
 	}
-	
-	
-    
 }

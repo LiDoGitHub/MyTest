@@ -11,14 +11,7 @@
             <th width="20%">操作</th>
         </tr>
         <tbody id="goods3">
-        <!--<tr>
-            <td>咨询分类</td>
-            <td>33333333333</td>
-            <td>
-                <a href="javascript:;" class="button border-main edit">修改</a>
-                <a href="javascript:;" class="button border-main edit">删除</a>
-            </td>
-        </tr>-->
+        <!-- 填充内容 -->
         </tbody>
     </table>
 </div>
@@ -48,24 +41,30 @@
                     goodsBox.append(content);
                 },
                 error:function(){
-                    console.log(".....请求发生错误了.....")
+                    alert("发生了不可描述的错误");
                 }
             })
         },
         del:function(id){
-            $.ajax({
-                url:serUrl+"cyclType/deleCyclType",
-                type:"post",
-                data:{"typeid":id},
-                crossDomain:true,
-                dataType:"json",
-                success:function(data){
-                    console.log(data);
-                },
-                error:function(){
-                    console.log("请求发生错误,没有完成删除......");
-                }
-            });
+            if(!id.equals("66c1b532f82b4017b53f8ae2cf3c05a7")){
+                $.ajax({
+                    url: serUrl + "cyclType/deleCyclType",
+                    type: "post",
+                    data: {"typeid": id},
+                    crossDomain: true,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data) {
+                            alert("删除成功!");
+                        }else {
+                            alert("删除失败!");
+                        }
+                    },
+                    error: function () {
+                        alert("貌似发生了不可描述的错误...");
+                    }
+                });
+            }
         }
     };
 
@@ -85,7 +84,7 @@
         var tbody=$("tbody");
         tbody.on("click","#del",function(){
             var id=$(this).attr("val");
-            if(confirm("你确定要删除这一条数据吗?")){
+            if(confirm("哎呀,真的要删除吗?")){
                 consultClass.del(id);
                 mainBox.ajaxData("consultation/consultClass.html",$(".admin"));
             }

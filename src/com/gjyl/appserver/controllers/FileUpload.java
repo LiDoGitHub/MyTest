@@ -90,4 +90,24 @@ public class FileUpload {
 			response.getWriter().write(JSON.toJSONString(result));
 		}
 	}
+
+	/**
+	 * 图片上传,返回路劲,后台用
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/uploadFile")
+	public void uploadFile(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		response.setContentType("text/json;charset=utf-8");
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Method", "*");
+		response.addHeader("Access-Control-Max-Age", "10000");
+		List<String> list = FileUploadUtils.uploadImage(request);
+		if (list!=null&&list.size()==1){
+			response.getWriter().write(JSON.toJSONString(list.get(0)));
+		}else {
+			response.getWriter().write(JSON.toJSONString("error"));
+		}
+	}
 }

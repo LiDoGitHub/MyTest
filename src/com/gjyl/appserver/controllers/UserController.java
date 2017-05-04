@@ -407,4 +407,23 @@ public class UserController {
 		}
 	}
 
+	/**
+	 * 删除用户,后台用
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/delUser")
+	public void delUser(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		response.setContentType("text/json;charset=utf-8");
+		System.out.println("删除请求.......................");
+		String userid = request.getParameter("userid");
+		if (userid!=null&&!userid.equals("")){
+			Boolean rst= userService.deleteUser(userid);
+			response.getWriter().write(JSON.toJSONString(rst));
+		}else {
+			response.getWriter().write(JSON.toJSONString("Error"));
+		}
+	}
+
 }

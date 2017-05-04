@@ -18,4 +18,6 @@ public interface UserService {
 	AppUser umLogin(String uid);
 
     List<AppUser> getAllUsers();
+
+    Boolean deleteUser(String userid);
 }

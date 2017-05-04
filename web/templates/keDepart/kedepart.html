@@ -1,10 +1,10 @@
 <div class="panel admin-panel">
     <div class="padding border-bottom">
         <ul class="search" style="padding-left:10px;">
-            <li> <a class="button border-main icon-plus-square-o" id="addPart" style="cursor:pointer"> 添加内容</a> </li>
+            <li> <a class="button border-main icon-plus-square-o" id="addPart" style="cursor:pointer"> 添加科室</a> </li>
             <!--<li> <a class="button border-main icon-plus-square-o" id="addFile" style="cursor:pointer"> 添加文件</a> </li>-->
             <li style=""> 
-            	<a class="button border-main icon-plus-square-o" style="cursor:pointer;position: relative;"> 添加文件
+            	<a class="button border-main icon-plus-square-o" style="cursor:pointer;position: relative;"> 导入Excel
             		<input type="file" style="position: absolute;left:0;top:0;width:100px;height:40px;opacity:0;" id="addFile" />
             	</a>
             </li>
@@ -47,7 +47,7 @@
                                     '<td>'+data[k].name+'</td>'+
                                     '<td>'+data[k].memo+'</td>'+
                                     '<td>'+ '<a id="alter" val="'+data[k].sectionid+'" href="javascript:;" class="button border-main edit">修改</a>'+
-                                            '<a id="del" val="'+data[k].sectionid+'" href="javascript:;"  class="button border-red del">删除</a>'+
+                                     '<a id="del" val="'+data[k].sectionid+'" href="javascript:;"  class="button border-red del">删除</a>'+
                                     '</td>'+
                                '</tr>';
                     }

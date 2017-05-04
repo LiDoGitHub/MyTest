@@ -110,7 +110,6 @@ public class DoctorController {
 		if (docid!=null&&!docid.equals("")) {
 			Doctor doctor = doctorService.getDrInfo(docid);
 			BeanUtils.populate(doctor, request.getParameterMap());
-			System.out.println("密码.........\n"+doctor.getPassword());
 			Boolean rst = doctorService.updateDocInfo(doctor);
 			response.getWriter().write(JSON.toJSONString(rst));
 		}else {
@@ -166,6 +165,26 @@ public class DoctorController {
 			}
 		}else {
 			response.getWriter().write(JSON.toJSONString("error"));
+		}
+	}
+
+	/**
+	 * 新增医生,后台用
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/addDoctor")
+	public void addDoctor(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		response.setContentType("text/json;charset=utf-8");
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Method", "*");
+		response.addHeader("Access-Control-Max-Age", "10000");
+		Doctor doctor = new Doctor();
+		BeanUtils.populate(doctor,request.getParameterMap());
+		if (doctor.getName()!=null&&!doctor.getName().equals("")){
+			Boolean rst = doctorService.addDoctor(doctor);
+			response.getWriter().write(JSON.toJSONString(rst));
 		}
 	}
 }

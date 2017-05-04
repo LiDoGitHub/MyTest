@@ -5,6 +5,7 @@ import com.gjyl.appserver.pojo.AppUser;
 import java.util.List;
 
 public interface AppUserMapper {
+    //删除用户
     int deleteByPrimaryKey(String userid);
 
     int insert(AppUser record);

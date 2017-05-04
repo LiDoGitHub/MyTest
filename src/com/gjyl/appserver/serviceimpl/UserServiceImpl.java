@@ -53,4 +53,11 @@ public class UserServiceImpl implements UserService {
 
 		return mapper.getAllUsers();
 	}
+
+	public Boolean deleteUser(String userid) {
+		int rst=mapper.deleteByPrimaryKey(userid);
+		if (rst>0)
+			return true;
+		return false;
+	}
 }

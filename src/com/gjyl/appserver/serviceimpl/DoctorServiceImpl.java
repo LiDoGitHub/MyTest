@@ -62,4 +62,11 @@ public class DoctorServiceImpl implements DoctorService {
 			return true;
 		return false;
 	}
+
+	public Boolean addDoctor(Doctor doctor) {
+		int rst=mapper.insertSelective(doctor);
+		if (rst>0)
+			return true;
+		return false;
+	}
 }

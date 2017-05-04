@@ -18,7 +18,7 @@ var mainBox={
         var _self=this;
         var admin=$(".admin");
         //默认渲染------
-        this.ajaxData("zixun/cyclopedia.html",admin);
+        this.ajaxData("Manag/userManag.html",admin);
         $(".leftnav").on("click","li",function(){
             var index=parseInt($(this).attr("data-num"));
             //console.log(index);

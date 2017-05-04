@@ -426,3 +426,22 @@ p span{
 	width: 100px;
 	height: 50px;
 }
+.radio{
+	border:3px solid #2c7;
+	text-align: center;
+	vertical-align:middle;
+	font-size: 18px;
+	border-radius: 4px ;
+	width: 27px;
+	height: 27px;
+	display: inline-block;
+	margin-left: 10px;
+	color: #2c7;
+}
+.doctorIcon{
+	width: 100px;
+	height:100px;
+	border:2px solid #2c7;
+	border-radius: 50%;
+}
+

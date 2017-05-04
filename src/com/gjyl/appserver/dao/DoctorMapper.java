@@ -10,8 +10,6 @@ public interface DoctorMapper {
 
     int insert(Doctor record);
 
-    int insertSelective(Doctor record);
-
     Doctor selectByPrimaryKey(String doctorid);
 
     int updateByPrimaryKeySelective(Doctor record);
@@ -35,4 +33,7 @@ public interface DoctorMapper {
 
     //更新医生头像
     int updateDocIcon(Map<String, String> map);
+
+    //新增医生
+    int insertSelective(Doctor record);
 }
