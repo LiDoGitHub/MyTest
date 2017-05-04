@@ -46,6 +46,13 @@
     <include refid="Base_Column_List" />
     from Doctor
   </select>
+
+  <!-- 科室下医生 -->
+  <select id="getDocBySection" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select * from Doctor
+    WHERE Section = #{secName,jdbcType=VARCHAR};
+  </select>
+
   <!-- 获取医生信息 -->
   <select id="getDrInfo" resultMap="BaseResultMap" parameterType="java.lang.String" >
   	select 

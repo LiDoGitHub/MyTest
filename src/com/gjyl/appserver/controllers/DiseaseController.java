@@ -92,7 +92,7 @@ public class DiseaseController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/getDiseaseById")
+	@RequestMapping(value = "/getDiseaseById")
 	public void getDiseaseById(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
 		response.addHeader("Access-Control-Allow-Origin", "*");
@@ -102,5 +102,27 @@ public class DiseaseController {
 		DiseaseLibraryWithBLOBs disease = diseaseService.getDiseaseById(disId);
 		response.getWriter().write(JSON.toJSONString(disease));
 //		return (JSON) JSON.toJSON(disease);
+	}
+
+	/**
+	 * 新增疾病
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/addDisease")
+	public void addDisease(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		response.setContentType("text/json;charset=utf-8");
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Method", "*");
+		response.addHeader("Access-Control-Max-Age", "10000");
+		DiseaseLibraryWithBLOBs dlwb = new DiseaseLibraryWithBLOBs();
+		BeanUtils.populate(dlwb,request.getParameterMap());
+		if (dlwb.getName()!=null&&!dlwb.getName().equals("")){
+			Boolean rst = diseaseService.addDisease(dlwb);
+			response.getWriter().write(JSON.toJSONString(rst));
+		}else {
+			response.getWriter().write(JSON.toJSONString("error"));
+		}
 	}
 }

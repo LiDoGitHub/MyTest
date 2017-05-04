@@ -36,7 +36,6 @@ public class CollectController {
 		dc.setPattern("yyyy-MM-dd HH:mm:ss");
 		ConvertUtils.register(dc, Date.class);
 		BeanUtils.populate(collect, request.getParameterMap());
-		System.out.println("收藏..................\n" + collect);
 		if (collect.getUserid()!=null&&collect.getCyclopediaid()!=null) {
 			Boolean result = collectService.collectCycl(collect);
 			//		return (JSON) JSON.toJSON(result);

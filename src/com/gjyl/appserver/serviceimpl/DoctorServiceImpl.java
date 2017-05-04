@@ -69,4 +69,9 @@ public class DoctorServiceImpl implements DoctorService {
 			return true;
 		return false;
 	}
+
+	public List<Doctor> getDocBySection(String secName) {
+
+		return mapper.getDocBySection(secName);
+	}
 }

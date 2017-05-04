@@ -20,4 +20,6 @@ public interface DoctorService {
 	Boolean updateDocIcon(String docid, String s);
 
     Boolean addDoctor(Doctor doctor);
+
+    List<Doctor> getDocBySection(String secName);
 }

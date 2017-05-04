@@ -1,6 +1,7 @@
 package com.gjyl.appserver.pojo;
 
 public class DiseaseLibraryWithBLOBs extends DiseaseLibrary {
+
     private String userputquestion;
 
     private String doctoranswerquestion;

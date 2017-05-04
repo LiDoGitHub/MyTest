@@ -47,4 +47,11 @@ public class DiseaseServiceImpl implements DiseaseService {
 		}
 		return false;
 	}
+
+	public Boolean addDisease(DiseaseLibraryWithBLOBs dlwb) {
+		int rst=dao.insertSelective(dlwb);
+		if (rst>0)
+			return true;
+		return false;
+	}
 }

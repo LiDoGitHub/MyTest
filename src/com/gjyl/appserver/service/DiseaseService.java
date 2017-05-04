@@ -1,8 +1,8 @@
 package com.gjyl.appserver.service;
 
-import java.util.List;
-
 import com.gjyl.appserver.pojo.DiseaseLibraryWithBLOBs;
+
+import java.util.List;
 
 public interface DiseaseService {
 
@@ -15,6 +15,7 @@ public interface DiseaseService {
 	List<DiseaseLibraryWithBLOBs> getCommonDis();
 
 	Boolean updateDisease(DiseaseLibraryWithBLOBs disease);
-	
+
+    Boolean addDisease(DiseaseLibraryWithBLOBs dlwb);
 }
 

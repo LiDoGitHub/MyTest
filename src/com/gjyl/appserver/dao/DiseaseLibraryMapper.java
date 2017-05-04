@@ -1,13 +1,11 @@
 package com.gjyl.appserver.dao;
 
-import java.util.List;
-
 import com.gjyl.appserver.pojo.DiseaseLibraryWithBLOBs;
+
+import java.util.List;
 
 public interface DiseaseLibraryMapper {
     int deleteByPrimaryKey(String disid);
-
-    int insertSelective(DiseaseLibraryWithBLOBs record);
 
     DiseaseLibraryWithBLOBs selectByPrimaryKey(String disid);
 
@@ -23,6 +21,10 @@ public interface DiseaseLibraryMapper {
 
 	//联想搜索
 	List<String> getDisInfoByContent(String content);
+
 	//搜索结果
 	List<DiseaseLibraryWithBLOBs> getDisByContent(String content);
+
+	//新增疾病
+	int insertSelective(DiseaseLibraryWithBLOBs record);
 }

@@ -92,7 +92,7 @@ public class FileUpload {
 	}
 
 	/**
-	 * 图片上传,返回路劲,后台用
+	 * 图片上传,返回路径,后台用
 	 * @param request
 	 * @param response
 	 * @throws Exception
@@ -105,6 +105,7 @@ public class FileUpload {
 		response.addHeader("Access-Control-Max-Age", "10000");
 		List<String> list = FileUploadUtils.uploadImage(request);
 		if (list!=null&&list.size()==1){
+			System.out.println("图片路径:"+list.get(0));
 			response.getWriter().write(JSON.toJSONString(list.get(0)));
 		}else {
 			response.getWriter().write(JSON.toJSONString("error"));

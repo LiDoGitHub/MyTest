@@ -36,4 +36,7 @@ public interface DoctorMapper {
 
     //新增医生
     int insertSelective(Doctor record);
+
+    //科室下医生
+    List<Doctor> getDocBySection(String secName);
 }

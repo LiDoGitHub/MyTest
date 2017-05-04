@@ -187,4 +187,25 @@ public class DoctorController {
 			response.getWriter().write(JSON.toJSONString(rst));
 		}
 	}
+
+	/**
+	 * 科室下医生,后台用
+	 * @param secName:科室名称
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/getDocBySection")
+	public void getDocBySection(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		response.setContentType("text/json;charset=utf-8");
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Method", "*");
+		response.addHeader("Access-Control-Max-Age", "10000");
+		String secName = request.getParameter("secName");
+		if (secName!=null&&!secName.equals("")) {
+			List<Doctor> list = doctorService.getDocBySection(secName);
+			response.getWriter().write(JSON.toJSONString(list));
+		}else {
+			response.getWriter().write(JSON.toJSONString("error"));
+		}
+	}
 }
