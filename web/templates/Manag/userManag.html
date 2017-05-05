@@ -147,7 +147,7 @@
             	 $(this).text(" 否");
             	 consultClass.modify(ids,name);
             }
-        });
+        })
         tbody.on("click",".delete",function(){
             alert("不允许删除,请联系开发人员");//避免数据混乱
             mainBox.ajaxData("Manag/userManag.html",$(".admin"));
@@ -156,7 +156,8 @@
                 var uid = $(this).attr("id");//获取当前对象的ID
                 consultClass.delUser(uid);
             }
-        });
+        })
+		
     })();
 
 

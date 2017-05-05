@@ -101,8 +101,11 @@ public class FileUpload {
 	public void uploadFile(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		response.setContentType("text/json;charset=utf-8");
 		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
 		response.addHeader("Access-Control-Allow-Method", "*");
-		response.addHeader("Access-Control-Max-Age", "10000");
+//		response.addHeader("Access-Control-Max-Age", "10000");
+		// 接收跨域的cookie
+		response.setHeader("Access-Control-Allow-Credentials", "true");
 		List<String> list = FileUploadUtils.uploadImage(request);
 		if (list!=null&&list.size()==1){
 			System.out.println("图片路径:"+list.get(0));

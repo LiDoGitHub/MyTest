@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/disease")
@@ -32,8 +34,17 @@ public class DiseaseController {
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		response.addHeader("Access-Control-Allow-Method", "*");
 		response.addHeader("Access-Control-Max-Age", "10000");
-		List<DiseaseLibraryWithBLOBs> list= diseaseService.getAllDiseases();
-		response.getWriter().write(JSON.toJSONString(list));
+		String pageNum = request.getParameter("pageNum");
+		if (pageNum!=null&&!pageNum.equals("")) {
+			List<DiseaseLibraryWithBLOBs> list = diseaseService.getAllDiseases(pageNum);
+			Integer total=diseaseService.getTotalNum();
+			Map<String,Object> map=new HashMap<>();
+			map.put("list",list);
+			map.put("totalNum",total);
+			response.getWriter().write(JSON.toJSONString(map));
+		}else {
+			response.getWriter().write(JSON.toJSONString("error"));
+		}
 	}
 	/**
 	 * 常见疾病
@@ -57,14 +68,21 @@ public class DiseaseController {
 	 */
 	@RequestMapping(value="/setIsCommon")
 	public void setIsCommon(HttpServletRequest request,HttpServletResponse response) throws Exception {
+		response.setContentType("text/json;charset=utf-8");
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		response.addHeader("Access-Control-Allow-Method", "*");
 		response.addHeader("Access-Control-Max-Age", "10000");
-		DiseaseLibraryWithBLOBs disease=new DiseaseLibraryWithBLOBs();
-		BeanUtils.populate(disease, request.getParameterMap());
-		if (disease.getDisid()!=null&&disease.getIscommon()!=null) {
-			Boolean result= diseaseService.updateDisease(disease);
-			response.getWriter().write(JSON.toJSONString(result));
+		String disid = request.getParameter("disid");
+		System.out.println("是否常见:"+request.getParameter("iscommon"));
+		if (disid != null && !disid.equals("")) {
+			DiseaseLibraryWithBLOBs disease = diseaseService.getDiseaseById(disid);
+			BeanUtils.populate(disease, request.getParameterMap());
+			if (disease.getDisid() != null && disease.getIscommon() != null) {
+				Boolean result = diseaseService.updateDisease(disease);
+				response.getWriter().write(JSON.toJSONString(result));
+			} else {
+				response.getWriter().write(JSON.toJSONString("error"));
+			}
 		}else {
 			response.getWriter().write(JSON.toJSONString("error"));
 		}
@@ -99,6 +117,7 @@ public class DiseaseController {
 		response.addHeader("Access-Control-Allow-Method", "*");
 		response.addHeader("Access-Control-Max-Age", "10000");
 		String disId = request.getParameter("diseaseId");
+		System.out.println("disid======"+disId);
 		DiseaseLibraryWithBLOBs disease = diseaseService.getDiseaseById(disId);
 		response.getWriter().write(JSON.toJSONString(disease));
 //		return (JSON) JSON.toJSON(disease);
@@ -120,6 +139,50 @@ public class DiseaseController {
 		BeanUtils.populate(dlwb,request.getParameterMap());
 		if (dlwb.getName()!=null&&!dlwb.getName().equals("")){
 			Boolean rst = diseaseService.addDisease(dlwb);
+			response.getWriter().write(JSON.toJSONString(rst));
+		}else {
+			response.getWriter().write(JSON.toJSONString("error"));
+		}
+	}
+
+	/**
+	 * 删除疾病
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/delDisease")
+	public void delDisease(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		response.setContentType("text/json;charset=utf-8");
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Method", "*");
+		response.addHeader("Access-Control-Max-Age", "10000");
+		String disid = request.getParameter("disid");
+		if (disid!=null&&!disid.equals("")){
+			Boolean rst = diseaseService.delDiseaseById(disid);
+			response.getWriter().write(JSON.toJSONString(rst));
+		}else {
+			response.getWriter().write(JSON.toJSONString("error"));
+		}
+	}
+
+	/**
+	 * 编辑疾病
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/editDisease")
+	public void editDisease(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		response.setContentType("text/json;charset=utf-8");
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Method", "*");
+		response.addHeader("Access-Control-Max-Age", "10000");
+		String disid = request.getParameter("disid");
+		if (disid!=null&&!disid.equals("")) {
+			DiseaseLibraryWithBLOBs disease = diseaseService.getDiseaseById(disid);
+			BeanUtils.populate(disease, request.getParameterMap());
+			Boolean rst = diseaseService.updateDisease(disease);
 			response.getWriter().write(JSON.toJSONString(rst));
 		}else {
 			response.getWriter().write(JSON.toJSONString("error"));

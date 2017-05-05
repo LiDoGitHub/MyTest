@@ -87,7 +87,7 @@
     </div>
   </div>
 </div>
-<script src="assets/js/wangEditor/js/wangEditor.js"></script>
+<!--wangEditor.js+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 <script>
 	//增加咨询[文章内容的增加]-------------------------------------------------------------
 	var addText={
@@ -134,7 +134,9 @@
 			// 通过 elem 创建编辑器
 			var editor = new wangEditor(elem);
 			// 上传图片
-			editor.config.uploadImgUrl = '/upload';
+			editor.config.uploadImgUrl = serUrl+'upload/uploadFile';
+			// 可以自定义配置 xhr.withCredentials （默认为 true）
+			editor.config.withCredentials = false;
 			// 表情显示项
 			editor.config.emotionsShow = 'value';
 			editor.create();

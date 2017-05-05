@@ -29,12 +29,12 @@
     UserPutQuestion, DoctorAnswerQuestion, Symptom, Cure, Prompt
   </sql>
   <!-- 所有疾病列表 -->
-  <select id="getAllDiseases" resultMap="ResultMapWithBLOBs" >
+  <select id="getAllDiseases" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
   	select 
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from DiseaseLibrary
+    from DiseaseLibrary limit #{pageNum,jdbcType=INTEGER},20
   </select>
   <!-- 常见疾病 -->
   <select id="getCommonDis" resultMap="ResultMapWithBLOBs" >
@@ -45,7 +45,10 @@
     from DiseaseLibrary
     where isCommon=1
   </select>
-  
+  <!-- 总数 -->
+  <select id="getTotalNum" resultType="java.lang.Integer">
+    SELECT count(*) FROM DiseaseLibrary;
+  </select>
   <!-- 科室下疾病列表 -->
   <select id="getDiseaseList" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
    select 

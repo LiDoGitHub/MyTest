@@ -17,6 +17,7 @@ public class DiseaseServiceImpl implements DiseaseService {
 	private DiseaseLibraryMapper dao;
 	@Resource
 	private DoctorMapper docDao;
+	private static Integer PageSize=20;//每页数量
 
 	public List<DiseaseLibraryWithBLOBs> getDiseaseList(String sectionId) {
 		
@@ -26,14 +27,16 @@ public class DiseaseServiceImpl implements DiseaseService {
 	public DiseaseLibraryWithBLOBs getDiseaseById(String disId) {
 		//获取疾病+医生的信息
 		DiseaseLibraryWithBLOBs disease = dao.getDiseaseById(disId);
-		Doctor doctor = docDao.getDrInfo(disease.getDoctorid());
-		disease.setDoctor(doctor);
+		if (disease!=null&&disease.getDoctorid()!=null) {
+			Doctor doctor = docDao.getDrInfo(disease.getDoctorid());
+			disease.setDoctor(doctor);
+		}
 		return disease;
 	}
 
-	public List<DiseaseLibraryWithBLOBs> getAllDiseases() {
-		
-		return dao.getAllDiseases();
+	public List<DiseaseLibraryWithBLOBs> getAllDiseases(String pageNum) {
+		Integer page=Integer.valueOf(pageNum)*PageSize;
+		return dao.getAllDiseases(Integer.valueOf(page));
 	}
 
 	public List<DiseaseLibraryWithBLOBs> getCommonDis() {
@@ -53,5 +56,16 @@ public class DiseaseServiceImpl implements DiseaseService {
 		if (rst>0)
 			return true;
 		return false;
+	}
+
+	public Boolean delDiseaseById(String disid) {
+		int rst=dao.deleteByPrimaryKey(disid);
+		if (rst>0)
+			return true;
+		return false;
+	}
+
+	public Integer getTotalNum() {
+		return dao.getTotalNum();
 	}
 }

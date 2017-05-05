@@ -30,7 +30,7 @@ var mainBox={
                 case 5:_self.ajaxData("leaveWord/book.html",admin);break;//留言管理
                 case 6:_self.ajaxData("column/column.html",admin);break;//栏目管理
                 case 7:_self.ajaxData("disease/disease.html",admin);break;//疾病管理
-                case 8:_self.ajaxData("zixun/cyclopedia.html",admin);break;//咨询管理
+                case 8:_self.ajaxData("zixun/cyclopedia.html",admin);break;//资讯管理
                 case 9:_self.ajaxData("consultation/consultClass.html",admin);break;//资讯分类
                 case 10:_self.ajaxData("video/lecture.html",admin);break;//视频管理
                 case 11:_self.ajaxData("keDepart/kedepart.html",admin);break;//科室管理

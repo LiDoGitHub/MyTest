@@ -1,5 +1,5 @@
 <div class="panel admin-panel" id="add">
-    <div class="panel-head"><strong><span class="icon-pencil-square-o"></span> 医生排班</strong></div>
+    <div class="panel-head"><strong><span class="icon-pencil-square-o"></span> 医生资料</strong></div>
     <div class="body-content">
         <form>
             <div name="form1" class="form-x">
@@ -148,7 +148,6 @@
                 success:function(data){
                 	var flag="";
                 	var flag2="";
-                   console.log(data);
                    $("#Names").val(data.doctor.name);//修改的医生姓名
                     $("#icon").append("<img src="+data.doctor.icon+" class='doctorIcon'/>");//修改医生的头像
 	                    if(data.doctor.title=="主任医师"){
@@ -160,7 +159,6 @@
 	                     	}else if(data.doctor.title=="执业医师"){
 	                     		flag=3;
 	                     	}
-	                     	console.log(flag+"+++++++");
                      $("#titleid").children("option").eq(flag).attr("selected","selected");//修改的医生职称
                      	//循环出下列表职称的字段-------------------------------------------------------
 	                      for(var i=0;i<data.section.length;i++){
@@ -175,7 +173,6 @@
                        		}else{
                        			flag2=1;
                        		}
-                       		console.log(flag2+"++")
                         $("#city").children("option").eq(flag2).attr("selected","selected");//修改的医生地区
                          $("#adept").val(data.doctor.adept);//修改的医生擅长
                           $("#bio").val(data.doctor.bio);//修改的医生简介
@@ -252,7 +249,7 @@
 			data.append("docid",op);
 			data.append("icon",icon);
 			$.ajax({
-                url:serUrl+"doctor/updateDocIcon",
+                url:serUrl+"doctor/updateDocicon",
                 type:"post",
 				data:data,
 				async: false,  
@@ -279,7 +276,6 @@
 		$("#upDate").click(function(){
 			var ind=$("#titleid").val();//职称------------------------------------------
 			var title=$("#titleid").children("option").eq(ind).text();
-			console.log(title)
 			modifyDoctor.Submitinfo();
 		})
 		

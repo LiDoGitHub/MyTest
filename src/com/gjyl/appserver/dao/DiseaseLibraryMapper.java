@@ -5,7 +5,7 @@ import com.gjyl.appserver.pojo.DiseaseLibraryWithBLOBs;
 import java.util.List;
 
 public interface DiseaseLibraryMapper {
-    int deleteByPrimaryKey(String disid);
+
 
     DiseaseLibraryWithBLOBs selectByPrimaryKey(String disid);
 
@@ -15,7 +15,7 @@ public interface DiseaseLibraryMapper {
 
 	DiseaseLibraryWithBLOBs getDiseaseById(String disId);
 
-	List<DiseaseLibraryWithBLOBs> getAllDiseases();
+	List<DiseaseLibraryWithBLOBs> getAllDiseases(Integer pageNum);
 
 	List<DiseaseLibraryWithBLOBs> getCommonDis();
 
@@ -27,4 +27,10 @@ public interface DiseaseLibraryMapper {
 
 	//新增疾病
 	int insertSelective(DiseaseLibraryWithBLOBs record);
+
+	//删除疾病
+	int deleteByPrimaryKey(String disid);
+
+	//总量
+	Integer getTotalNum();
 }
