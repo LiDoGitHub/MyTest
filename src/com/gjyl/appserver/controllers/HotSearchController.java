@@ -1,19 +1,17 @@
 package com.gjyl.appserver.controllers;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
 import com.alibaba.fastjson.JSON;
 import com.gjyl.appserver.pojo.HotSearch;
 import com.gjyl.appserver.pojo.HotSearchResult;
 import com.gjyl.appserver.service.HotSearchService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Controller
 @RequestMapping("/hotSearch")
@@ -43,9 +41,13 @@ public class HotSearchController {
 	@RequestMapping(value="/getSearchRst",method=RequestMethod.POST)
 	public void getSearchRst(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
-		String content = request.getParameter("content");
-		HotSearchResult rst= hotSearchService.getSearchRst(content);
-		response.getWriter().write(JSON.toJSONString(rst));
+		String content = request.getParameter("content").trim();
+		if (content!=null&&!content.equals("")) {
+			HotSearchResult rst = hotSearchService.getSearchRst(content);
+			response.getWriter().write(JSON.toJSONString(rst));
+		}else {
+			response.getWriter().write(JSON.toJSONString("null"));
+		}
 	}
 
 

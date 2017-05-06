@@ -67,6 +67,9 @@ public class CyclopediaController {
 	@RequestMapping(value="/getCyclInfo",method = RequestMethod.POST)
 	public void getCyclInfo(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Method", "*");
+		response.addHeader("Access-Control-Max-Age", "10000");
 		String cyclId = request.getParameter("cyclId");
 		Cyclopedia cyclInfo = cyclopediaService.getCyclInfo(cyclId);
 		List<CyclType> list=cyclTypeService.getAllTypes();

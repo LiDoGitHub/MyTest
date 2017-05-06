@@ -73,6 +73,7 @@
     from Doctor
     where Section like
     concat ('%',#{content,jdbcType=VARCHAR},'%')
+    OR  Name LIKE concat ('%',#{content,jdbcType=VARCHAR},'%')
   </select>
 
   <!-- 批量导入 -->

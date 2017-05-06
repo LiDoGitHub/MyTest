@@ -33,7 +33,6 @@ public class CyclopediaServiceImpl implements CyclopediaService {
 	}
 
 	public Cyclopedia getCyclInfo(String cyclId) {
-		
 		Cyclopedia cyclopedia = mapper.getCyclInfo(cyclId);
 		CyclType type = typeMapper.getTypeById(cyclopedia.getTypeid());
 		cyclopedia.setType(typeMapper.getTypeById(cyclopedia.getTypeid()));
