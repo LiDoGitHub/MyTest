@@ -3,7 +3,7 @@ AppServer.iml
 
 out
 web/WEB-INF/classes
-web/WEB-INF/lib
+#web/WEB-INF/lib
 .idea
 *.iml
 AppServer.properties
