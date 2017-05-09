@@ -313,7 +313,6 @@
 			
 			//确认修改---------------------------------------------------------------------
 			updata:function(name,secname,remdoctor,icon,username,userputquestion,doctoricon,doctorname,doctorAnswerQuestion,bio,sympton,cure,prompt,sectionid,doctorid){
-				console.log(op+"++++++++++++");
 				$.ajax({
 					url: serUrl+'disease/editDisease',
 				    type:"post",
@@ -337,7 +336,6 @@
 				    	"doctorid":doctorid
 				    },//var disid,name,bio,usericon,username,doctoricon,doctorname,secname,docname,userputquestion,doctoranswerquestion,symptom,cure,prompt;
 				    success:function(data){
-				    	console.log(data);
 				   	 	if(data){
 				   	 		alert("修改成功!")
 				   	 	}else{
@@ -354,7 +352,6 @@
 
 	(function(){
 		var flag;//定义的标记全局变量------------------;
-		console.log(op);
 		//初始化数据----------------------------------------------------------------------
 	    disease.ready();
 	    

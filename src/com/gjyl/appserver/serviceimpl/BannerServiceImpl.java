@@ -1,27 +1,51 @@
 package com.gjyl.appserver.serviceimpl;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
 import com.gjyl.appserver.dao.BannerMapper;
+import com.gjyl.appserver.dao.CyclopediaMapper;
 import com.gjyl.appserver.pojo.Banner;
 import com.gjyl.appserver.service.BannerService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 @Service("bannerService")
 public class BannerServiceImpl implements BannerService {
 
 	@Resource
-	private BannerMapper mapper;
+	private BannerMapper dao;
+	@Resource
+	private CyclopediaMapper cyclopediaMapper;
 	
 	public List<Banner> getHomeBanners() {
-		return mapper.getBannersByCate(1);
+		return dao.getBannersByCate(1);
 	}
 
 	public List<Banner> getDisBanners() {
-		return mapper.getBannersByCate(2);
+		return dao.getBannersByCate(2);
 	}
 
+	public Boolean addBanner(Banner banner) {
+		System.out.println(banner.toString());
+		int rst=dao.insertSelective(banner);
+		if (rst>0)
+			return true;
+		return false;
+	}
+
+	public Banner getBanByCyclId(String cyclid) {
+		return dao.getBanByCyclId(cyclid);
+	}
+
+
+	public Banner getBanById(String banid) {
+		return dao.selectByPrimaryKey(banid);
+	}
+
+	public Boolean updateBanner(Banner banner) {
+		int rst=dao.updateByPrimaryKeySelective(banner);
+		if (rst>0)
+			return true;
+		return false;
+	}
 }

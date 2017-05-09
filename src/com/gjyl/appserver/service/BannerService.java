@@ -1,12 +1,20 @@
 package com.gjyl.appserver.service;
 
-import java.util.List;
-
 import com.gjyl.appserver.pojo.Banner;
+
+import java.util.List;
 
 public interface BannerService {
 
-	public List<Banner> getHomeBanners();
+	List<Banner> getHomeBanners();
 
-	public List<Banner> getDisBanners();
+	List<Banner> getDisBanners();
+
+	Boolean addBanner(Banner banner);
+
+	Banner getBanByCyclId(String banid);
+
+	Banner getBanById(String banid);
+
+	Boolean updateBanner(Banner banner);
 }

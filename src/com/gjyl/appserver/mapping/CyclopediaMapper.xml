@@ -76,6 +76,11 @@
     from Cyclopedia order by ReadTimes DESC
     limit 0,20
   </select>
+
+  <!-- 总数 -->
+  <select id="getTotalNum" resultType="java.lang.Integer">
+    SELECT count(*) FROM Cyclopedia;
+  </select>
   
   <!-- 新增文章 -->
   <insert id="addCycl" parameterType="com.gjyl.appserver.pojo.Cyclopedia" >

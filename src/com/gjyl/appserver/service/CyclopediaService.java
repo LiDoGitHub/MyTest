@@ -23,4 +23,8 @@ public interface CyclopediaService {
 	List<Cyclopedia> getHotCycl();
 
     Boolean updateCyclopedia(Cyclopedia cyclopedia);
+
+	List<Cyclopedia> getCyclListByPage(Integer integer);
+
+	Integer getTotalNum();
 }

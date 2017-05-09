@@ -13,6 +13,16 @@ public class Banner {
 
     private String cyclopediaid;
 
+    private Cyclopedia cyclopedia;
+
+    public Cyclopedia getCyclopedia() {
+        return cyclopedia;
+    }
+
+    public void setCyclopedia(Cyclopedia cyclopedia) {
+        this.cyclopedia = cyclopedia;
+    }
+
     public String getId() {
         return id;
     }
@@ -57,5 +67,15 @@ public class Banner {
 	public Banner() {
 		this.id=UUID.randomUUID().toString().replace("-", "");
 	}
-    
+
+    public String toString() {
+        return "Banner{" +
+                "id='" + id + '\'' +
+                ", cover='" + cover + '\'' +
+                ", site='" + site + '\'' +
+                ", categorycode=" + categorycode +
+                ", cyclopediaid='" + cyclopediaid + '\'' +
+                ", cyclopedia=" + cyclopedia +
+                '}';
+    }
 }

@@ -17,7 +17,14 @@
     from Banner
     where id = #{id,jdbcType=CHAR}
   </select>
-  
+  <!-- 文章关联的横幅 -->
+  <select id="getBanByCyclId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Columns" />
+    from Banner
+    WHERE CyclopediaId=#{cyclopediaid,jdbcType=CHAR}
+  </select>
+
   <select id="getBannersByCate" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
   	select
   	<include refid="Columns" />

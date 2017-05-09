@@ -1,7 +1,9 @@
 package com.gjyl.appserver.serviceimpl;
 
+import com.gjyl.appserver.dao.BannerMapper;
 import com.gjyl.appserver.dao.CyclTypeMapper;
 import com.gjyl.appserver.dao.CyclopediaMapper;
+import com.gjyl.appserver.pojo.Banner;
 import com.gjyl.appserver.pojo.CyclType;
 import com.gjyl.appserver.pojo.Cyclopedia;
 import com.gjyl.appserver.service.CyclopediaService;
@@ -19,6 +21,8 @@ public class CyclopediaServiceImpl implements CyclopediaService {
 	private CyclopediaMapper mapper;
 	@Resource
 	private CyclTypeMapper typeMapper;
+	@Resource
+	private BannerMapper banDao;
 
 	private static Integer pageSize=20;
 
@@ -85,5 +89,22 @@ public class CyclopediaServiceImpl implements CyclopediaService {
 			return true;
 		}
 		return false;
+	}
+
+	public List<Cyclopedia> getCyclListByPage(Integer pageNum) {
+		List<Cyclopedia> list = mapper.getCyclByPage(pageNum * pageSize);
+		if (list!=null){
+			for (Cyclopedia c : list) {
+				Banner ban= banDao.getBanByCyclId(c.getCyclopediaid());
+				if (ban!=null)
+					c.setBanner(ban);
+			}
+		}
+		return list;
+	}
+
+	public Integer getTotalNum() {
+
+		return mapper.getTotalNum();
 	}
 }

@@ -6542,7 +6542,7 @@ _e(function (E, $) {
 
         // -------- 定义load函数 --------
         fns.onload || (fns.onload = function (resultText, xhr) {
-            resultText=eval('('+resultText+')');
+        	resultText=eval('('+resultText+')');
             E.log('上传结束，返回结果为 ' + resultText);
 
             var editor = this;
@@ -6558,7 +6558,7 @@ _e(function (E, $) {
                 // 将结果插入编辑器
                 img = document.createElement('img');
                 img.onload = function () {
-                    var html = '<img src=' + resultText + ' alt="' + originalName + '" style="max-width:100%;"/>';
+                    var html = '<img src="' + resultText + '" alt="' + originalName + '" style="max-width:100%;"/>';
                     editor.command(null, 'insertHtml', html);
 
                     E.log('已插入图片，地址 ' + resultText);

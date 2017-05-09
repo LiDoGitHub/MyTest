@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="assets/js/doctor/jquery-3.1.0.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="assets/css/app.css"/>
+	</head>
+	<body>
+		<header class="info_head">
+			<img src="assets/images/u=2481470388,80264777&fm=23&gp=0.jpg" class="info_head_img"/>
+			<p>父母如何给孩子创造一个良好的家庭环境氛围</p>
+		</header>
+		<div class="info_info">
+			<div class="info_info_left">2017-3-5</div>
+			<div class="info_info_right">
+				<img src="assets/images/微信图片_20170505164923.png"/>
+				<span>浏览量</span>
+				<span class="info_sum">26465</span>
+			</div>
+		</div>
+		<section class="info_section">
+				翻译是在准确、通顺的基础上，把一种语言信息转变成另一种语言信息的行为。翻译是将一种相对陌生的表达方式，转换成相对熟悉的表达方式的过程。其内容有语言、文字、图形、符号的翻译。其中，在甲语和乙语中，“翻”是指的这两种语言的转换，即先把一句甲语转换为一句乙语，然后再把一句乙语转换为甲语；“译”是指这两种语言转换的过程，把甲语转换成乙语，在译成当地语言的文字中，进而明白乙语的含义。二者构成了一般意义上的翻译，让更多人了解其他语言的含义。
+		</section>
+		<!--<footer class="info_footer">
+			<dl class="info_footer_comment">
+				<dt><span class="info_footer_sty"></span>最新评论</dt>
+				<dd>
+					<img src="assets/images/u=2481470388,80264777&fm=23&gp=0.jpg" class="info_usericon"/>
+					<div class="info_comment">
+						<p class="info_names">秋日的风铃</p>
+						<p class="info_time">10小时前</p>
+						<p class="info_com">翻译是在准确、通顺的基础上，把一种语言信息转变成另一种语言信息的行为。翻译是将一种相对陌生的表达方式，转换成相对熟悉的表达方式的过程。其内容有语言、文字、图形、符号的翻译。其中，在甲语和乙语中，“翻”是指的这两种语言的转换，即先把一句甲语转换为一句乙语，然后再把一句乙语转换为甲语；“译”是指这两种语言转换的过程，把甲语转换成乙语，在译成当地语言的文字中，进而明白乙语的含义。二者构成了一般意义上的翻译，让更多人了解其他语言的含义。</p>
+					</div>
+				</dd>
+				<dd>
+					<img src="assets/images/微信图片_20170505164929.png" class="info_usericon"/>
+					<div class="info_comment">
+						<p class="info_names">中指朝天</p>
+						<p class="info_time">2小时前</p>
+						<p class="info_com">让更多人了解其他语言的含义。哈哈哈哈哈哈</p>
+					</div>
+				</dd>
+			</dl>
+		</footer>-->
+		<script type="text/javascript">
+		//截取url参数---------------------------------------------------------------------------------
+			var serUrl="http://192.168.1.11:10010/AppServer/";
+			function getQueryString(name) { 
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+				var r = window.location.search.substr(1).match(reg); 
+				if (r != null) return unescape(r[2]); return null; 
+				} 
+			
+			
+			(function(){
+				var url=getQueryString("id");
+				//获取数据------------------------------------------------------------------------------
+				$.ajax({
+				url: serUrl+'cyclopedia/getCyclInfo',
+				type:"post",
+				data:{"cyclId":url},
+				crossDomain:true,
+				dataType:"json",
+				success:function(data){
+					$(".info_head>img").attr("src",data.cover);
+					$(".info_head>p").html(data.title);
+					var yy=data.ctime.split(" ");
+					$(".info_info_left").html(yy[0]);
+					$('.info_sum').html(data.readtimes);
+					$(".info_section").html(data.content)
+				},
+				error:function(){
+					console.log("无法获取列表当中的数据内容.........");
+				}
+			})
+			})()
+		</script>
+	</body>
+</html>

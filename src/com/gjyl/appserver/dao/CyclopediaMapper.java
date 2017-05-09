@@ -1,9 +1,9 @@
 package com.gjyl.appserver.dao;
 
+import com.gjyl.appserver.pojo.Cyclopedia;
+
 import java.util.List;
 import java.util.Map;
-
-import com.gjyl.appserver.pojo.Cyclopedia;
 
 public interface CyclopediaMapper {
     int deleteByPrimaryKey(String cyclopediaid);
@@ -37,4 +37,7 @@ public interface CyclopediaMapper {
 
 	//获取热门文章
 	List<Cyclopedia> getHotCycl();
+
+	//总数
+    Integer getTotalNum();
 }
