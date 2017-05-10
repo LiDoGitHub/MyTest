@@ -22,4 +22,6 @@ public interface DoctorService {
     Boolean addDoctor(Doctor doctor);
 
     List<Doctor> getDocBySection(String secName);
+
+    List<Doctor> getTodayDoctor();
 }

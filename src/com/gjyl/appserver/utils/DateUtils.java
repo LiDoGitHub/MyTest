@@ -57,4 +57,50 @@ public class DateUtils {
 		Date next = new Date(calendar.getTimeInMillis());
 		return next;
 	}
+
+	/**
+	 * 获取当前星期几
+	 */
+    public static String getWeekDay() {
+		String weekday;
+		Date date = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		int week_index=calendar.get(Calendar.DAY_OF_WEEK)-1;
+		switch (week_index){
+			case 0:{
+				weekday="sunday";
+				break;
+			}
+			case 1:{
+				weekday="monday";
+				break;
+			}
+			case 2:{
+				weekday="tuesday";
+				break;
+			}
+			case 3:{
+				weekday="wensday";
+				break;
+			}
+			case 4:{
+				weekday="thursday";
+				break;
+			}
+			case 5:{
+				weekday="friday";
+				break;
+			}
+			case 6:{
+				weekday="saturday";
+				break;
+			}
+			default:{
+				weekday="monday";
+				break;
+			}
+		}
+		return weekday;
+	}
 }

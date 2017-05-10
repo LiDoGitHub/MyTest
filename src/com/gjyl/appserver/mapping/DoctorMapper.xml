@@ -76,6 +76,15 @@
     OR  Name LIKE concat ('%',#{content,jdbcType=VARCHAR},'%')
   </select>
 
+  <!-- 当日坐诊 -->
+  <select id="getTodayDoctor" resultMap="BaseResultMap" parameterType="java.util.Map" statementType="STATEMENT" >
+    select
+    <include refid="Base_Column_List" />
+    from Doctor
+    WHERE  DoctorId IN
+    (SELECT docId FROM DocArrangement WHERE ${weekDay} &lt; 3)
+  </select>
+  
   <!-- 批量导入 -->
   <update id="executeBatch" parameterType="java.util.List" >
     <foreach collection="list" index="index" item="item" open="" close="" separator=";" >

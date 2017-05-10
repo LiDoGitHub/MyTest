@@ -24,7 +24,7 @@ public class EssayServiceImpl implements EssayService {
 	@Resource
 	private AppUserMapper userDao;
 
-	private static Integer pageSize=30;
+	private static Integer pageSize=20;
 
 	public Boolean publishEssay(Essay essay) {
 

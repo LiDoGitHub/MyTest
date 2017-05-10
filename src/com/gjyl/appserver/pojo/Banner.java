@@ -47,7 +47,6 @@ public class Banner {
         this.site = site == null ? null : site.trim();
     }
 
-
     public Integer getCategorycode() {
 		return categorycode;
 	}
@@ -66,6 +65,8 @@ public class Banner {
 
 	public Banner() {
 		this.id=UUID.randomUUID().toString().replace("-", "");
+        this.categorycode=1;
+        this.site="app.html";
 	}
 
     public String toString() {

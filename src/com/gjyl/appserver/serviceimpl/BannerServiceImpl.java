@@ -7,7 +7,9 @@ import com.gjyl.appserver.service.BannerService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service("bannerService")
 public class BannerServiceImpl implements BannerService {
@@ -44,6 +46,15 @@ public class BannerServiceImpl implements BannerService {
 
 	public Boolean updateBanner(Banner banner) {
 		int rst=dao.updateByPrimaryKeySelective(banner);
+		if (rst>0)
+			return true;
+		return false;
+	}
+
+	public Boolean deleteBanners(String[] ids) {
+		Map<String,String[]> map=new HashMap<>();
+		map.put("list",ids);
+		int rst=dao.deleteBanners(map);
 		if (rst>0)
 			return true;
 		return false;

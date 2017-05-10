@@ -39,4 +39,7 @@ public interface DoctorMapper {
 
     //科室下医生
     List<Doctor> getDocBySection(String secName);
+
+    //当日坐诊
+    List<Doctor> getTodayDoctor(Map<String,String>map);
 }

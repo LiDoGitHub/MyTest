@@ -17,4 +17,6 @@ public interface BannerService {
 	Banner getBanById(String banid);
 
 	Boolean updateBanner(Banner banner);
+
+    Boolean deleteBanners(String[] ids);
 }

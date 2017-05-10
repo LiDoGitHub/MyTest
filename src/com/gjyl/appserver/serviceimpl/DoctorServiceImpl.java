@@ -5,6 +5,7 @@ import com.gjyl.appserver.dao.DoctorMapper;
 import com.gjyl.appserver.pojo.DocArrangement;
 import com.gjyl.appserver.pojo.Doctor;
 import com.gjyl.appserver.service.DoctorService;
+import com.gjyl.appserver.utils.DateUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -73,5 +74,12 @@ public class DoctorServiceImpl implements DoctorService {
 	public List<Doctor> getDocBySection(String secName) {
 
 		return mapper.getDocBySection(secName);
+	}
+
+	public List<Doctor> getTodayDoctor() {
+		String weekDay = DateUtils.getWeekDay();
+		Map<String,String> map=new HashMap<>();
+		map.put("weekDay",weekDay);
+		return mapper.getTodayDoctor(map);
 	}
 }

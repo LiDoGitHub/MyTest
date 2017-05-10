@@ -77,7 +77,6 @@ public class CyclopediaServiceImpl implements CyclopediaService {
 		return mapper.getCyclByType(map);
 	}
 
-	
 	public List<Cyclopedia> getHotCycl() {
 		
 		return mapper.getHotCycl();

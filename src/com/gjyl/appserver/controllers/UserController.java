@@ -295,6 +295,7 @@ public class UserController {
 		String uid = request.getParameter("uid");
 		AppUser user= userService.umLogin(uid);
 		if (user!=null) {
+			System.out.println("umLogin...........\n"+user.toString());
 			response.getWriter().write(JSON.toJSONString(user));
 //			return (JSON) JSON.toJSON(user);
 		}else {

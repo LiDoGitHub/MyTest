@@ -3,6 +3,7 @@ package com.gjyl.appserver.dao;
 import com.gjyl.appserver.pojo.Banner;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BannerMapper {
     int deleteByPrimaryKey(String id);
@@ -20,4 +21,7 @@ public interface BannerMapper {
     List<Banner> getBannersByCate(Integer categoryCode);
 
     Banner getBanByCyclId(String cyclopediaid);
+
+    //批量删除
+    int deleteBanners(Map<String,String[]> map);
 }

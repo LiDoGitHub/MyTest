@@ -96,7 +96,7 @@ public class BannerController {
 	}
 
 	/**
-	 * 更换/添加Banner
+	 * 更换/添加Banner,后台用
 	 * @param request
 	 * @param response
 	 * @throws Exception
@@ -130,7 +130,7 @@ public class BannerController {
 	}
 
 	/**
-	 * banner详情
+	 * banner详情,后台用
 	 * @param request
 	 * @param response
 	 * @throws Exception
@@ -147,6 +147,30 @@ public class BannerController {
 			response.getWriter().write(JSON.toJSONString(banner));
 		}else {
 			response.getWriter().write(JSON.toJSONString("error"));
+		}
+	}
+
+	/**
+	 * 批量删除
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/delBanners")
+	public void delBanners(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		response.setContentType("text/json;charset=utf-8");
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Method", "*");
+		response.addHeader("Access-Control-Max-Age", "10000");
+		String banids = request.getParameter("banids");
+		if (banids!=null&&!banids.equals("")) {
+			String[] ids = banids.split(",");
+			if (ids.length > 0) {
+				Boolean rst = bannerService.deleteBanners(ids);
+				response.getWriter().write(JSON.toJSONString(rst));
+			}
+		}else {
+			response.getWriter().write("error");
 		}
 	}
 }

@@ -74,6 +74,19 @@ public class DoctorController {
 	}
 
 	/**
+	 * 当日坐诊医生
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/getTodayDoctor")
+	public void getTodayDoctor(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		response.setContentType("text/json;charset=utf-8");
+		List<Doctor> list=doctorService.getTodayDoctor();
+		response.getWriter().write(JSON.toJSONString(list));
+	}
+
+	/**
 	 * 导入Excel表格
 	 * @param request
 	 * @param response
