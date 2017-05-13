@@ -389,7 +389,7 @@ function binl2hex(binarray)
     str += hex_tab.charAt((binarray[i>>2] >> ((i%4)*8+4)) & 0xF) +
            hex_tab.charAt((binarray[i>>2] >> ((i%4)*8  )) & 0xF);
   }
-  return str;
+  return str.toUpperCase();
 }
 function binl2b64(binarray)
 {

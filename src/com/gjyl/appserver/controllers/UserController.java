@@ -162,13 +162,7 @@ public class UserController {
 				map.put(nodeValue.getNodeName(), nodeValue.getTextContent());
 			}
 		}
-
 		return  "ok".equals(map.get("message").toLowerCase());
-		/*if ("ok".equals(map.get("message").toLowerCase())) {
-			return true;
-		}else {
-			return false;
-		}*/
 	}
 
 	/**

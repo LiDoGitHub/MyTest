@@ -8,6 +8,7 @@ import com.gjyl.appserver.service.MyFocusService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,7 @@ public class MyFocusServiceImpl implements MyFocusService {
         if (myFocus.size()>0) {
             return userDao.getFocusUsers(myFocus);
         }else {
-            return null;
+            return Collections.emptyList();
         }
     }
 

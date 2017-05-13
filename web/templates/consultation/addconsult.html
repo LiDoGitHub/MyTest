@@ -47,20 +47,11 @@
                 dataType:"json",
                 data:formData,
                 success:function(data){
-                    if(oName!=""||oText!=""){
-                        if(!isNaN(parseInt(oText))&&parseInt(oText)!=1){
-                            if(confirm("添加成功了 返回页面吗?")){
+                    if(confirm("添加成功了 返回页面吗?")){
                                 //重新加载页面
                                 mainBox.ajaxData("consultation/consultClass.html",$(".admin"));
                                 $("#title").val("");
                                 $("#content").val("");
-                            }
-                        }else{
-                            alert("只能是数字并且数字不能为1...................");
-                            return;
-                        }
-                    }else{
-                        alert("任意的文本内容都不能为空..........");
                     }
                 },
                 error:function(){
@@ -74,13 +65,15 @@
     (function(){
         //添加数据----------------------------------------------
         $("#addBtn").click(function(){
-            addConsult.getData();
-        });
-
-        //事件触发-------------------------------------------------------------
-        $(document).keydown(function(ev){
-            if(ev.keyCode==13){
-                $("#addBtn").trigger("click");
+        	if($("#title").val()!=""||$("#content").val()!=""){
+                        if(!isNaN(parseInt($("#content").val()))&&parseInt($("#content").val())>1){
+                            addConsult.getData();
+                        }else{
+                            alert("只能是数字并且数字不能为1...................");
+                            return;
+                        }
+            }else{
+                alert("任意的文本内容都不能为空..........");
             }
         });
     })();

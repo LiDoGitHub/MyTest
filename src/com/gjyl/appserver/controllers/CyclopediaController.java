@@ -22,7 +22,7 @@ import java.util.Map;
 @RequestMapping(value="/cyclopedia")
 public class CyclopediaController {
 
-	private static final String HOTID="66c1b532f82b4017b53f8ae2cf3c05a7";
+	private static final String HOTID="5c88cd42ebf64b92b65dac9e73045d65";
 
 	@Resource
 	private CyclopediaService cyclopediaService;

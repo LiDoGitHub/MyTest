@@ -32,8 +32,12 @@ public class MyFocusController {
     public void getMyFocus(HttpServletRequest request, HttpServletResponse response) throws Exception {
         response.setContentType("text/json;charset=utf-8");
         String userid = request.getParameter("userid");
-        List<AppUser> list= myfocueService.getMyFocuses(userid);
-        response.getWriter().write(JSON.toJSONString(list));
+        if (userid!=null&&!userid.equals("")) {
+            List<AppUser> list = myfocueService.getMyFocuses(userid);
+            response.getWriter().write(JSON.toJSONString(list));
+        }else {
+            response.getWriter().write(JSON.toJSONString("error"));
+        }
     }
 
     /**
