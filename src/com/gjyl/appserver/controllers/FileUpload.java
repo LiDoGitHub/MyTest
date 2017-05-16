@@ -39,9 +39,6 @@ public class FileUpload {
 	@RequestMapping(value="/ImgUpload",method=RequestMethod.POST)
 	public void imgUpload(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Method", "*");
-		response.addHeader("Access-Control-Max-Age", "10000");
 //		String prePath = FileUploadUtils.getPrePath(request);
 		//封装数据
 		Cyclopedia cyclopedia = new Cyclopedia();
@@ -100,9 +97,6 @@ public class FileUpload {
 	@RequestMapping(value = "/uploadFile")
 	public void uploadFile(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		response.setContentType("text/json;charset=utf-8");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Method", "*");
-		response.addHeader("Access-Control-Max-Age", "10000");
 		List<String> list = FileUploadUtils.uploadImage(request);
 		if (list!=null&&list.size()==1){
 			System.out.println("图片路径: "+list.get(0));

@@ -31,9 +31,6 @@ public class DiseaseController {
 	@RequestMapping(value="/getAllDiseases")
 	public void getAllDisease(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Method", "*");
-		response.addHeader("Access-Control-Max-Age", "10000");
 		String pageNum = request.getParameter("pageNum");
 		if (pageNum!=null&&!pageNum.equals("")) {
 			List<DiseaseLibraryWithBLOBs> list = diseaseService.getAllDiseases(pageNum);
@@ -60,7 +57,7 @@ public class DiseaseController {
 	}
 
 	/**
-	 * 设置疾病是否常见
+	 * 设置疾病是否常见,后台用
 	 * @param request
 	 * @param response
 	 * @throws Exception
@@ -69,9 +66,6 @@ public class DiseaseController {
 	@RequestMapping(value="/setIsCommon")
 	public void setIsCommon(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Method", "*");
-		response.addHeader("Access-Control-Max-Age", "10000");
 		String disid = request.getParameter("disid");
 		System.out.println("是否常见:"+request.getParameter("iscommon"));
 		if (disid != null && !disid.equals("")) {
@@ -105,7 +99,7 @@ public class DiseaseController {
 	}
 
 	/**
-	 * 疾病详情
+	 * 疾病详情,后台共用
 	 * @param diseaseId:疾病ID
 	 * @return
 	 * @throws Exception
@@ -113,18 +107,14 @@ public class DiseaseController {
 	@RequestMapping(value = "/getDiseaseById")
 	public void getDiseaseById(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Method", "*");
-		response.addHeader("Access-Control-Max-Age", "10000");
 		String disId = request.getParameter("diseaseId");
-		System.out.println("disid======"+disId);
 		DiseaseLibraryWithBLOBs disease = diseaseService.getDiseaseById(disId);
 		response.getWriter().write(JSON.toJSONString(disease));
 //		return (JSON) JSON.toJSON(disease);
 	}
 
 	/**
-	 * 新增疾病
+	 * 新增疾病,后台用
 	 * @param request
 	 * @param response
 	 * @throws Exception
@@ -132,9 +122,6 @@ public class DiseaseController {
 	@RequestMapping(value = "/addDisease")
 	public void addDisease(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		response.setContentType("text/json;charset=utf-8");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Method", "*");
-		response.addHeader("Access-Control-Max-Age", "10000");
 		DiseaseLibraryWithBLOBs dlwb = new DiseaseLibraryWithBLOBs();
 		BeanUtils.populate(dlwb,request.getParameterMap());
 		if (dlwb.getName()!=null&&!dlwb.getName().equals("")){
@@ -146,7 +133,7 @@ public class DiseaseController {
 	}
 
 	/**
-	 * 删除疾病
+	 * 删除疾病,后台用
 	 * @param request
 	 * @param response
 	 * @throws Exception
@@ -154,9 +141,6 @@ public class DiseaseController {
 	@RequestMapping(value = "/delDisease")
 	public void delDisease(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		response.setContentType("text/json;charset=utf-8");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Method", "*");
-		response.addHeader("Access-Control-Max-Age", "10000");
 		String disid = request.getParameter("disid");
 		if (disid!=null&&!disid.equals("")){
 			Boolean rst = diseaseService.delDiseaseById(disid);
@@ -167,7 +151,7 @@ public class DiseaseController {
 	}
 
 	/**
-	 * 编辑疾病
+	 * 编辑疾病,后台用
 	 * @param request
 	 * @param response
 	 * @throws Exception
@@ -175,9 +159,6 @@ public class DiseaseController {
 	@RequestMapping(value = "/editDisease")
 	public void editDisease(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		response.setContentType("text/json;charset=utf-8");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Method", "*");
-		response.addHeader("Access-Control-Max-Age", "10000");
 		String disid = request.getParameter("disid");
 		if (disid!=null&&!disid.equals("")) {
 			DiseaseLibraryWithBLOBs disease = diseaseService.getDiseaseById(disid);

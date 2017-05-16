@@ -57,9 +57,6 @@ public class UserController {
 	@RequestMapping(value="/Login")
 	public void loginWithPwd(HttpServletRequest request,HttpServletResponse response) throws IOException{
 		response.setContentType("application/json;charset=utf-8");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Method", "*");
-		response.addHeader("Access-Control-Max-Age", "10000");
 		String phone = request.getParameter("phone");
 		String password = request.getParameter("password").toUpperCase();
 		if (phone!=null&&(!phone.equals(""))&&(!password.equals(""))) {
@@ -352,9 +349,6 @@ public class UserController {
 	@RequestMapping(value = "/getUserList")
 	public void getUserList(HttpServletRequest request,HttpServletResponse response) throws  Exception{
 		response.setContentType("text/json;charset=utf-8");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Method", "*");
-		response.addHeader("Access-Control-Max-Age", "10000");
 		List<AppUser> list= userService.getAllUsers();
 		response.getWriter().write(JSON.toJSONString(list));
 	}
@@ -370,9 +364,6 @@ public class UserController {
 	@RequestMapping(value = "/setManager")
 	public void setManager(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		response.setContentType("text/json;charset=utf-8");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Method", "*");
-		response.addHeader("Access-Control-Max-Age", "10000");
 		String userid = request.getParameter("userid");
 		AppUser user = userService.GetUserById(userid);
 		BeanUtils.populate(user,request.getParameterMap());
@@ -389,9 +380,6 @@ public class UserController {
 	@RequestMapping(value = "/addUser")
 	public void addUser(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		response.setContentType("text/json;charset=utf-8");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Method", "*");
-		response.addHeader("Access-Control-Max-Age", "10000");
 		AppUser user=new AppUser();
 		BeanUtils.populate(user,request.getParameterMap());
 		if (user.getPhone() != null && !user.getPhone().equals("")) {

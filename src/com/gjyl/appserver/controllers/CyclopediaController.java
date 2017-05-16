@@ -67,9 +67,6 @@ public class CyclopediaController {
 	@RequestMapping(value="/getCyclInfo",method = RequestMethod.POST)
 	public void getCyclInfo(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Method", "*");
-		response.addHeader("Access-Control-Max-Age", "10000");
 		String cyclId = request.getParameter("cyclId");
 		Cyclopedia cyclInfo = cyclopediaService.getCyclInfo(cyclId);
 		List<CyclType> list=cyclTypeService.getAllTypes();
@@ -86,9 +83,6 @@ public class CyclopediaController {
 	@RequestMapping(value = "/getCyclDetail",method = RequestMethod.POST)
 	public void getCyclDetail(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Method", "*");
-		response.addHeader("Access-Control-Max-Age", "10000");
 		String cyclId = request.getParameter("cyclId");
 		Cyclopedia cyclInfo = cyclopediaService.getCyclInfo(cyclId);
 		List<CyclType> types=cyclTypeService.getAllTypes();
@@ -107,9 +101,6 @@ public class CyclopediaController {
 	@RequestMapping(value="/getAllCycl")
 	public void getCyclopedia(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("application/json;charset=utf-8");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Method", "*");
-		response.addHeader("Access-Control-Max-Age", "10000");
 		response.setContentType("text/json;charset=utf-8");
 		List<Cyclopedia> list = cyclopediaService.getAllCyclopedias();
         response.getWriter().write(JSON.toJSONString(list));
@@ -124,9 +115,6 @@ public class CyclopediaController {
 	@RequestMapping(value="/delCyclopedia")
 	public void delCyclopedia(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Method", "*");
-		response.addHeader("Access-Control-Max-Age", "10000");
 		String cycId = request.getParameter("cyclId");
 		Boolean result = cyclopediaService.delCyclopedia(cycId);
 		response.getWriter().write(JSON.toJSONString(result));
@@ -170,9 +158,6 @@ public class CyclopediaController {
 	@RequestMapping(value = "/updateCyclopedia")
 	public void updateCyclopedia(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Method", "*");
-		response.addHeader("Access-Control-Max-Age", "10000");
 		String cyclId = request.getParameter("cyclopediaid");
 		if (cyclId != null && !cyclId.equals("")) {
 			Cyclopedia cyclopedia = cyclopediaService.getCyclInfo(cyclId);

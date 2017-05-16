@@ -79,9 +79,6 @@ public class BannerController {
 	@RequestMapping(value = "/getBannerList")
 	public void getBannerList(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		response.setContentType("text/json;charset=utf-8");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Method", "*");
-		response.addHeader("Access-Control-Max-Age", "10000");
 		String pageNum = request.getParameter("pageNum");
 		if (pageNum==null||pageNum.equals("")){
 			pageNum="0";
@@ -104,9 +101,6 @@ public class BannerController {
 	@RequestMapping(value = "/editBanner")
 	public void editBanner(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		response.setContentType("text/json;charset=utf-8");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Method", "*");
-		response.addHeader("Access-Control-Max-Age", "10000");
 		String banid = request.getParameter("banid");
 		Banner banner=null;
 		if (banid!=null&&!banid.equals("")) {
@@ -138,9 +132,6 @@ public class BannerController {
 	@RequestMapping(value = "/getBanner")
 	public void getBanner(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		response.setContentType("text/json;charset=utf-8");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Method", "*");
-		response.addHeader("Access-Control-Max-Age", "10000");
 		String cyclid = request.getParameter("cyclid");
 		if (cyclid!=null&&!cyclid.equals("")) {
 			Banner banner= bannerService.getBanByCyclId(cyclid);
@@ -159,9 +150,6 @@ public class BannerController {
 	@RequestMapping(value = "/delBanners")
 	public void delBanners(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		response.setContentType("text/json;charset=utf-8");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Method", "*");
-		response.addHeader("Access-Control-Max-Age", "10000");
 		String banids = request.getParameter("banids");
 		if (banids!=null&&!banids.equals("")) {
 			String[] ids = banids.split(",");

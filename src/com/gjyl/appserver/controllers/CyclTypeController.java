@@ -29,9 +29,6 @@ public class CyclTypeController {
 	@RequestMapping(value="/getAllTypes",method=RequestMethod.GET)
 	public void getTypes(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Method", "*");
-		response.addHeader("Access-Control-Max-Age", "10000");
 		List<CyclType> types = cyclTypeService.getAllTypes();
 		response.getWriter().write(JSON.toJSONString(types));
 	}
@@ -45,9 +42,6 @@ public class CyclTypeController {
 	@RequestMapping(value = "/addCyclType",method = RequestMethod.POST)
 	public void addCyclType(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		response.setContentType("text/json;charset=utf-8");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Method", "*");
-		response.addHeader("Access-Control-Max-Age", "10000");
 		CyclType type=new CyclType();
 		BeanUtils.populate(type,request.getParameterMap());
 		if (type.getTypename()!=null&&(!type.getTypename().equals(""))){
@@ -67,9 +61,6 @@ public class CyclTypeController {
 	@RequestMapping(value = "/editCyclType",method = RequestMethod.POST)
 	public void editCyclType(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		response.setContentType("text/json;charset=utf-8");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Method", "*");
-		response.addHeader("Access-Control-Max-Age", "10000");
 		String id=request.getParameter("typeid");
 		CyclType type= cyclTypeService.getTypeById(id);
 		BeanUtils.populate(type,request.getParameterMap());
@@ -86,9 +77,6 @@ public class CyclTypeController {
 	@RequestMapping(value = "/deleCyclType",method = RequestMethod.POST)
 	public void deleCyclType(HttpServletRequest request,HttpServletResponse response) throws  Exception{
 		response.setContentType("text/json;charset=utf-8");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Method", "*");
-		response.addHeader("Access-Control-Max-Age", "10000");
 		String id=request.getParameter("typeid");
 		Boolean rst=cyclTypeService.deleCyclTypeById(id);
 		response.getWriter().write(JSON.toJSONString(rst));
@@ -103,9 +91,6 @@ public class CyclTypeController {
 	@RequestMapping(value = "/getTypeInfo",method = RequestMethod.GET)
 	public  void getTypeInfo(HttpServletRequest request,HttpServletResponse response) throws  Exception{
 		response.setContentType("text/json;charset=utf-8");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Method", "*");
-		response.addHeader("Access-Control-Max-Age", "10000");
 		String id=request.getParameter("typeid");
 		CyclType type= cyclTypeService.getTypeById(id);
 		response.getWriter().write(JSON.toJSONString(type));

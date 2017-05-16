@@ -30,9 +30,6 @@ public class DocArrangeController {
     @RequestMapping(value = "/getDocArrange")
     public void getDocArrange(HttpServletRequest request, HttpServletResponse response) throws Exception{
         response.setContentType("text/json;charset=utf-8");
-        response.addHeader("Access-Control-Allow-Origin", "*");
-        response.addHeader("Access-Control-Allow-Method", "*");
-        response.addHeader("Access-Control-Max-Age", "10000");
         String docid = request.getParameter("docid");
         if (docid!=null&&!docid.equals("")) {
             DocArrangement arrangement = docArrService.getDocArrByDocId(docid);
@@ -51,9 +48,6 @@ public class DocArrangeController {
     @RequestMapping(value = "/editDocArrange")
     public void editDocArrange(HttpServletRequest request,HttpServletResponse response) throws Exception{
         response.setContentType("text/json;charset=utf-8");
-        response.addHeader("Access-Control-Allow-Origin", "*");
-        response.addHeader("Access-Control-Allow-Method", "*");
-        response.addHeader("Access-Control-Max-Age", "10000");
         String arrid = request.getParameter("arrid");
         if (arrid!=null&&!arrid.equals("")) {
             DocArrangement arr = docArrService.getArrById(arrid);
