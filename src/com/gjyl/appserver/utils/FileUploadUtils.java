@@ -33,6 +33,10 @@ public class FileUploadUtils {
 					String uuidname = getUUIDFileName(filename);
 					// 得到随机目录
 					String randomDirectory = getRandomDirectory(filename);
+					/*
+					if (file.getName().equals("video")){
+						request.getServletContext().setAttribute("videoPath",randomDirectory+"/"+uuidname);
+					}*/
 					//父目录
 					String parentPath = request.getServletContext().getRealPath("/images");
 					File rd = new File(parentPath, randomDirectory);

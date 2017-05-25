@@ -23,7 +23,13 @@
     from MyDoctor
     where UserId = #{userId,jdbcType=CHAR}
   </select>
-  
+
+  <!--医生是否收藏-->
+  <select id="isCollected" resultType="java.lang.Integer" parameterType="java.util.Map" >
+    SELECT count(*) FROM MyDoctor
+    WHERE UserId=#{userid,jdbcType=CHAR} AND DoctorId=#{docid,jdbcType=CHAR}
+  </select>
+
   <!-- 添加我的医生 -->
   <insert id="addMyDoctor" parameterType="com.gjyl.appserver.pojo.MyDoctor" >
   insert into MyDoctor
@@ -56,7 +62,12 @@
       </if>
     </trim>
   </insert>
-  
+
+  <!-- 删除我的医生-->
+  <delete id="delMyDoctor" parameterType="java.util.Map">
+    DELETE FROM MyDoctor
+    WHERE UserId=#{userid,jdbcType=CHAR} AND DoctorId=#{docid,jdbcType=CHAR}
+  </delete>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from MyDoctor

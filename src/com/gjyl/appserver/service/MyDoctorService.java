@@ -1,8 +1,8 @@
 package com.gjyl.appserver.service;
 
-import java.util.List;
-
 import com.gjyl.appserver.pojo.MyDoctor;
+
+import java.util.List;
 
 public interface MyDoctorService {
 
@@ -10,4 +10,7 @@ public interface MyDoctorService {
 
 	Boolean addMyDoctor(MyDoctor myDoctor);
 
+    Boolean isCollected(String docId, String userid);
+
+    Boolean delMyDoctor(String docid, String userid);
 }

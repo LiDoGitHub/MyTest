@@ -41,7 +41,17 @@ public class Doctor {
 
     private String adept;
 
-    private DocArrangement arrangement;
+    private DocArrangement arrangement;//医生排班
+
+    private Boolean isCollected;        //是否收藏
+
+    public Boolean getCollected() {
+        return isCollected;
+    }
+
+    public void setCollected(Boolean collected) {
+        isCollected = collected;
+    }
 
     public DocArrangement getArrangement() {
         return arrangement;

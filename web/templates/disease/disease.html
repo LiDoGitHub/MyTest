@@ -59,12 +59,12 @@
 	                                    '</td>'+
 	                               '</tr>';
                     }
-                    sum=Math.floor(data.totalNum/20);
+                    sum=Math.ceil(data.totalNum/20);
                     $("#pagenum").text(sum);
                     goodsBox.append(content);
                 },
                 error:function(){
-                    console.log(".....请求发生错误了.....")
+                    console.log(".....请求发生错误了.....");
                 }
             })
         },
@@ -74,12 +74,13 @@
         	$.ajax({
                 url:serUrl+"disease/setIsCommon",
                 type:"post",
-                data:{"docid":id,"iscommon":val},
+                data:{"disid":id,"iscommon":val},
                 crossDomain:true,
                 dataType:"json",
                 success:function(data){
                      if(data){
-                    	alert("修改成功")
+                    	alert("修改成功");
+                         mainBox.ajaxData("disease/disease.html",$(".admin"));
                     }
                 },
                 error:function(){

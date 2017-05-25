@@ -1,7 +1,9 @@
 package com.gjyl.appserver.serviceimpl;
 
 import com.gjyl.appserver.dao.CollectMapper;
+import com.gjyl.appserver.dao.CyclopediaMapper;
 import com.gjyl.appserver.pojo.Collect;
+import com.gjyl.appserver.pojo.Cyclopedia;
 import com.gjyl.appserver.service.CollectService;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,8 @@ public class CollectServiceImpl implements CollectService {
 
 	@Resource
 	private CollectMapper mapper;
+	@Resource
+	private CyclopediaMapper cyclDao;
 
 	public Boolean collectCycl(Collect collect) {
 		int result= mapper.collectCycl(collect);
@@ -49,8 +53,15 @@ public class CollectServiceImpl implements CollectService {
 	}
 
 	public List<Collect> getCollectByUserId(String userId) {
-
-		return mapper.getCollectByUserId(userId);
+		List<Collect> list = mapper.getCollectByUserId(userId);
+		if (list.size()>0){
+			for (Collect c : list) {
+				Cyclopedia cyclopedia = cyclDao.getCyclInfo(c.getCyclopediaid());
+				if (cyclopedia!=null)
+					c.setCyclopedia(cyclopedia);
+			}
+		}
+		return list;
 	}
 	
 }

@@ -57,6 +57,9 @@ public class UserController {
 	@RequestMapping(value="/Login")
 	public void loginWithPwd(HttpServletRequest request,HttpServletResponse response) throws IOException{
 		response.setContentType("application/json;charset=utf-8");
+		response.setHeader("Access-Control-Allow-Origin","*");
+		response.setHeader("Access-Control-Allow-Methods","*");
+		response.setHeader("Access-Control-Max-Age", "3600");
 		String phone = request.getParameter("phone");
 		String password = request.getParameter("password").toUpperCase();
 		if (phone!=null&&(!phone.equals(""))&&(!password.equals(""))) {

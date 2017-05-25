@@ -47,7 +47,7 @@
   </select>
   <!-- 总数 -->
   <select id="getTotalNum" resultType="java.lang.Integer">
-    SELECT count(*) FROM DiseaseLibrary;
+    SELECT count(*) FROM DiseaseLibrary
   </select>
   <!-- 科室下疾病列表 -->
   <select id="getDiseaseList" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >

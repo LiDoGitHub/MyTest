@@ -1,6 +1,7 @@
 package com.gjyl.appserver.pojo;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class Lecture {
     private String lecid;
@@ -81,5 +82,24 @@ public class Lecture {
 
     public void setAgrees(Integer agrees) {
         this.agrees = agrees;
+    }
+
+    public Lecture() {
+        this.lecid= UUID.randomUUID().toString().replace("-","");
+        this.ltime=new Date();
+    }
+
+    @Override
+    public String toString() {
+        return "Lecture{" +
+                "lecid='" + lecid + '\'' +
+                ", title='" + title + '\'' +
+                ", cover='" + cover + '\'' +
+                ", video='" + video + '\'' +
+                ", memo='" + memo + '\'' +
+                ", lduration='" + lduration + '\'' +
+                ", ltime=" + ltime +
+                ", agrees=" + agrees +
+                '}';
     }
 }

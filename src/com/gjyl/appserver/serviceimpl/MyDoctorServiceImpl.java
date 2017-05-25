@@ -8,7 +8,9 @@ import com.gjyl.appserver.service.MyDoctorService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service("myDrService")
 public class MyDoctorServiceImpl implements MyDoctorService {
@@ -34,5 +36,20 @@ public class MyDoctorServiceImpl implements MyDoctorService {
 		}
 		return false;
 	}
-	
+
+	public Boolean isCollected(String docId, String userid) {
+		Map<String,String> map=new HashMap<>();
+		map.put("docid",docId);
+		map.put("userid",userid);
+		int rst=dao.isCollected(map);
+		return rst > 0 ? true : false;
+	}
+
+	public Boolean delMyDoctor(String docid, String userid) {
+		Map<String,String> map=new HashMap<>();
+		map.put("docid",docid);
+		map.put("userid",userid);
+		int rst=dao.delMyDoctor(map);
+		return rst > 0 ? true : false;
+	}
 }

@@ -67,7 +67,6 @@ public class DiseaseController {
 	public void setIsCommon(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
 		String disid = request.getParameter("disid");
-		System.out.println("是否常见:"+request.getParameter("iscommon"));
 		if (disid != null && !disid.equals("")) {
 			DiseaseLibraryWithBLOBs disease = diseaseService.getDiseaseById(disid);
 			BeanUtils.populate(disease, request.getParameterMap());

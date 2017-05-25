@@ -11,6 +11,16 @@ public class Collect {
 
     private String ctime;
 
+    private Cyclopedia cyclopedia;
+
+    public Cyclopedia getCyclopedia() {
+        return cyclopedia;
+    }
+
+    public void setCyclopedia(Cyclopedia cyclopedia) {
+        this.cyclopedia = cyclopedia;
+    }
+
     public String getId() {
         return id;
     }

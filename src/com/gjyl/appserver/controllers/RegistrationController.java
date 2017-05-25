@@ -1,21 +1,19 @@
 package com.gjyl.appserver.controllers;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.beanutils.BeanUtils;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.alibaba.fastjson.JSON;
 import com.gjyl.appserver.pojo.AppUser;
 import com.gjyl.appserver.pojo.Registration;
 import com.gjyl.appserver.service.RegistrationService;
 import com.gjyl.appserver.service.UserService;
+import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/registration")
@@ -44,20 +42,19 @@ public class RegistrationController {
 		response.setContentType("text/json;charset=utf-8");
 		Registration registration = new Registration();
 		//订单号 start
-		String orderCode = new SimpleDateFormat("yyyyMMddHHmmss")
-				.format(new Date());
+		String orderCode = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 		registration.setOrdercode(orderCode);
 		//订单号 end
 
 		BeanUtils.populate(registration, request.getParameterMap());
-		if (registration.getPhone() != null && registration.getPhone() != "") {
+		if (registration.getPhone() != null && !registration.getPhone().equals("")) {
 			AppUser user = userService.GetUserByPhone(registration.getPhone());
-			if (user.getUserid() != null && user.getUserid() != "") {// 用户已存在,绑定用户ID
+			if (user.getUserid() != null && !user.getUserid().equals("")) {// 用户已存在,绑定用户ID
 				registration.setUserid(user.getUserid());
 			} else {// 不存在用户
 				AppUser appUser = new AppUser();
 				BeanUtils.populate(appUser, request.getParameterMap());
-				if (appUser.getPhone() != null && appUser.getPhone() != "") {// 新增用户
+				if (appUser.getPhone() != null && !appUser.getPhone().equals("")) {// 新增用户
 					Boolean result = userService.addUser(appUser);
 					if (result) {// 新增用户成功,绑定用户ID
 						registration.setUserid(appUser.getUserid());

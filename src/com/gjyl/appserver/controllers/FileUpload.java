@@ -97,9 +97,12 @@ public class FileUpload {
 	@RequestMapping(value = "/uploadFile")
 	public void uploadFile(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		response.setContentType("text/json;charset=utf-8");
+		response.setHeader("Access-Control-Allow-Origin","*");
+		response.setHeader("Access-Control-Allow-Methods","*");
+		response.setHeader("Access-Control-Max-Age", "3600");
 		List<String> list = FileUploadUtils.uploadImage(request);
 		if (list!=null&&list.size()==1){
-			System.out.println("图片路径: "+list.get(0));
+			System.out.println("文件路径: "+list.get(0));
 			response.getWriter().write(JSON.toJSONString(list.get(0)));
 		}else {
 			response.getWriter().write(JSON.toJSONString("error"));

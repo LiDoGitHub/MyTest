@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.gjyl.appserver.pojo.Doctor;
 import com.gjyl.appserver.pojo.Section;
 import com.gjyl.appserver.service.DoctorService;
+import com.gjyl.appserver.service.MyDoctorService;
 import com.gjyl.appserver.service.SectionService;
 import com.gjyl.appserver.utils.ExcelUtil;
 import com.gjyl.appserver.utils.FileUploadUtils;
@@ -27,6 +28,8 @@ public class DoctorController {
 	private DoctorService doctorService;
 	@Resource
 	private SectionService sectionService;
+	@Resource
+	private MyDoctorService myDoctorService;
 
 	/**
 	 * 主页随机获取三名医生
@@ -62,8 +65,15 @@ public class DoctorController {
 	public void getDrInfo(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
 		String docId = request.getParameter("docId");
-		if (docId!=null&&!docId.equals("")) {
+		String userid = request.getParameter("userid");
+		if (docId!=null&&!docId.equals("")&&userid!=null&&!userid.equals("")) {
 			Doctor doctor = doctorService.getDrInfo(docId);
+			if (doctor.getDoctorid()!=null&&!doctor.getDoctorid().equals("")){
+				Boolean isCollected = myDoctorService.isCollected(docId, userid);
+				doctor.setCollected(isCollected);
+			}else {
+				doctor.setCollected(false);
+			}
 			response.getWriter().write(JSON.toJSONString(doctor));
 		}else {
 			response.getWriter().write(JSON.toJSONString("error"));

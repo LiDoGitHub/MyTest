@@ -21,7 +21,6 @@ import java.util.Map;
 
 
 @Controller
-
 @RequestMapping("/banner")
 public class BannerController {
 
@@ -110,7 +109,7 @@ public class BannerController {
 			banner=new Banner();
 		}
 		BeanUtils.populate(banner,request.getParameterMap());
-		Boolean rst=false;
+		Boolean rst;
 		if (banner.getCover()!=null){
 			if (banid!=null&&!banid.equals("")) {
 				rst=bannerService.updateBanner(banner);
