@@ -8,3 +8,5 @@ web/WEB-INF/classes/
 *.iml
 AppServer.properties
 AppServer.xml
+/src/com/gjyl/appserver/controllers/MyTest.java
+/web/MyTest.html
