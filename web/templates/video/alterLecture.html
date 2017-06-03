@@ -35,7 +35,7 @@
                         </video>
                     </div>
                     <div>
-                        <a href="javascript:;" class="button bg-main icon-check-square-o" style="position: relative"> 点击修改视频
+                        <a href="javascript:void(0);" class="button bg-main icon-check-square-o" style="position: relative"> 点击修改视频
                             <input type="file" style="position: absolute;left: 0;top:0;width: 100%;height: 100%;opacity: 0" id="alterVideo"></a>
                     </div>
                     <div>
@@ -64,9 +64,10 @@
     </div>
 </div>
 <div style="position: fixed;left:0;top: 0;width: 100%;height: 100%;background:rgba(0,0,0,.5);display: none" id="VPrompt">
-    <div style="position: absolute;left: 50%;top: 50%;padding: 30px;">
+    <div style="position: absolute;left:  50%;top: 50%;padding: 30px;">
         <h2 style="background: white">视频上传中,请勿关闭页面!</h2>
-        <img src="assets/images/loogin.gif" style="width:228px;">
+        <progress value="0" style="border: 2px solid skyblue;margin-top: 20px;height: 20px;width: 100%"></progress>
+        <p id="upLoad" style="text-align: center"></p>
     </div>
 </div>
 <script>
@@ -115,15 +116,10 @@
             },
             //确认修改------------------------------------------------------------------
             alterLec:function(){
-                var video=$("#alterVideo")[0].files[0];
                 var data=new FormData();
                     data.append("cover",$("#VideoIcon").attr("src"));
                     data.append("title",$("#title").val());
-                if(video!=null&&video!=undefined&&video!="") {
-                    data.append("video", video);
-                }else {
-                    data.append("video", $("#video").attr("src"));
-                }
+                    data.append("video",$("#alterVideo")[0].files[0]);
                     data.append("lduration",$("#length").val());
                     data.append("lecid",op);
                 $.ajax({
@@ -135,6 +131,14 @@
                     processData: false,
                     crossDomain:true,
                     dataType:"json",
+                    xhr: function(){ //获取ajaxSettings中的xhr对象，为它的upload属性绑定progress事件的处理函数
+                        var myXhr = $.ajaxSettings.xhr();
+                        if(myXhr.upload){ //检查upload属性是否存在
+                            //绑定progress事件的回调函数
+                            myXhr.upload.addEventListener('progress',progressHandlingFunction, false);
+                        }
+                        return myXhr; //xhr对象返回给jQuery使用
+                    },
                     success:function(data){
                         if(data){
                             $("#VPrompt").css("display","none");
@@ -152,6 +156,14 @@
                         console.log("请求发生错误,没有完成删除......");
                     }
                 });
+                //上传进度回调函数：
+                function progressHandlingFunction(e) {
+                    if (e.lengthComputable) {
+                        $('progress').attr({value : e.loaded, max : e.total}); //更新数据到进度条
+                        var percent = e.loaded/e.total*100;
+                        $('#upLoad').html(e.loaded + "/" + e.total+" 上传进度. " + percent.toFixed(2) + "%");
+                    }
+                }
             }
     };
 
@@ -199,5 +211,6 @@
             lecTure.alterLec();
             $("#VPrompt").css("display","block");
         })
+
     })();
 </script>

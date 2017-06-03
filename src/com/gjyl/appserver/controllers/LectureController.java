@@ -28,9 +28,6 @@ public class LectureController {
 	@RequestMapping(value="/getAllLectures")
 	public void getAllLectures(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		response.setContentType("text/json;charset=utf-8");
-		response.setHeader("Access-Control-Allow-Origin","*");
-		response.setHeader("Access-Control-Allow-Methods","*");
-		response.setHeader("Access-Control-Max-Age", "3600");
 		List<Lecture> list= lectureService.getAllLectures();
 //		return (JSON) JSON.toJSON(list);
 		response.getWriter().write(JSON.toJSONString(list));
@@ -45,15 +42,11 @@ public class LectureController {
 	@RequestMapping(value = "/addLecture")
 	public void addLecture(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		response.setContentType("text/json;charset=utf-8");
-		response.setHeader("Access-Control-Allow-Origin","*");
-		response.setHeader("Access-Control-Allow-Methods","*");
-		response.setHeader("Access-Control-Max-Age", "3600");
 		List<String> path = FileUploadUtils.uploadImage(request);
 		if (path.size()>0) {
 			Lecture lecture = new Lecture();
 			lecture.setVideo(path.get(0));
 			BeanUtils.populate(lecture, request.getParameterMap());
-			System.out.println("......\n" + lecture.toString());
 			if (lecture.getVideo() != null && !lecture.getVideo().equals("")) {
 				Boolean rst = lectureService.addLecture(lecture);
 				response.getWriter().write(JSON.toJSONString(rst));
@@ -74,9 +67,6 @@ public class LectureController {
 	@RequestMapping(value = "/lecInfo")
 	public void lecInfo(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		response.setContentType("text/json;charset=utf-8");
-		response.setHeader("Access-Control-Allow-Origin","*");
-		response.setHeader("Access-Control-Allow-Methods","*");
-		response.setHeader("Access-Control-Max-Age", "3600");
 		String lecid = request.getParameter("lecid");
 		if (lecid!=null&&!lecid.equals("")){
 			Lecture lecture= lectureService.getLectureById(lecid);
@@ -95,9 +85,6 @@ public class LectureController {
 	@RequestMapping(value = "/updateLecture")
 	public void updateLecture(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		response.setContentType("text/json;charset=utf-8");
-		response.setHeader("Access-Control-Allow-Origin","*");
-		response.setHeader("Access-Control-Allow-Methods","*");
-		response.setHeader("Access-Control-Max-Age", "3600");
 		String lecid = request.getParameter("lecid");
 		if (lecid!=null&&!lecid.equals("")) {
 			Lecture lecture = lectureService.getLectureById(lecid);
@@ -122,9 +109,6 @@ public class LectureController {
 	@RequestMapping(value = "/deleteLecture")
 	public void deleteLecture(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		response.setContentType("text/json;charset=utf-8");
-		response.setHeader("Access-Control-Allow-Origin","*");
-		response.setHeader("Access-Control-Allow-Methods","*");
-		response.setHeader("Access-Control-Max-Age", "3600");
 		String lecid = request.getParameter("lecid");
 		if (lecid!=null&&!lecid.equals("")){
 			Boolean rst = lectureService.deleteLecById(lecid);

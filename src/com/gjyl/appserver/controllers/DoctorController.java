@@ -141,7 +141,8 @@ public class DoctorController {
 	public void getDocInfo(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		response.setContentType("text/json;charset=utf-8");
 		String docId = request.getParameter("docid");
-		if (docId!=null&&!docId.equals("")) {
+		String userId=request.getParameter("userid");
+		if (docId!=null&&!docId.equals("")&&userId!=null&&!userId.equals("")) {
 			Doctor doctor = doctorService.getDrInfo(docId);
 			List<Section> sections = sectionService.getSecList();
 			Map<String,Object> map=new HashMap<>();

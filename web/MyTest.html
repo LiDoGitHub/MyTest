@@ -7,34 +7,34 @@
     <script src="assets/js/config.js"></script>
 </head>
 <body>
-    <input type="text" id="filePath" /><br />
-    <input id="file" type="file"><br />
-    <button id="btnOK">走你~~~</button>
+<input type="text" id="filePath" /><br />
+<input id="file" type="file"><br />
+<button id="btnOK">走你~~~</button>
 </body>
 <script type="text/javascript">
-$("#btnOK").click(function () {
-    var formData=new FormData();
-    formData.append("video",$("#file")[0].files[0]);
+    $("#btnOK").click(function () {
+        var formData=new FormData();
+        formData.append("video",$("#file")[0].files[0]);
 
-    $.ajax({
-        url: serUrl+'/lecture/addLecture',
-        type: 'POST',
-        cache: false,
-        data: formData,
-        processData: false,
-        contentType: false,
-        crossDomain:true,
-        dataType:"json",
-        success:function(data){
-            console.log(data);
-           $("#filePath").val(data);
-        },
-        error:function(){
-            alert("发生错误了哈")
-        }
+        $.ajax({
+            url: serUrl+'/lecture/addLecture',
+            type: 'POST',
+            cache: false,
+            data: formData,
+            processData: false,
+            contentType: false,
+            crossDomain:true,
+            dataType:"json",
+            success:function(data){
+                console.log(data);
+                $("#filePath").val(data);
+            },
+            error:function(){
+                alert("发生错误了哈")
+            }
+        });
+
+
     });
-
-
-});
 </script>
 </html>

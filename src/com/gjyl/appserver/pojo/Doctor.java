@@ -3,47 +3,47 @@ package com.gjyl.appserver.pojo;
 import java.util.UUID;
 
 public class Doctor {
-    private String doctorid;
+    private String doctorid;        //ID
 
-    private String name;
+    private String name;            //姓名
 
-    private String username;
+    private String username;        //用户名
 
-    private String password;
+    private String password;        //密码
 
-    private String icon;
+    private String icon;            //头像
 
-    private String title;
+    private String title;           //职称
 
-    private String sectionid;
+    private String sectionid;       //科室ID
 
-    private String section;
+    private String section;         //科室名称
 
-    private String hospital;
+    private String hospital;        //所属医院
 
-    private String chatcost;
+    private String chatcost;        //图文问诊费用
 
-    private String callcost;
+    private String callcost;        //电话问诊费用
 
-    private String seniority;
+    private String seniority;       //资历
 
-    private Integer commentcount;
+    private Integer commentcount;   //评论次数
 
-    private String city;
+    private String city;            //城市
 
-    private String titleid;
+    private String titleid;         //职称ID
     
-    private Integer isexpert;
+    private Integer isexpert;       //是否是专家
 
-    private Integer canonline;
+    private Integer canonline;      //是否可以在线问诊
 
-    private String bio;
+    private String bio;             //简介
 
-    private String adept;
+    private String adept;           //擅长
 
     private DocArrangement arrangement;//医生排班
 
-    private Boolean isCollected;        //是否收藏
+    private Boolean isCollected;    //是否收藏
 
     public Boolean getCollected() {
         return isCollected;

@@ -1,8 +1,8 @@
 
 AppServer.iml
 
-out
-web/WEB-INF/classes
+out/
+web/WEB-INF/classes/
 #web/WEB-INF/lib
 .idea
 *.iml

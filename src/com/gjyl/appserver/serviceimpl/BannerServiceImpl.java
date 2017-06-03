@@ -28,11 +28,8 @@ public class BannerServiceImpl implements BannerService {
 	}
 
 	public Boolean addBanner(Banner banner) {
-		System.out.println(banner.toString());
 		int rst=dao.insertSelective(banner);
-		if (rst>0)
-			return true;
-		return false;
+		return rst > 0 ? true : false;
 	}
 
 	public Banner getBanByCyclId(String cyclid) {

@@ -57,9 +57,6 @@ public class UserController {
 	@RequestMapping(value="/Login")
 	public void loginWithPwd(HttpServletRequest request,HttpServletResponse response) throws IOException{
 		response.setContentType("application/json;charset=utf-8");
-		response.setHeader("Access-Control-Allow-Origin","*");
-		response.setHeader("Access-Control-Allow-Methods","*");
-		response.setHeader("Access-Control-Max-Age", "3600");
 		String phone = request.getParameter("phone");
 		String password = request.getParameter("password").toUpperCase();
 		if (phone!=null&&(!phone.equals(""))&&(!password.equals(""))) {
@@ -270,11 +267,13 @@ public class UserController {
 	public void updateUser(HttpServletRequest request,HttpServletResponse response) throws  Exception{
 		response.setContentType("text/json;charset=utf-8");
 		AppUser user = userService.GetUserById(request.getParameter("userid"));
-		BeanUtils.populate(user, request.getParameterMap());
-		System.out.println("updateUser..............................\n"+user);
-		Boolean result = userService.updateUser(user);
-		response.getWriter().write(JSON.toJSONString(result));
-//		return (JSON) JSON.toJSON(result);
+		if (user!=null&&user.getPhone()!=null) {
+			BeanUtils.populate(user, request.getParameterMap());
+			Boolean result = userService.updateUser(user);
+			response.getWriter().write(JSON.toJSONString(result));
+		}else {
+			response.getWriter().write(JSON.toJSONString("error"));
+		}
 	}
 
 	/**
