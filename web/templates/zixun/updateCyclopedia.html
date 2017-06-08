@@ -126,7 +126,7 @@
                    //获取值的计算----表单中的内容
                    var formData=new FormData();
                    formData.append("title", $("#title").val());
-                   formData.append("content", $("#cyclInfoContent").html());
+                   formData.append("content", textarea.val());
                    formData.append("imgIcon", $("#imgIcon")[0].files[0]);
                    formData.append("imgCover", $("#imgCover")[0].files[0]);
                    formData.append("cyclopediaid",$("#cyclId").val());

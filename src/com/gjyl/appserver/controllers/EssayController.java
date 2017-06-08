@@ -40,11 +40,15 @@ public class EssayController {
 		response.setContentType("text/json;charset=utf-8");
 		String pageNum = request.getParameter("pageNum");
 		String userid = request.getParameter("userid");
-		List<Essay> list = essayService.getAllEssaiesByPage(pageNum,userid);
-		EssayResult result = new EssayResult();
-		result.setList(list);
-		result.setMaxPage(essayService.getMaxPage());
-		response.getWriter().write(JSON.toJSONString(result));
+		if (pageNum!=null&&!pageNum.equals("")&&userid!=null&&!userid.equals("")) {
+			List<Essay> list = essayService.getAllEssaiesByPage(pageNum, userid);
+			EssayResult result = new EssayResult();
+			result.setList(list);
+			result.setMaxPage(essayService.getMaxPage());
+			response.getWriter().write(JSON.toJSONString(result));
+		}else {
+			response.getWriter().write(JSON.toJSONString("error"));
+		}
 	}
 
 	/**

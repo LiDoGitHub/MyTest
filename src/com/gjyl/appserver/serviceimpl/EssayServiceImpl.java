@@ -72,7 +72,7 @@ public class EssayServiceImpl implements EssayService {
 			}
 			//发布说说的用户信息
 			AppUser user = userDao.getUserById(essay.getUserid());
-			if (user.getName()!=null&&(!user.getName().equals(""))) {
+			if (user!=null&&user.getName()!=null&&(!user.getName().equals(""))) {
 				essay.setUser(user);
 			}
 		}

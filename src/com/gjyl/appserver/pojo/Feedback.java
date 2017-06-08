@@ -11,6 +11,16 @@ public class Feedback {
 
     private String userid;
 
+    private AppUser user;
+
+    public AppUser getUser() {
+        return user;
+    }
+
+    public void setUser(AppUser user) {
+        this.user = user;
+    }
+
     public String getFeedid() {
         return feedid;
     }

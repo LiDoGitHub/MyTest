@@ -16,6 +16,18 @@
     from Feedback
     where FeedId = #{feedid,jdbcType=CHAR}
   </select>
+
+  <!-- 分页获取反馈 -->
+  <select id="getFeedbackByPage" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select * from Feedback ORDER BY fTime DESC
+    limit #{pageNum,jdbcType=INTEGER},20
+  </select>
+
+  <!-- 总页数 -->
+  <select id="getTotalNum" resultType="java.lang.Integer" >
+    SELECT COUNT(*) FROM Feedback;
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from Feedback
     where FeedId = #{feedid,jdbcType=CHAR}
